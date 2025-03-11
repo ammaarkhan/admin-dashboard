@@ -1,0 +1,83 @@
+# Project: Happipad Admin Dashboard Mockup
+
+Purpose: Create a high-fidelity UI mockup for stakeholder demonstration with minimal functional implementation
+
+HTML & Structure Guidelines:
+
+- Use 2-space indentation for all HTML files
+- Always include proper DOCTYPE, lang attribute, viewport and charset meta tags
+- Component names should use kebab-case (e.g., user-profile, search-bar)
+
+Styling & Design System:
+
+- Use Inter font family as the primary typeface
+- Follow the color system:
+  - Primary: #4f46e5 (main brand color)
+  - Sidebar Background: #1e293b
+  - Text Primary: #1e293b
+  - Text Secondary: #64748b
+  - Success: #10b981
+  - Danger: #ef4444
+  - Warning: #f59e0b
+  - Border: #e2e8f0
+- Implement responsive breakpoints:
+  - Small (sm): 640px
+  - Medium (md): 768px
+  - Large (lg): 1024px
+  - Extra Large (xl): 1280px
+
+Layout & Components:
+
+- Fixed sidebar width of 250px with responsive main content
+- Standard container padding of 2rem
+- Component spacing of 1rem
+- Card styling:
+  - 8px border radius
+  - Subtle shadow (0 2px 4px rgba(0, 0, 0, 0.1))
+- Button variants: primary, secondary, danger, success
+  - 6px border radius
+  - Consistent padding (0.5rem 1rem)
+- Form elements:
+  - Standard height of 2.5rem
+  - 6px border radius
+  - Consistent border colors
+
+Asset Guidelines:
+
+- Acceptable image formats: jpg, png, svg
+- Maximum image size: 500kb
+- Use Font Awesome 6.0.0 for icons
+
+Accessibility Requirements:
+
+- All images must have alt text
+- Interactive elements require ARIA labels
+- Maintain minimum contrast ratio of 4.5:1
+
+Required UI Components:
+
+- Navigation sidebar
+- Search functionality (UI only)
+- Data tables
+- Form elements
+- Modal dialogs
+- Status indicators
+
+Non-Functional Features (Mockup Only):
+
+- Authentication system
+- Data persistence
+- Form validation
+- File handling
+- Real-time updates
+
+Important Notes for AI Assistant:
+
+- Focus on UI/UX excellence over functionality
+- Maintain consistent spacing and typography
+- Ensure responsive design patterns
+- Use semantic HTML structure
+- Keep code modular and maintainable
+- Prioritize visual clarity for stakeholder demonstration
+- Do not implement complex backend functionality
+- Use placeholder data for demonstration purposes
