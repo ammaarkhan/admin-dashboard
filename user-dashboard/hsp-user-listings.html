@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Listings - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--sidebar-bg);
+        padding: 2rem;
+      }
+
+      .logo-container {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.75rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+        color: white;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-gray);
+        padding: 12px;
+        margin-bottom: 4px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 2rem;
+      }
+
+      /* Listings Specific Styles */
+      .listings-header {
+        margin-bottom: 2rem;
+      }
+
+      .listings-header h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 1.5rem;
+      }
+
+      .create-listing-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background-color: #4b5eaa;
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 9999px;
+        border: none;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      .create-listing-btn:hover {
+        background-color: #3b4a88;
+      }
+
+      /* Listing Card */
+      .listing-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        margin-bottom: 2rem;
+        border: 1px solid #e2e8f0;
+        display: block;
+      }
+
+      .listing-card:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .listing-content {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      .listing-image {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .listing-details {
+        padding: 1.5rem 2rem 1.5rem 0;
+      }
+
+      .listing-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.75rem;
+      }
+
+      .listing-subtitle {
+        font-size: 1.125rem;
+        color: #1e293b;
+        margin-bottom: 1rem;
+      }
+
+      .listing-meta {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #64748b;
+      }
+
+      .listing-description {
+        color: #64748b;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .listing-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        background-color: #fee2e2;
+        color: #ef4444;
+      }
+
+      .listing-price {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #4b5eaa;
+      }
+
+      .price-period {
+        font-size: 1rem;
+        color: #64748b;
+        font-weight: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo-container">HappiPad Logo</div>
+        <nav>
+          <ul class="nav-menu">
+            <li>
+              <a href="hsp-user-dashboard.html" class="nav-item">
+                <span><i class="fas fa-home"></i></span>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-profile.html" class="nav-item">
+                <span><i class="fas fa-user"></i></span>
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-listings.html" class="nav-item active">
+                <span><i class="fas fa-clipboard-list"></i></span>
+                Listings
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item">
+                <span><i class="fas fa-file-contract"></i></span>
+                Contracts
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item">
+                <span><i class="fas fa-cog"></i></span>
+                Settings
+              </a>
+            </li>
+          </ul>
+          <div style="margin-top: 2rem">
+            <a href="#" class="nav-item">
+              <span><i class="fas fa-headset"></i></span>
+              24/7 Support
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="listings-header">
+          <h1>Listings</h1>
+          <button class="create-listing-btn">
+            <i class="fas fa-plus"></i>
+            Create new listing
+          </button>
+        </div>
+
+        <div class="listings-grid">
+          <!-- Room 1 -->
+          <a href="hsp-listing-view.html" class="listing-card">
+            <div class="listing-content">
+              <img
+                src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop"
+                alt="Room with bed and desk"
+                class="listing-image"
+              />
+              <div class="listing-details">
+                <h2 class="listing-title">Room 1</h2>
+                <h3 class="listing-subtitle">
+                  Shared kitchen, private bathroom room in Corktown.
+                </h3>
+                <div class="listing-meta">
+                  <div class="meta-item">
+                    <i class="fas fa-home"></i>
+                    House
+                  </div>
+                  <div class="meta-item">
+                    <i class="fas fa-users"></i>
+                    Couple
+                  </div>
+                  <div class="meta-item">
+                    <i class="fas fa-bath"></i>
+                    Shared bath
+                  </div>
+                  <div class="meta-item">
+                    <i class="fas fa-paw"></i>
+                    Animal friendly
+                  </div>
+                </div>
+                <p class="listing-description">
+                  Comfortable, affordable stay. Queen bed, en-suite bathroom,
+                  work desk, essential amenities. Located in Corktown, this room
+                  offers a perfect blend of comfort and convenience.
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const createListingBtn = document.querySelector(".create-listing-btn");
+        createListingBtn.addEventListener("click", () => {
+          alert("Create listing functionality coming soon!");
+        });
+      });
+    </script>
+  </body>
+</html>

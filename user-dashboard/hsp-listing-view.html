@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Room 1 - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--sidebar-bg);
+        padding: 2rem;
+      }
+
+      .logo-container {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.75rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+        color: white;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-gray);
+        padding: 12px;
+        margin-bottom: 4px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 2rem;
+      }
+
+      /* Listing Header */
+      .listing-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .back-button:hover {
+        color: var(--primary);
+      }
+
+      .listing-actions {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .action-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        border: none;
+      }
+
+      .primary-button {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .secondary-button {
+        background-color: white;
+        color: var(--text-gray);
+        border: 1px solid var(--border);
+      }
+
+      /* Listing Content */
+      .listing-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      .section-content {
+        padding: 1.5rem;
+      }
+
+      .info-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .info-label {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .info-value {
+        color: #1e293b;
+      }
+
+      /* Responsive Grid */
+      @media (min-width: 640px) {
+        .info-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .info-item.full-width {
+          grid-column: span 2;
+        }
+      }
+
+      .listing-image {
+        width: 100%;
+        height: 300px;
+        background-color: #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+      }
+
+      .listing-status {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        background-color: #fee2e2;
+        color: #ef4444;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo-container">HappiPad Logo</div>
+        <nav>
+          <ul class="nav-menu">
+            <li>
+              <a href="hsp-user-dashboard.html" class="nav-item">
+                <span><i class="fas fa-home"></i></span>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-profile.html" class="nav-item">
+                <span><i class="fas fa-user"></i></span>
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-listings.html" class="nav-item active">
+                <span><i class="fas fa-clipboard-list"></i></span>
+                Listings
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item">
+                <span><i class="fas fa-file-contract"></i></span>
+                Contracts
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item">
+                <span><i class="fas fa-cog"></i></span>
+                Settings
+              </a>
+            </li>
+          </ul>
+          <div style="margin-top: 2rem">
+            <a href="#" class="nav-item">
+              <span><i class="fas fa-headset"></i></span>
+              24/7 Support
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="listing-header">
+          <a href="hsp-user-listings.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Listings
+          </a>
+          <div class="listing-actions">
+            <button class="action-button secondary-button">
+              <i class="fas fa-edit"></i>
+              Edit
+            </button>
+            <button class="action-button primary-button">
+              <i class="fas fa-check"></i>
+              Publish
+            </button>
+          </div>
+        </div>
+
+        <div class="listing-content">
+          <div class="listing-image">
+            <i class="fas fa-image" style="font-size: 3rem; color: #94a3b8"></i>
+          </div>
+
+          <!-- Listing Info -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Listing Info</h2>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-label">Property Type</div>
+                  <div class="info-value">House</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Room Type</div>
+                  <div class="info-value">Private Room</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Bathroom Type</div>
+                  <div class="info-value">Shared Bathroom</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Location</div>
+                  <div class="info-value">Corktown, Vancouver</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Available From</div>
+                  <div class="info-value">March 1, 2024</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Minimum Stay</div>
+                  <div class="info-value">6 months</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Room Size</div>
+                  <div class="info-value">200 sq ft</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Furnished</div>
+                  <div class="info-value">Yes</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- About Listing -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">About Listing</h2>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item full-width">
+                  <div class="info-label">Description</div>
+                  <div class="info-value">
+                    Comfortable, affordable stay in a well-maintained house. The
+                    room comes with a queen bed, en-suite bathroom, work desk,
+                    and essential amenities. Located in Corktown, this room
+                    offers a perfect blend of comfort and convenience.
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Amenities</div>
+                  <div class="info-value">
+                    - Queen size bed<br />
+                    - Work desk<br />
+                    - Closet<br />
+                    - High-speed internet<br />
+                    - Air conditioning<br />
+                    - Heating
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Shared Spaces</div>
+                  <div class="info-value">
+                    - Kitchen<br />
+                    - Living room<br />
+                    - Laundry room<br />
+                    - Garden<br />
+                    - Parking
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Housing Rules -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Housing Rules</h2>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-label">House Rules</div>
+                  <div class="info-value">
+                    - No smoking indoors<br />
+                    - Quiet hours: 10 PM - 7 AM<br />
+                    - Clean up after using common areas<br />
+                    - Guests allowed with prior notice<br />
+                    - No overnight guests without approval
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Additional Policies</div>
+                  <div class="info-value">
+                    - Monthly cleaning schedule<br />
+                    - Shared utility costs<br />
+                    - Recycling program<br />
+                    - Pet policy available<br />
+                    - Security deposit required
+                  </div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Safety & Security</div>
+                  <div class="info-value">
+                    The house is equipped with smoke detectors, carbon monoxide
+                    detectors, and security cameras in common areas. All
+                    residents receive a set of keys and access codes for secure
+                    entry.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const editButton = document.querySelector(".secondary-button");
+        const publishButton = document.querySelector(".primary-button");
+
+        editButton.addEventListener("click", () => {
+          alert("Edit functionality coming soon!");
+        });
+
+        publishButton.addEventListener("click", () => {
+          alert("Publish functionality coming soon!");
+        });
+      });
+    </script>
+  </body>
+</html>

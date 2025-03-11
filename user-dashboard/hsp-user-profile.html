@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--sidebar-bg);
+        padding: 2rem;
+      }
+
+      .logo-container {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.75rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+        color: white;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-gray);
+        padding: 12px;
+        margin-bottom: 4px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 2rem;
+      }
+
+      /* Profile Header */
+      .profile-header {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-info h1 {
+        font-size: 1.5rem;
+        color: #1e293b;
+        margin-bottom: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .verified-badge {
+        color: var(--primary);
+        font-size: 1rem;
+      }
+
+      .email-verified {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        font-size: 0.875rem;
+      }
+
+      .email-verified i {
+        color: var(--success);
+      }
+
+      /* Profile Content */
+      .profile-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      .edit-button {
+        color: var(--primary);
+        background: none;
+        border: none;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .section-content {
+        padding: 1.5rem;
+      }
+
+      .info-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .info-label {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .info-value {
+        color: #1e293b;
+      }
+
+      /* Responsive Grid */
+      @media (min-width: 640px) {
+        .info-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .info-item.full-width {
+          grid-column: span 2;
+        }
+      }
+
+      .document-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.25rem;
+        font-size: 0.875rem;
+      }
+      .status-icon {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+      .status-valid {
+        background-color: var(--success);
+      }
+      .status-expired {
+        background-color: #ef4444;
+      }
+      .status-pending {
+        background-color: #f59e0b;
+      }
+      .document-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .action-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+      .action-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo-container">HappiPad Logo</div>
+        <nav>
+          <ul class="nav-menu">
+            <li>
+              <a href="hsp-user-dashboard.html" class="nav-item">
+                <span><i class="fas fa-home"></i></span>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-profile.html" class="nav-item active">
+                <span><i class="fas fa-user"></i></span>
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-listings.html" class="nav-item">
+                <span><i class="fas fa-clipboard-list"></i></span>
+                Listings
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item">
+                <span><i class="fas fa-file-contract"></i></span>
+                Contracts
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-item">
+                <span><i class="fas fa-cog"></i></span>
+                Settings
+              </a>
+            </li>
+          </ul>
+          <div style="margin-top: 2rem">
+            <a href="#" class="nav-item">
+              <span><i class="fas fa-headset"></i></span>
+              24/7 Support
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="profile-header">
+          <div class="profile-avatar"></div>
+          <div class="profile-info">
+            <h1>
+              John, 54
+              <i class="fas fa-check-circle verified-badge"></i>
+            </h1>
+            <div class="email-verified">
+              <i class="fas fa-check-circle"></i>
+              Email verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+          <!-- Profile Basic -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Profile Basic</h2>
+              <button class="edit-button">
+                <i class="fas fa-edit"></i>
+                Edit
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-label">First Name</div>
+                  <div class="info-value">John</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Last Name</div>
+                  <div class="info-value">Smith</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Email</div>
+                  <div class="info-value">john.smith@email.com</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Phone</div>
+                  <div class="info-value">+1 (604) 555-0123</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Date of Birth</div>
+                  <div class="info-value">April 15, 1970</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Preferred Contact Method</div>
+                  <div class="info-value">Email</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Postal Code</div>
+                  <div class="info-value">V6B 1A1</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Province</div>
+                  <div class="info-value">British Columbia</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Password</div>
+                  <div class="info-value">••••••••••</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Terms Agreement</div>
+                  <div class="info-value">
+                    Agreed to Privacy Policy and Terms of Use on Jan 1, 2024
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Specific -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Profile Specific</h2>
+              <button class="edit-button">
+                <i class="fas fa-edit"></i>
+                Edit
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-label">Gender</div>
+                  <div class="info-value">Male</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">
+                    Supported Individual's Gender Preference
+                  </div>
+                  <div class="info-value">No preference</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Languages</div>
+                  <div class="info-value">
+                    English (Native), French (Intermediate), Mandarin (Basic)
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Noise Tolerance</div>
+                  <div class="info-value">
+                    Moderate - occasional noise is fine
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Daily Schedule</div>
+                  <div class="info-value">Work from home, 9 AM - 5 PM</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Guest Visits</div>
+                  <div class="info-value">Once or twice a month</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Cooking Habits</div>
+                  <div class="info-value">Cook dinner 3-4 times per week</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Dietary Requirements/Allergies</div>
+                  <div class="info-value">
+                    Lactose intolerant, Peanut allergy
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Accessibility Requirements</div>
+                  <div class="info-value">None</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">House Cleaning Frequency</div>
+                  <div class="info-value">Weekly deep clean, daily tidying</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Profile Photo</div>
+                  <div class="info-value">Uploaded: Jan 15, 2024</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Found Happipad Through</div>
+                  <div class="info-value">Online search</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Hobbies & Interests</div>
+                  <div class="info-value">
+                    Reading, gardening, yoga, hiking, board games, cooking,
+                    photography
+                  </div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">About Me</div>
+                  <div class="info-value">
+                    I'm a friendly and organized individual who values creating
+                    a harmonious living environment. With over 10 years of
+                    experience in home sharing, I understand the importance of
+                    clear communication and mutual respect. I maintain a clean
+                    and tidy home, am quiet during late hours, and enjoy sharing
+                    occasional meals with housemates when schedules align.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Home Share Fields -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Custom Home Share Fields</h2>
+              <button class="edit-button">
+                <i class="fas fa-edit"></i>
+                Edit
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <!-- Basic Eligibility -->
+                <div class="info-item">
+                  <div class="info-label">BC Resident/Canadian Citizen</div>
+                  <div class="info-value">Yes - BC Resident for 15 years</div>
+                </div>
+
+                <!-- Secondary Applicant Information -->
+                <div class="info-item">
+                  <div class="info-label">Secondary Applicant</div>
+                  <div class="info-value">Yes - Spouse</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Secondary Applicant Details</div>
+                  <div class="info-value">
+                    Name: Sarah Smith<br />
+                    Phone: (604) 555-0124<br />
+                    Year of Birth: 1972<br />
+                    Email: sarah.smith@email.com<br />
+                    Languages: English, French<br />
+                    Education: Masters in Special Education
+                  </div>
+                </div>
+
+                <!-- Professional Background -->
+                <div class="info-item full-width">
+                  <div class="info-label">Professional Memberships</div>
+                  <div class="info-value">
+                    BC Care Providers Association, Developmental Disabilities
+                    Association
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Current Employment</div>
+                  <div class="info-value">
+                    Company: Care Support Services<br />
+                    Position: Support Worker Coordinator<br />
+                    Responsibilities: Coordinating care plans, staff training,
+                    client assessment<br />
+                    Supervisor: Michael Johnson<br />
+                    Supervisor Phone: (604) 555-0125<br />
+                    Duration: Jan 2020 - Present
+                  </div>
+                </div>
+
+                <!-- Cultural & Religious Background -->
+                <div class="info-item">
+                  <div class="info-label">Cultural Background</div>
+                  <div class="info-value">Canadian/European</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Religious/Spiritual Affiliation</div>
+                  <div class="info-value">Non-denominational Christian</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Cultural/Religious Preferences</div>
+                  <div class="info-value">
+                    Open to all backgrounds and beliefs, celebrates major
+                    holidays
+                  </div>
+                </div>
+
+                <!-- Support Experience & Philosophy -->
+                <div class="info-item full-width">
+                  <div class="info-label">
+                    Experience with Developmental Disabilities
+                  </div>
+                  <div class="info-value">
+                    15 years experience in support work, specialized training in
+                    autism spectrum support, certified in positive behavior
+                    support
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Preferred Style of Support</div>
+                  <div class="info-value">
+                    Person-centered, strength-based approach
+                  </div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Important Values</div>
+                  <div class="info-value">
+                    Dignity, independence, inclusion, personal growth, community
+                    integration
+                  </div>
+                </div>
+
+                <!-- Household Information -->
+                <div class="info-item full-width">
+                  <div class="info-label">Household Composition</div>
+                  <div class="info-value">
+                    Primary: John Smith, 54, Male, Home Share Provider<br />
+                    Spouse: Sarah Smith, 52, Female, Support Worker<br />
+                    Schedule: Flexible work-from-home arrangements
+                  </div>
+                </div>
+
+                <!-- Support Capabilities -->
+                <div class="info-item full-width">
+                  <div class="info-label">
+                    Types of Support Willing to Provide
+                  </div>
+                  <div class="info-value">
+                    Physical Support: Mobility assistance, personal care,
+                    medication management<br />
+                    Behavioral Support: Positive behavior intervention, anxiety
+                    management<br />
+                    Life Skills: Cooking, budgeting, employment support,
+                    transportation<br />
+                    Medical Support: Diabetes management, seizure protocol
+                    trained<br />
+                    Communication: Experience with assistive technology, basic
+                    sign language
+                  </div>
+                </div>
+
+                <!-- Vehicle Information -->
+                <div class="info-item full-width">
+                  <div class="info-label">Vehicle Details</div>
+                  <div class="info-value">
+                    Description: 2022 Toyota RAV4<br />
+                    Insurance: ICBC Comprehensive<br />
+                    3rd Party Liability: $5 million coverage<br />
+                    Maintenance: Regular dealer service<br />
+                    Safety: All passengers required to use seat belts
+                  </div>
+                </div>
+
+                <!-- References -->
+                <div class="info-item full-width">
+                  <div class="info-label">Professional References</div>
+                  <div class="info-value">
+                    1. Dr. Emily Chen - Vancouver General Hospital - (604)
+                    555-0126 - emily.chen@hospital.ca - Former Supervisor<br />
+                    2. Robert Wilson - Community Living BC - (604) 555-0127 -
+                    robert.wilson@clbc.ca - Program Coordinator<br />
+                    3. Lisa Thompson - Care Support Services - (604) 555-0128 -
+                    l.thompson@caresupport.ca - Current Colleague
+                  </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="info-item full-width">
+                  <div class="info-label">Commitment Duration</div>
+                  <div class="info-value">
+                    Long-term commitment (5+ years) with intention to provide
+                    stable, consistent support
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Previous Home Share Experience</div>
+                  <div class="info-value">
+                    Provided respite care through CLBC (2018-2020), Foster
+                    parent with MCFD (2015-2018)
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Training Needs</div>
+                  <div class="info-value">
+                    Interested in advanced behavioral support training, crisis
+                    intervention updates, and specialized medical care training
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Impact on Lifestyle</div>
+                  <div class="info-value">
+                    Flexible work schedule allows for appointment management,
+                    strong support network for respite care, planned vacation
+                    coverage arranged
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- File Uploads -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">File Uploads</h2>
+              <button class="edit-button">
+                <i class="fas fa-upload"></i>
+                Upload
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <!-- Required Documents -->
+                <div class="info-item">
+                  <div class="info-label">Physician's Certification</div>
+                  <div class="info-value">Uploaded: Jan 15, 2024</div>
+                  <div class="document-status">
+                    <div class="status-icon status-valid"></div>
+                    Valid until Jan 15, 2025
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="action-link">
+                      <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="#" class="action-link">
+                      <i class="fas fa-upload"></i> Update
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Driver's License (Class 5)</div>
+                  <div class="info-value">Uploaded: Dec 20, 2023</div>
+                  <div class="document-status">
+                    <div class="status-icon status-valid"></div>
+                    Valid until Dec 20, 2028
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="action-link">
+                      <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="#" class="action-link">
+                      <i class="fas fa-upload"></i> Update
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Driver's Abstract</div>
+                  <div class="info-value">Uploaded: Feb 1, 2024</div>
+                  <div class="document-status">
+                    <div class="status-icon status-valid"></div>
+                    Valid until May 1, 2024
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="action-link">
+                      <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="#" class="action-link">
+                      <i class="fas fa-upload"></i> Update
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Vehicle Insurance</div>
+                  <div class="info-value">$3M Liability, Personal Use</div>
+                  <div class="document-status">
+                    <div class="status-icon status-expired"></div>
+                    Expired: Update required
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="action-link">
+                      <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="#" class="action-link">
+                      <i class="fas fa-upload"></i> Update
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Home/Renter's Insurance</div>
+                  <div class="info-value">Uploaded: Jan 5, 2024</div>
+                  <div class="document-status">
+                    <div class="status-icon status-valid"></div>
+                    Valid until Jan 5, 2025
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="action-link">
+                      <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="#" class="action-link">
+                      <i class="fas fa-upload"></i> Update
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Emergency Evacuation Plan</div>
+                  <div class="info-value">Includes home diagram</div>
+                  <div class="document-status">
+                    <div class="status-icon status-pending"></div>
+                    Pending review
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="action-link">
+                      <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="#" class="action-link">
+                      <i class="fas fa-upload"></i> Update
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">First Aid Certificate</div>
+                  <div class="info-value">CPR Level C included</div>
+                  <div class="document-status">
+                    <div class="status-icon status-valid"></div>
+                    Valid until Dec 1, 2024
+                  </div>
+                  <div class="document-actions">
+                    <a href="#" class="action-link">
+                      <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="#" class="action-link">
+                      <i class="fas fa-upload"></i> Update
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Optional Certificates -->
+                <div class="info-item full-width">
+                  <div class="info-label">Additional Certificates</div>
+                  <div class="info-value">
+                    <div style="margin-bottom: 1rem">
+                      Optional certifications uploaded:
+                    </div>
+                    <div style="display: grid; gap: 1rem">
+                      <div>
+                        <strong>WHMIS Certificate</strong>
+                        <div class="document-status">
+                          <div class="status-icon status-valid"></div>
+                          Valid until Nov 15, 2024
+                        </div>
+                        <div class="document-actions">
+                          <a href="#" class="action-link">
+                            <i class="fas fa-download"></i> Download
+                          </a>
+                          <a href="#" class="action-link">
+                            <i class="fas fa-upload"></i> Update
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <strong>FoodSafe Level 1</strong>
+                        <div class="document-status">
+                          <div class="status-icon status-valid"></div>
+                          Valid until Oct 1, 2024
+                        </div>
+                        <div class="document-actions">
+                          <a href="#" class="action-link">
+                            <i class="fas fa-download"></i> Download
+                          </a>
+                          <a href="#" class="action-link">
+                            <i class="fas fa-upload"></i> Update
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Competency Testing -->
+                <div class="info-item full-width">
+                  <div class="info-label">Competency Based Testing</div>
+                  <div class="info-value">
+                    <div style="display: grid; gap: 1rem">
+                      <div>
+                        <strong>Home Share Policies</strong>
+                        <div class="document-status">
+                          <div class="status-icon status-valid"></div>
+                          Completed: Jan 10, 2024
+                        </div>
+                        <div class="document-actions">
+                          <a href="#" class="action-link">
+                            <i class="fas fa-download"></i> View Certificate
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <strong>Medication Administration</strong>
+                        <div class="document-status">
+                          <div class="status-icon status-valid"></div>
+                          Completed: Jan 12, 2024
+                        </div>
+                        <div class="document-actions">
+                          <a href="#" class="action-link">
+                            <i class="fas fa-download"></i> View Certificate
+                          </a>
+                        </div>
+                      </div>
+                      <div>
+                        <strong>Privacy Awareness</strong>
+                        <div class="document-status">
+                          <div class="status-icon status-valid"></div>
+                          Completed: Jan 15, 2024
+                        </div>
+                        <div class="document-actions">
+                          <a href="#" class="action-link">
+                            <i class="fas fa-download"></i> View Certificate
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Edit Button Functionality
+        const editButtons = document.querySelectorAll(".edit-button");
+        editButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            alert("Edit functionality coming soon!");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
