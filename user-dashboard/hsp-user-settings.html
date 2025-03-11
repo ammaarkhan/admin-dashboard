@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--sidebar-bg);
+        padding: 2rem;
+      }
+
+      .logo-container {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 0.75rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+        color: white;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-gray);
+        padding: 12px;
+        margin-bottom: 4px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 2rem;
+      }
+
+      .section-header {
+        margin-bottom: 2rem;
+      }
+
+      .section-header h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      /* Settings Specific Styles */
+      .settings-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .settings-section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .settings-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .settings-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      .settings-content {
+        padding: 1.5rem;
+      }
+
+      .settings-group {
+        margin-bottom: 2rem;
+      }
+
+      .settings-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .setting-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .setting-item:last-child {
+        border-bottom: none;
+      }
+
+      .setting-info {
+        flex: 1;
+      }
+
+      .setting-label {
+        font-weight: 500;
+        color: #1e293b;
+        margin-bottom: 0.25rem;
+      }
+
+      .setting-description {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .setting-control {
+        margin-left: 2rem;
+      }
+
+      /* Toggle Switch */
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e2e8f0;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .toggle-slider {
+        background-color: var(--primary);
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(24px);
+      }
+
+      /* Button Styles */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--text-gray);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+        border: none;
+      }
+
+      .btn-danger {
+        background: #fee2e2;
+        color: #ef4444;
+        border: 1px solid #fecaca;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo-container">HappiPad Logo</div>
+        <nav>
+          <ul class="nav-menu">
+            <li>
+              <a href="hsp-user-dashboard.html" class="nav-item">
+                <span><i class="fas fa-home"></i></span>
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-profile.html" class="nav-item">
+                <span><i class="fas fa-user"></i></span>
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-listings.html" class="nav-item">
+                <span><i class="fas fa-clipboard-list"></i></span>
+                Listings
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-contracts.html" class="nav-item">
+                <span><i class="fas fa-file-contract"></i></span>
+                Contracts
+              </a>
+            </li>
+            <li>
+              <a href="hsp-user-settings.html" class="nav-item active">
+                <span><i class="fas fa-cog"></i></span>
+                Settings
+              </a>
+            </li>
+          </ul>
+          <div style="margin-top: 2rem">
+            <a href="#" class="nav-item">
+              <span><i class="fas fa-headset"></i></span>
+              24/7 Support
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="section-header">
+          <h1>Settings</h1>
+        </div>
+
+        <div class="settings-container">
+          <!-- Account Settings -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Account Settings</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Email Address</div>
+                    <div class="setting-description">john.smith@email.com</div>
+                  </div>
+                  <div class="setting-control">
+                    <button class="btn">Change</button>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Password</div>
+                    <div class="setting-description">
+                      Last changed 3 months ago
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <button class="btn">Update</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notification Settings -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Notification Settings</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Email Notifications</div>
+                    <div class="setting-description">
+                      Receive updates about new matches and messages
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">SMS Notifications</div>
+                    <div class="setting-description">
+                      Receive text messages for important updates
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy Settings -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Privacy Settings</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Profile Visibility</div>
+                    <div class="setting-description">
+                      Control who can see your profile
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <select class="btn">
+                      <option>Public</option>
+                      <option>Private</option>
+                      <option>Matches Only</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Contact Information</div>
+                    <div class="setting-description">
+                      Show contact details to matched individuals
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Danger Zone</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Delete Account</div>
+                    <div class="setting-description">
+                      Permanently delete your account and all data
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <button class="btn btn-danger">Delete Account</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle button clicks
+        document.querySelectorAll(".btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            alert("This feature is coming soon!");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
