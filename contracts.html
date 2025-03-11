@@ -307,6 +307,48 @@
         align-items: center;
         gap: 0.25rem;
       }
+
+      .status-dropdown {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        min-width: 140px;
+      }
+
+      .status-dropdown .status-select {
+        appearance: none;
+        width: 100%;
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        background-color: white;
+        cursor: pointer;
+      }
+
+      .status-dropdown .select-icon {
+        position: absolute;
+        right: 0.75rem;
+        pointer-events: none;
+        color: #6b7280;
+      }
+
+      .status-select option[value="active"] {
+        color: #166534;
+      }
+
+      .status-select option[value="pending"] {
+        color: #92400e;
+      }
+
+      .status-select option[value="disabled"] {
+        color: #991b1b;
+      }
+
+      .status-select option[value="complete"] {
+        color: #1d4ed8;
+      }
     </style>
     <!-- Add Google Fonts for signature styles -->
     <link
@@ -365,11 +407,11 @@
                   <th>Contract ID</th>
                   <th>Individual</th>
                   <th>Home Share Provider</th>
-                  <th>Start Date</th>
-                  <th>Individual Consent Service Agreement</th>
-                  <th>HSP Contract</th>
                   <th>Status</th>
-                  <th>Actions</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Individual Consent Agreement</th>
+                  <th>HSP Contract</th>
                 </tr>
               </thead>
               <tbody id="contractsTableBody">
@@ -378,7 +420,33 @@
                   <td>CTR-0001</td>
                   <td>Emily Davis</td>
                   <td>Sarah Wilson</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option
+                          value="active"
+                          data-icon="fa-check-circle"
+                          selected
+                        >
+                          Active
+                        </option>
+                        <option value="pending" data-icon="fa-clock">
+                          Pending
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                        <option value="complete" data-icon="fa-flag-checkered">
+                          Complete
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
                   <td>2024-03-15</td>
+                  <td>2025-03-15</td>
                   <td class="file-upload-cell">
                     <div class="file-upload" data-user-id="1-consent">
                       <div class="upload-state uploaded">
@@ -397,27 +465,22 @@
                       </div>
                     </div>
                   </td>
-                  <td class="e-sign-cell">
-                    <div class="e-sign-status">
-                      <span class="e-sign-badge e-sign-signed">
-                        <i class="fas fa-check-circle"></i>
-                        Signed
-                      </span>
-                    </div>
-                    <div class="e-sign-actions">
-                      <button class="btn-view-contract">
-                        <i class="fas fa-file-contract"></i>
-                        View Contract
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <span class="contract-status status-active">Active</span>
-                  </td>
-                  <td class="actions-cell">
-                    <div class="actions">
-                      <button class="btn-edit">View</button>
-                      <button class="btn-delete">Delete</button>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="1-hsp">
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">hsp_contract.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -425,7 +488,29 @@
                   <td>CTR-0002</td>
                   <td>James Wilson</td>
                   <td>Michael Chen</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="active" data-icon="fa-check-circle">
+                          Active
+                        </option>
+                        <option value="pending" data-icon="fa-clock" selected>
+                          Pending
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                        <option value="complete" data-icon="fa-flag-checkered">
+                          Complete
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
                   <td>2024-03-18</td>
+                  <td>2025-03-18</td>
                   <td class="file-upload-cell">
                     <div class="file-upload" data-user-id="2-consent">
                       <div class="upload-state uploaded">
@@ -444,27 +529,40 @@
                       </div>
                     </div>
                   </td>
-                  <td class="e-sign-cell">
-                    <div class="e-sign-status">
-                      <span class="e-sign-badge e-sign-pending">
-                        <i class="fas fa-clock"></i>
-                        Pending Signature
-                      </span>
-                    </div>
-                    <div class="e-sign-actions">
-                      <button class="btn-view-contract">
-                        <i class="fas fa-file-contract"></i>
-                        View Contract
-                      </button>
-                    </div>
-                  </td>
-                  <td>
-                    <span class="contract-status status-pending">Pending</span>
-                  </td>
-                  <td class="actions-cell">
-                    <div class="actions">
-                      <button class="btn-edit">View</button>
-                      <button class="btn-delete">Delete</button>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="2-hsp">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file2-hsp"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file2-hsp" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload HSP Contract</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -504,6 +602,10 @@
           <div class="form-group">
             <label for="startDate">Start Date</label>
             <input type="date" id="startDate" required />
+          </div>
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" required />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn-cancel" id="cancelContract">
@@ -605,6 +707,7 @@
           const individual = document.getElementById("individual");
           const provider = document.getElementById("provider");
           const startDate = document.getElementById("startDate");
+          const endDate = document.getElementById("endDate");
 
           // Create new contract row
           const newRow = document.createElement("tr");
@@ -613,7 +716,21 @@
             <td>CTR-${String(contractId).padStart(4, "0")}</td>
             <td>${individual.options[individual.selectedIndex].text}</td>
             <td>${provider.options[provider.selectedIndex].text}</td>
+            <td>
+              <div class="status-dropdown">
+                <select class="status-select">
+                  <option value="active" data-icon="fa-check-circle">Active</option>
+                  <option value="pending" data-icon="fa-clock" selected>Pending</option>
+                  <option value="disabled" data-icon="fa-ban">Disabled</option>
+                  <option value="complete" data-icon="fa-flag-checkered">Complete</option>
+                </select>
+                <div class="select-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+            </td>
             <td>${startDate.value}</td>
+            <td>${endDate.value}</td>
             <td class="file-upload-cell">
               <div class="file-upload" data-user-id="${contractId}-consent">
                 <div class="upload-state initial">
@@ -645,29 +762,40 @@
                 </div>
               </div>
             </td>
-            <td class="e-sign-cell">
-              <div class="e-sign-status">
-                <span class="e-sign-badge e-sign-pending">
-                  <i class="fas fa-clock"></i>
-                  Not Ready
-                </span>
-              </div>
-              <div class="e-sign-actions">
-                <button class="btn-send-contract" disabled onclick="sendContract(${contractId})">
-                  <i class="fas fa-paper-plane"></i>
-                  Send Contract
-                </button>
-                <button class="btn-view-contract">
-                  <i class="fas fa-file-contract"></i>
-                  View Contract
-                </button>
-              </div>
-            </td>
-            <td><span class="contract-status status-pending">Pending</span></td>
-            <td class="actions-cell">
-              <div class="actions">
-                <button class="btn-edit">View</button>
-                <button class="btn-delete">Delete</button>
+            <td class="file-upload-cell">
+              <div class="file-upload" data-user-id="${contractId}-hsp">
+                <div class="upload-state initial">
+                  <input
+                    type="file"
+                    id="${contractId}-hsp"
+                    class="file-input"
+                    accept=".pdf,.doc,.docx"
+                  />
+                  <label for="${contractId}-hsp" class="file-label">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload HSP Contract</span>
+                  </label>
+                </div>
+                <div class="upload-state uploaded hidden">
+                  <div class="file-info">
+                    <i class="fas fa-file-alt"></i>
+                    <span class="file-name">document.pdf</span>
+                  </div>
+                  <div class="file-actions">
+                    <button class="btn-download" title="Download">
+                      <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn-update" title="Upload New Version">
+                      <i class="fas fa-sync-alt"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="upload-progress hidden">
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                  </div>
+                  <span class="progress-text">Uploading... 0%</span>
+                </div>
               </div>
             </td>
           `;
@@ -675,8 +803,10 @@
           contractsTableBody.appendChild(newRow);
 
           // Initialize file upload functionality for the new row
-          const uploadContainer = newRow.querySelector(".file-upload");
-          initializeSingleFileUpload(uploadContainer);
+          const uploadContainer = newRow.querySelectorAll(".file-upload");
+          uploadContainer.forEach((container) => {
+            initializeSingleFileUpload(container);
+          });
 
           contractId++;
           closeModal();
