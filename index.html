@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Share Providers - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul>
+            <li class="active">
+              <i class="fas fa-home"></i>
+              <a href="index.html" class="nav-link">Home Share Providers</a>
+            </li>
+            <li>
+              <i class="fas fa-users"></i>
+              <a href="individuals.html" class="nav-link">Individuals</a>
+            </li>
+            <li>
+              <i class="fas fa-file-contract"></i>
+              <a href="contracts.html" class="nav-link">Contracts</a>
+            </li>
+            <li><i class="fas fa-chart-bar"></i> Analytics</li>
+            <li><i class="fas fa-cog"></i> Settings</li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search">
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-info">
+            <span class="notifications"><i class="fas fa-bell"></i></span>
+            <span class="profile">Admin User</span>
+          </div>
+        </header>
+
+        <section class="users-section">
+          <div class="section-header">
+            <h2>Users List</h2>
+            <button class="add-user-btn">+ Add User</button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Last Active</th>
+                  <th>CRC Check</th>
+                  <th>Reference Check</th>
+                  <th>Home Study Recommendation</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Sarah+Wilson"
+                      alt="SW"
+                      class="user-avatar"
+                    />
+                    <span>Sarah Wilson</span>
+                  </td>
+                  <td>sarah.wilson@example.com</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option
+                          value="approved"
+                          data-icon="fa-check-circle"
+                          selected
+                        >
+                          Approved
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>2 minutes ago</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="1-crc">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file1-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">crc_check.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="1-ref">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file1-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference1.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference2.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="1"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference3.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="2"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="1">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file1" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">home_study.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="actions">
+                      <button class="btn-edit">Edit</button>
+                      <button class="btn-delete">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Michael+Chen"
+                      alt="MC"
+                      class="user-avatar"
+                    />
+                    <span>Michael Chen</span>
+                  </td>
+                  <td>michael.chen@example.com</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option
+                          value="approved"
+                          data-icon="fa-check-circle"
+                          selected
+                        >
+                          Approved
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>5 minutes ago</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="2-crc">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file2-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">crc_check.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="2-ref">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file2-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference1.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference2.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="1"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference3.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="2"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="2">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file2" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">home_study.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="actions">
+                      <button class="btn-edit">Edit</button>
+                      <button class="btn-delete">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="applications-section">
+          <div class="section-header">
+            <h2>Ongoing Applications</h2>
+            <button class="add-user-btn">+ Add Application</button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Application Progress</th>
+                  <th>Status</th>
+                  <th>CRC Check</th>
+                  <th>Reference Check</th>
+                  <th>Home Study Recommendation</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=John+Smith"
+                      alt="JS"
+                      class="user-avatar"
+                    />
+                    <a href="user-profile.html" class="user-link"
+                      ><span>John Smith</span></a
+                    >
+                  </td>
+                  <td>john.smith@example.com</td>
+                  <td>
+                    <div class="progress-container">
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                      </div>
+                      <span class="progress-text">75% Complete</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="disabled" data-icon="fa-ban" selected>
+                          Disabled
+                        </option>
+                        <option value="approved" data-icon="fa-check-circle">
+                          Approved
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="6-crc">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file6-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file6-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div
+                      class="file-upload multiple"
+                      data-user-id="6-ref"
+                      style="width: 200px"
+                    >
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file6-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file6-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div
+                        class="uploaded-files hidden"
+                        style="max-width: 200px"
+                      >
+                        <div
+                          class="add-more-files"
+                          style="position: absolute; top: -30px; right: 0"
+                        >
+                          <button
+                            class="btn-add-file"
+                            style="padding: 2px 8px; font-size: 12px"
+                          >
+                            <i class="fas fa-plus"></i> Add More
+                          </button>
+                        </div>
+                        <!-- Files will be listed here -->
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="6">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file6"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file6" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="actions">
+                      <button class="btn-edit">Edit</button>
+                      <button class="btn-delete">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Emily+Davis"
+                      alt="ED"
+                      class="user-avatar"
+                    />
+                    <span>Emily Davis</span>
+                  </td>
+                  <td>emily.davis@example.com</td>
+                  <td>
+                    <div class="progress-container">
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                      </div>
+                      <span class="progress-text">75% Complete</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="disabled" data-icon="fa-ban" selected>
+                          Disabled
+                        </option>
+                        <option value="approved" data-icon="fa-check-circle">
+                          Approved
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="7-crc">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file7-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file7-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div
+                      class="file-upload multiple"
+                      data-user-id="7-ref"
+                      style="width: 200px"
+                    >
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file7-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file7-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div
+                        class="uploaded-files hidden"
+                        style="max-width: 200px"
+                      >
+                        <div
+                          class="add-more-files"
+                          style="position: absolute; top: -30px; right: 0"
+                        >
+                          <button
+                            class="btn-add-file"
+                            style="padding: 2px 8px; font-size: 12px"
+                          >
+                            <i class="fas fa-plus"></i> Add More
+                          </button>
+                        </div>
+                        <!-- Files will be listed here -->
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="7">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file7"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file7" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="actions">
+                      <button class="btn-edit">Edit</button>
+                      <button class="btn-delete">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Decline Reason Modal -->
+    <div id="declineModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Decline Application</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="declineReason"
+            >Please provide a reason for declining this application:</label
+          >
+          <textarea
+            id="declineReason"
+            rows="4"
+            placeholder="Enter the reason for declining..."
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Approval Confirmation Modal -->
+    <div id="approvalModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Approve Application</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to approve this application?</p>
+          <p>An email will be sent to notify the Home Share Provider.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Confirm Approval</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Standard single file uploads
+        document
+          .querySelectorAll(".file-upload:not(.multiple)")
+          .forEach((uploadContainer) => {
+            initializeSingleFileUpload(uploadContainer);
+          });
+
+        // Multiple file uploads
+        document
+          .querySelectorAll(".file-upload.multiple")
+          .forEach((uploadContainer) => {
+            initializeMultipleFileUpload(uploadContainer);
+          });
+
+        // Function for single file uploads
+        function initializeSingleFileUpload(uploadContainer) {
+          const fileInput = uploadContainer.querySelector(".file-input");
+          const initialState = uploadContainer.querySelector(
+            ".upload-state.initial"
+          );
+          const uploadedState = uploadContainer.querySelector(
+            ".upload-state.uploaded"
+          );
+          const progressState =
+            uploadContainer.querySelector(".upload-progress");
+          const fileName = uploadContainer.querySelector(".file-name");
+          const progressBar = uploadContainer.querySelector(".progress-fill");
+          const progressText = uploadContainer.querySelector(".progress-text");
+          const updateBtn = uploadContainer.querySelector(".btn-update");
+          const downloadBtn = uploadContainer.querySelector(".btn-download");
+
+          let uploadedFile = null;
+
+          function showProgress() {
+            initialState.classList.add("hidden");
+            uploadedState.classList.add("hidden");
+            progressState.classList.remove("hidden");
+          }
+
+          function updateProgress(percent) {
+            progressBar.style.width = `${percent}%`;
+            progressText.textContent = `Uploading... ${percent}%`;
+          }
+
+          function showUploadedState(file) {
+            initialState.classList.add("hidden");
+            progressState.classList.add("hidden");
+            uploadedState.classList.remove("hidden");
+            fileName.textContent = file.name;
+            uploadedFile = file;
+          }
+
+          function simulateUpload(file) {
+            showProgress();
+            let progress = 0;
+            const interval = setInterval(() => {
+              progress += 10;
+              updateProgress(progress);
+              if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => showUploadedState(file), 500);
+              }
+            }, 200);
+          }
+
+          fileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              simulateUpload(file);
+            }
+          });
+
+          if (updateBtn) {
+            updateBtn.addEventListener("click", () => {
+              fileInput.click();
+            });
+          }
+
+          if (downloadBtn) {
+            downloadBtn.addEventListener("click", () => {
+              if (uploadedFile) {
+                // Create a temporary URL for the file
+                const url = URL.createObjectURL(uploadedFile);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = uploadedFile.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              }
+            });
+          }
+        }
+
+        // Function for multiple file uploads
+        function initializeMultipleFileUpload(uploadContainer) {
+          const fileInput = uploadContainer.querySelector(".file-input");
+          const initialState = uploadContainer.querySelector(
+            ".upload-state.initial"
+          );
+          const uploadedFiles =
+            uploadContainer.querySelector(".uploaded-files");
+          const progressState =
+            uploadContainer.querySelector(".upload-progress");
+          const progressBar = progressState.querySelector(".progress-fill");
+          const progressText = progressState.querySelector(".progress-text");
+
+          // Simple array to store uploaded files
+          let files = [];
+
+          // Handle file input change
+          fileInput.addEventListener("change", function (e) {
+            if (this.files.length > 0) {
+              // Show progress while "uploading"
+              initialState.classList.add("hidden");
+              uploadedFiles.classList.add("hidden");
+              progressState.classList.remove("hidden");
+
+              // Simulate upload progress
+              let progress = 0;
+              const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + "%";
+                progressText.textContent = `Uploading... ${progress}%`;
+
+                if (progress >= 100) {
+                  clearInterval(interval);
+                  setTimeout(() => {
+                    // Add new files to array
+                    Array.from(this.files).forEach((file) => {
+                      files.push(file);
+                    });
+
+                    // Show uploaded files
+                    displayFiles();
+
+                    // Reset file input to allow selecting the same file again
+                    fileInput.value = "";
+                  }, 500);
+                }
+              }, 200);
+            }
+          });
+
+          // Function to display files
+          function displayFiles() {
+            // Hide progress and initial state
+            progressState.classList.add("hidden");
+            initialState.classList.add("hidden");
+
+            // Clear the files container
+            uploadedFiles.innerHTML = "";
+
+            // Create "Add More Files" button at the top
+            const addMoreButton = document.createElement("button");
+            addMoreButton.className = "btn-add-file";
+            addMoreButton.innerHTML =
+              '<i class="fas fa-plus"></i> Add More Files';
+            addMoreButton.onclick = function () {
+              fileInput.click();
+            };
+
+            const addButtonContainer = document.createElement("div");
+            addButtonContainer.className = "add-more-files";
+            addButtonContainer.appendChild(addMoreButton);
+            uploadedFiles.appendChild(addButtonContainer);
+
+            // Add each file
+            files.forEach((file, index) => {
+              const fileItem = document.createElement("div");
+              fileItem.className = "file-item";
+              fileItem.innerHTML = `
+                <div class="file-info">
+                  <i class="fas fa-file-alt"></i>
+                  <span class="file-name">${file.name}</span>
+                </div>
+                <div class="file-actions">
+                  <button class="btn-download" title="Download"><i class="fas fa-download"></i></button>
+                  <button class="btn-delete" title="Delete" data-index="${index}"><i class="fas fa-trash"></i></button>
+                </div>
+              `;
+
+              // Add download functionality
+              fileItem
+                .querySelector(".btn-download")
+                .addEventListener("click", function () {
+                  const url = URL.createObjectURL(file);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = file.name;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                });
+
+              // Add delete functionality
+              fileItem
+                .querySelector(".btn-delete")
+                .addEventListener("click", function () {
+                  files.splice(index, 1);
+
+                  if (files.length === 0) {
+                    // Show initial upload state if no files
+                    uploadedFiles.classList.add("hidden");
+                    initialState.classList.remove("hidden");
+                  } else {
+                    // Refresh the file list
+                    displayFiles();
+                  }
+                });
+
+              uploadedFiles.appendChild(fileItem);
+            });
+
+            // Show files container if we have files
+            if (files.length > 0) {
+              uploadedFiles.classList.remove("hidden");
+            } else {
+              uploadedFiles.classList.add("hidden");
+              initialState.classList.remove("hidden");
+            }
+          }
+        }
+
+        // Status dropdown functionality
+        const statusSelects = document.querySelectorAll(".status-select");
+
+        statusSelects.forEach((select) => {
+          // Set initial status
+          updateSelectStatus(select);
+
+          select.addEventListener("change", function () {
+            const isApplicationSection = this.closest(".applications-section");
+            const row = this.closest("tr");
+            const userEmail = row.querySelector("td:nth-child(2)").textContent;
+            const userName = row.querySelector(".user-cell span").textContent;
+
+            if (this.value === "declined") {
+              showDeclineModal(this, userEmail, userName);
+            } else if (this.value === "approved") {
+              showApprovalModal(
+                this,
+                userEmail,
+                userName,
+                isApplicationSection
+              );
+            }
+
+            updateSelectStatus(this);
+          });
+        });
+
+        function showDeclineModal(select, email, name) {
+          const modal = document.getElementById("declineModal");
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+          const reasonTextarea = modal.querySelector("#declineReason");
+
+          modal.dataset.selectElement = select;
+          modal.classList.remove("hidden");
+          reasonTextarea.value = "";
+
+          const closeModal = () => {
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            const reason = reasonTextarea.value.trim();
+            if (!reason) {
+              showToast("Please provide a reason for declining", "error");
+              return;
+            }
+            sendDeclineEmail(email, name, reason);
+            modal.classList.add("hidden");
+            showToast("Application declined and email sent", "success");
+          };
+        }
+
+        function showApprovalModal(select, email, name, isApplicationSection) {
+          const modal = document.getElementById("approvalModal");
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+
+          modal.classList.remove("hidden");
+
+          const closeModal = () => {
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            modal.classList.add("hidden");
+            if (isApplicationSection) {
+              moveToUsersList(select.closest("tr"));
+            }
+            sendApprovalEmail(email, name);
+            showToast("Application approved and email sent", "success");
+          };
+        }
+
+        function moveToUsersList(row) {
+          const usersList = document.querySelector(
+            ".users-section .users-table tbody"
+          );
+          const newUserRow = createUserRowFromApplication(row);
+          usersList.insertBefore(newUserRow, usersList.firstChild);
+          row.remove();
+        }
+
+        function createUserRowFromApplication(applicationRow) {
+          const newUserRow = document.createElement("tr");
+
+          // Copy user cell (name and avatar)
+          newUserRow.appendChild(
+            applicationRow.querySelector(".user-cell").cloneNode(true)
+          );
+
+          // Copy email cell
+          newUserRow.appendChild(
+            applicationRow.querySelector("td:nth-child(2)").cloneNode(true)
+          );
+
+          // Add status cell with approved status
+          const statusCell = document.createElement("td");
+          statusCell.innerHTML = `
+            <div class="status-dropdown">
+              <select class="status-select">
+                <option value="approved" data-icon="fa-check-circle" selected>Approved</option>
+                <option value="disabled" data-icon="fa-ban">Disabled</option>
+                <option value="declined" data-icon="fa-times-circle">Declined</option>
+              </select>
+              <div class="select-icon">
+                <i class="fas fa-chevron-down"></i>
+              </div>
+            </div>
+          `;
+          const statusSelect = statusCell.querySelector(".status-select");
+          statusSelect.value = "approved";
+          updateSelectStatus(statusSelect);
+          newUserRow.appendChild(statusCell);
+
+          // Add "Last Active" cell
+          const lastActiveCell = document.createElement("td");
+          lastActiveCell.textContent = "Just now";
+          newUserRow.appendChild(lastActiveCell);
+
+          // Copy CRC Check cell
+          newUserRow.appendChild(
+            applicationRow.querySelector("td:nth-child(5)").cloneNode(true)
+          );
+
+          // Copy Reference Check cell
+          newUserRow.appendChild(
+            applicationRow.querySelector("td:nth-child(6)").cloneNode(true)
+          );
+
+          // Copy Home Study Recommendation cell
+          newUserRow.appendChild(
+            applicationRow.querySelector("td:nth-child(7)").cloneNode(true)
+          );
+
+          // Copy actions cell
+          newUserRow.appendChild(
+            applicationRow.querySelector(".actions-cell").cloneNode(true)
+          );
+
+          // Initialize file upload functionality for the new row
+          newUserRow
+            .querySelectorAll(".file-upload")
+            .forEach((uploadContainer) => {
+              if (uploadContainer.classList.contains("multiple")) {
+                initializeMultipleFileUpload(uploadContainer);
+              } else {
+                initializeSingleFileUpload(uploadContainer);
+              }
+            });
+
+          return newUserRow;
+        }
+
+        function sendApprovalEmail(email, name) {
+          console.log("Sending approval email to:", email);
+          console.log("User:", name);
+          // In a real application, this would make an API call to send the email
+        }
+
+        function updateSelectStatus(select) {
+          const selectedOption = select.options[select.selectedIndex];
+          const status = selectedOption.value;
+
+          // Update select appearance
+          select.dataset.status = status;
+
+          // Update icon color based on status
+          const iconContainer =
+            select.parentElement.querySelector(".select-icon");
+
+          // Reset classes
+          iconContainer.classList.remove(
+            "text-gray-400",
+            "text-green-500",
+            "text-red-500"
+          );
+
+          // Add appropriate color class
+          switch (status) {
+            case "approved":
+              iconContainer.style.color = "var(--success-color)";
+              break;
+            case "declined":
+              iconContainer.style.color = "var(--danger-color)";
+              break;
+            default:
+              iconContainer.style.color = "var(--text-secondary)";
+          }
+        }
+
+        // Function to show toast notifications
+        function showToast(message, type = "success") {
+          const toast = document.createElement("div");
+          toast.className = `toast ${type}`;
+          toast.innerHTML = `
+            <i class="fas ${
+              type === "success" ? "fa-check-circle" : "fa-exclamation-circle"
+            }"></i>
+            <span>${message}</span>
+          `;
+          document.body.appendChild(toast);
+
+          // Remove toast after 3 seconds
+          setTimeout(() => {
+            toast.style.animation = "slideOut 0.3s ease-out forwards";
+            setTimeout(() => toast.remove(), 300);
+          }, 3000);
+        }
+
+        // Function to simulate sending decline email
+        function sendDeclineEmail(email, name, reason) {
+          console.log("Sending decline email to:", email);
+          console.log("User:", name);
+          console.log("Reason:", reason);
+          // In a real application, this would make an API call to your backend
+          // to send the actual email
+        }
+      });
+    </script>
+  </body>
+</html>
