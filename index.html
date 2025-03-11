@@ -90,18 +90,20 @@
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
-                        <option
-                          value="approved"
-                          data-icon="fa-check-circle"
-                          selected
-                        >
+                        <option value="approved" data-icon="fa-check-circle">
                           Approved
+                        </option>
+                        <option value="in-progress" data-icon="fa-clock">
+                          In Progress
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
                         </option>
                         <option value="disabled" data-icon="fa-ban">
                           Disabled
-                        </option>
-                        <option value="declined" data-icon="fa-times-circle">
-                          Declined
                         </option>
                       </select>
                       <div class="select-icon">
@@ -268,7 +270,6 @@
                   </td>
                   <td class="actions-cell">
                     <div class="actions">
-                      <button class="btn-edit">Edit</button>
                       <button class="btn-delete">Delete</button>
                     </div>
                   </td>
@@ -288,18 +289,20 @@
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
-                        <option
-                          value="approved"
-                          data-icon="fa-check-circle"
-                          selected
-                        >
+                        <option value="approved" data-icon="fa-check-circle">
                           Approved
+                        </option>
+                        <option value="in-progress" data-icon="fa-clock">
+                          In Progress
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
                         </option>
                         <option value="disabled" data-icon="fa-ban">
                           Disabled
-                        </option>
-                        <option value="declined" data-icon="fa-times-circle">
-                          Declined
                         </option>
                       </select>
                       <div class="select-icon">
@@ -466,7 +469,6 @@
                   </td>
                   <td class="actions-cell">
                     <div class="actions">
-                      <button class="btn-edit">Edit</button>
                       <button class="btn-delete">Delete</button>
                     </div>
                   </td>
@@ -652,7 +654,6 @@
                   </td>
                   <td class="actions-cell">
                     <div class="actions">
-                      <button class="btn-edit">Edit</button>
                       <button class="btn-delete">Delete</button>
                     </div>
                   </td>
@@ -813,7 +814,6 @@
                   </td>
                   <td class="actions-cell">
                     <div class="actions">
-                      <button class="btn-edit">Edit</button>
                       <button class="btn-delete">Delete</button>
                     </div>
                   </td>
@@ -1209,9 +1209,10 @@
           statusCell.innerHTML = `
             <div class="status-dropdown">
               <select class="status-select">
-                <option value="approved" data-icon="fa-check-circle" selected>Approved</option>
+                <option value="approved" data-icon="fa-check-circle">Approved</option>
+                <option value="in-progress" data-icon="fa-clock">In Progress</option>
+                <option value="in-contract" data-icon="fa-file-contract">In Contract</option>
                 <option value="disabled" data-icon="fa-ban">Disabled</option>
-                <option value="declined" data-icon="fa-times-circle">Declined</option>
               </select>
               <div class="select-icon">
                 <i class="fas fa-chevron-down"></i>
