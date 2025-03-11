@@ -433,6 +433,38 @@
         border-radius: 8px;
         padding: 1rem;
       }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+      }
+
+      .section-header h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #111827;
+      }
+
+      .edit-button {
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        color: #374151;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .edit-button:hover {
+        background: #e5e7eb;
+      }
     </style>
   </head>
   <body>
@@ -505,7 +537,12 @@
           <!-- Profile Information -->
           <div class="tab-content active" id="profile-tab">
             <div class="profile-section">
-              <h2>Basic Information</h2>
+              <div class="section-header">
+                <h2>Basic Information</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
               <div class="info-grid">
                 <div class="info-item">
                   <label>Email</label>
@@ -547,7 +584,12 @@
             </div>
 
             <div class="profile-section">
-              <h2>Specific Information</h2>
+              <div class="section-header">
+                <h2>Specific Information</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
               <div class="info-grid">
                 <div class="info-item">
                   <label>Looking to Move In</label>
@@ -627,7 +669,12 @@
           <!-- HomeShare Custom Fields -->
           <div class="tab-content" id="custom-tab">
             <div class="profile-section">
-              <h2>Basic Support Information</h2>
+              <div class="section-header">
+                <h2>Basic Support Information</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
               <div class="info-grid">
                 <div class="info-item">
                   <label>GSA Level</label>
@@ -661,7 +708,12 @@
             </div>
 
             <div class="profile-section">
-              <h2>Support Network</h2>
+              <div class="section-header">
+                <h2>Support Network</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
               <div class="support-contact-grid">
                 <div class="support-contact">
                   <h4>Primary Contact</h4>
@@ -738,7 +790,12 @@
             </div>
 
             <div class="profile-section">
-              <h2>Health & Support Needs</h2>
+              <div class="section-header">
+                <h2>Health & Support Needs</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
               <div class="info-grid">
                 <div class="info-item full-width">
                   <label>Health Concerns</label>
@@ -816,7 +873,12 @@
             </div>
 
             <div class="profile-section">
-              <h2>Personal Information & Preferences</h2>
+              <div class="section-header">
+                <h2>Personal Information & Preferences</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
               <div class="info-grid">
                 <div class="info-item">
                   <label>Awareness of Adult Rights</label>
@@ -900,7 +962,12 @@
           <!-- File Uploads -->
           <div class="tab-content" id="documents-tab">
             <div class="profile-section">
-              <h2>Required Documents</h2>
+              <div class="section-header">
+                <h2>Required Documents</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
               <p class="section-description">
                 Access Resources requires current and up to date information to
                 best support all service recipients.
@@ -922,7 +989,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -942,7 +1009,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -962,7 +1029,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -982,7 +1049,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -1000,7 +1067,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -1018,7 +1085,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -1036,7 +1103,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -1054,7 +1121,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
@@ -1072,7 +1139,7 @@
                         <i class="fas fa-download"></i> Download
                       </button>
                       <button class="action-btn">
-                        <i class="fas fa-history"></i> View History
+                        <i class="fas fa-upload"></i> Update File
                       </button>
                     </div>
                   </div>
