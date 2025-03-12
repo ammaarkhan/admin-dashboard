@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      /* Top Navigation */
+      .top-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        background: white;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .logo {
+        font-weight: 600;
+        color: #1e293b;
+        text-decoration: none;
+      }
+
+      .search-container {
+        position: relative;
+      }
+
+      .search-input {
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        width: 300px;
+        font-size: 0.875rem;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-gray);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .favorites-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 6px;
+      }
+
+      .user-profile:hover {
+        background: #f1f5f9;
+      }
+
+      .profile-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e2e8f0;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: calc(100vh - 64px);
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--sidebar-bg);
+        padding: 2rem;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-gray);
+        padding: 12px;
+        margin-bottom: 4px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 2rem;
+      }
+
+      .section-header {
+        margin-bottom: 2rem;
+      }
+
+      .section-header h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-header p {
+        color: var(--text-gray);
+        font-size: 1.125rem;
+      }
+
+      /* Listing Cards */
+      .listings-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+
+      .listing-card {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--border);
+      }
+
+      .listing-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .listing-content {
+        padding: 1.5rem;
+      }
+
+      .listing-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+
+      .listing-location {
+        color: var(--text-gray);
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+      }
+
+      .listing-features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        font-size: 0.875rem;
+      }
+
+      .listing-price {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--primary);
+        margin-bottom: 1rem;
+      }
+
+      .listing-actions {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .action-button {
+        flex: 1;
+        padding: 0.75rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .primary-button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+      }
+
+      .secondary-button {
+        background-color: white;
+        color: var(--text-gray);
+        border: 1px solid var(--border);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-gray);
+      }
+
+      .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #e2e8f0;
+      }
+
+      .empty-state-text {
+        font-size: 1.125rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .empty-state-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      /* New styles for Search HSP button */
+      .search-hsp-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      /* Dropdown styles */
+      .user-dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: white;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border);
+        min-width: 200px;
+        display: none;
+      }
+
+      .dropdown-menu.active {
+        display: block;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .dropdown-item:hover {
+        background: #f8fafc;
+      }
+
+      /* Update layout without sidebar */
+      .main-container {
+        min-height: calc(100vh - 64px);
+        background: #f8fafc;
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-left">
+        <a href="#" class="logo">Happipad</a>
+        <div class="search-container">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" placeholder="Search HSP" class="search-input" />
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-actions">
+          <a href="#" class="search-hsp-button">
+            <i class="fas fa-search"></i>
+            Search HSP
+          </a>
+          <a href="individual-user-favorites.html" class="favorites-link">
+            <i class="fas fa-heart"></i>
+            <span>Favorited</span>
+          </a>
+        </div>
+        <div class="user-dropdown">
+          <div class="user-profile">
+            <div class="profile-image"></div>
+            <span>John</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="individual-user-dashboard.html" class="dropdown-item">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main-container">
+      <div class="section-header">
+        <h1>Favorited Listings</h1>
+        <p>Your saved home share opportunities</p>
+      </div>
+
+      <div class="listings-grid">
+        <!-- Sample Listing Card -->
+        <div class="listing-card">
+          <img
+            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop"
+            alt="Room with bed and desk"
+            class="listing-image"
+          />
+          <div class="listing-content">
+            <h3 class="listing-title">Cozy Private Room in Corktown</h3>
+            <div class="listing-location">
+              <i class="fas fa-map-marker-alt"></i>
+              Vancouver, BC
+            </div>
+            <div class="listing-features">
+              <div class="feature-item">
+                <i class="fas fa-home"></i>
+                Private Room
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-bath"></i>
+                Shared Bath
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-calendar"></i>
+                Available Now
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-clock"></i>
+                Long Term
+              </div>
+            </div>
+            <div class="listing-price">$900/month</div>
+            <div class="listing-actions">
+              <a href="#" class="action-button secondary-button"> Remove </a>
+              <a href="#" class="action-button primary-button">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sample Listing Card -->
+        <div class="listing-card">
+          <img
+            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=2158&auto=format&fit=crop"
+            alt="Room with bed and desk"
+            class="listing-image"
+          />
+          <div class="listing-content">
+            <h3 class="listing-title">Spacious Room in Mount Pleasant</h3>
+            <div class="listing-location">
+              <i class="fas fa-map-marker-alt"></i>
+              Vancouver, BC
+            </div>
+            <div class="listing-features">
+              <div class="feature-item">
+                <i class="fas fa-home"></i>
+                Private Room
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-bath"></i>
+                Private Bath
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-calendar"></i>
+                Mar 1, 2024
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-clock"></i>
+                Long Term
+              </div>
+            </div>
+            <div class="listing-price">$1,100/month</div>
+            <div class="listing-actions">
+              <a href="#" class="action-button secondary-button"> Remove </a>
+              <a href="#" class="action-button primary-button">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State (hidden by default) -->
+      <div class="empty-state" style="display: none">
+        <i class="fas fa-heart empty-state-icon"></i>
+        <p class="empty-state-text">You haven't saved any listings yet</p>
+        <a href="#" class="empty-state-action">
+          Start Browsing <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle dropdown toggle
+        const userProfile = document.querySelector(".user-profile");
+        const dropdownMenu = document.querySelector(".dropdown-menu");
+
+        userProfile.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdownMenu.classList.toggle("active");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", () => {
+          dropdownMenu.classList.remove("active");
+        });
+
+        // Handle remove and view actions
+        document.querySelectorAll(".action-button").forEach((button) => {
+          button.addEventListener("click", (e) => {
+            e.preventDefault();
+            alert("This feature is coming soon!");
+          });
+        });
+
+        // Handle Search HSP button click
+        document
+          .querySelector(".search-hsp-button")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            alert("Search HSP feature coming soon!");
+          });
+      });
+    </script>
+  </body>
+</html>

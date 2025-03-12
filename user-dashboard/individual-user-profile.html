@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      /* Top Navigation */
+      .top-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        background: white;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .logo {
+        font-weight: 600;
+        color: #1e293b;
+        text-decoration: none;
+      }
+
+      .search-container {
+        position: relative;
+      }
+
+      .search-input {
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        width: 300px;
+        font-size: 0.875rem;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-gray);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .favorites-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 6px;
+      }
+
+      .user-profile:hover {
+        background: #f1f5f9;
+      }
+
+      .profile-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e2e8f0;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: calc(100vh - 64px);
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--sidebar-bg);
+        padding: 2rem;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-gray);
+        padding: 12px;
+        margin-bottom: 4px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 2rem;
+      }
+
+      /* Profile Header */
+      .profile-header {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-info h1 {
+        font-size: 1.5rem;
+        color: #1e293b;
+        margin-bottom: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .verified-badge {
+        color: var(--primary);
+        font-size: 1rem;
+      }
+
+      .email-verified {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        font-size: 0.875rem;
+      }
+
+      .email-verified i {
+        color: var(--success);
+      }
+
+      /* Profile Content */
+      .profile-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .section-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      .edit-button {
+        color: var(--primary);
+        background: none;
+        border: none;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .section-content {
+        padding: 1.5rem;
+      }
+
+      .info-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .info-label {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .info-value {
+        color: #1e293b;
+      }
+
+      @media (min-width: 640px) {
+        .info-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .info-item.full-width {
+          grid-column: span 2;
+        }
+      }
+
+      /* Add Search HSP button styles */
+      .search-hsp-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      /* Add dropdown styles */
+      .user-dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: white;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border);
+        min-width: 200px;
+        display: none;
+      }
+
+      .dropdown-menu.active {
+        display: block;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .dropdown-item:hover {
+        background: #f8fafc;
+      }
+
+      /* Document Status Styles */
+      .document-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0.5rem 0;
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .status-icon {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      .status-valid {
+        background-color: var(--success);
+      }
+
+      .status-expired {
+        background-color: var(--danger);
+      }
+
+      .document-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .action-link {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .action-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-left">
+        <a href="#" class="logo">Happipad</a>
+        <div class="search-container">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" placeholder="Search HSP" class="search-input" />
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-actions">
+          <a href="#" class="search-hsp-button">
+            <i class="fas fa-search"></i>
+            Search HSP
+          </a>
+          <a href="individual-user-favorites.html" class="favorites-link">
+            <i class="fas fa-heart"></i>
+            <span>Favorited</span>
+          </a>
+        </div>
+        <div class="user-dropdown">
+          <div class="user-profile">
+            <div class="profile-image"></div>
+            <span>John</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="individual-user-dashboard.html" class="dropdown-item">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="dashboard">
+      <aside class="sidebar">
+        <nav>
+          <ul class="nav-menu">
+            <li>
+              <a href="individual-user-dashboard.html" class="nav-item">
+                <span><i class="fas fa-home"></i></span>
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="individual-user-profile.html" class="nav-item active">
+                <span><i class="fas fa-user"></i></span>
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="individual-user-contracts.html" class="nav-item">
+                <span><i class="fas fa-file-contract"></i></span>
+                My Stay
+              </a>
+            </li>
+            <li>
+              <a href="individual-user-settings.html" class="nav-item">
+                <span><i class="fas fa-cog"></i></span>
+                Settings
+              </a>
+            </li>
+          </ul>
+          <div
+            style="
+              margin-top: 2rem;
+              padding-top: 1.5rem;
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
+            "
+          >
+            <a href="individual-user-support.html" class="nav-item">
+              <span><i class="fas fa-headset"></i></span>
+              Support
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="profile-header">
+          <div class="profile-avatar"></div>
+          <div class="profile-info">
+            <h1>
+              John, 28
+              <i class="fas fa-check-circle verified-badge"></i>
+            </h1>
+            <div class="email-verified">
+              <i class="fas fa-check-circle"></i>
+              Email verified
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-content">
+          <!-- Profile Basic -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Profile Basic</h2>
+              <button class="edit-button">
+                <i class="fas fa-edit"></i>
+                Edit
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-label">First Name</div>
+                  <div class="info-value">John</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Last Name</div>
+                  <div class="info-value">Smith</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Email</div>
+                  <div class="info-value">john.smith@email.com</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Phone</div>
+                  <div class="info-value">+1 (604) 555-0123</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Date of Birth</div>
+                  <div class="info-value">April 15, 1990</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Preferred Contact Method</div>
+                  <div class="info-value">Email</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Postal Code</div>
+                  <div class="info-value">V6B 1A1</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Province</div>
+                  <div class="info-value">British Columbia</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Password</div>
+                  <div class="info-value">••••••••••</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Terms Agreement</div>
+                  <div class="info-value">
+                    Agreed to Privacy Policy and Terms of Use on Jan 1, 2024
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Specific -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Profile Specific</h2>
+              <button class="edit-button">
+                <i class="fas fa-edit"></i>
+                Edit
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-label">Looking to Move In</div>
+                  <div class="info-value">Kelowna, BC</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Move-in Timeline</div>
+                  <div class="info-value">June 2024</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Stay Duration</div>
+                  <div class="info-value">1 year minimum</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Gender</div>
+                  <div class="info-value">Male</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Host Gender Preference</div>
+                  <div class="info-value">No preference</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Employment Status</div>
+                  <div class="info-value">Part-time employed</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Languages</div>
+                  <div class="info-value">English (Native), French (Basic)</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Pets</div>
+                  <div class="info-value">
+                    Yes - Cat (Maine Coon)<br />
+                    Pet photos uploaded: 2 files
+                  </div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Hobbies & Interests</div>
+                  <div class="info-value">
+                    Reading, music, cooking, board games, nature walks
+                  </div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">About Me</div>
+                  <div class="info-value">
+                    I'm a friendly and quiet individual looking for a supportive
+                    home share environment. I enjoy spending time with my cat
+                    and pursuing creative hobbies. I'm organized, respectful of
+                    others' space, and appreciate clear communication. I'm
+                    excited about the opportunity to be part of a welcoming
+                    household while maintaining my independence.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HomeShare Preferences -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">HomeShare Preferences</h2>
+              <button class="edit-button">
+                <i class="fas fa-edit"></i>
+                Edit
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <!-- Basic Information -->
+                <div class="info-item">
+                  <div class="info-label">GSA Level</div>
+                  <div class="info-value">Level 3</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">CLBC Facilitator</div>
+                  <div class="info-value">Sarah Johnson</div>
+                </div>
+                <div class="info-item full-width">
+                  <div class="info-label">Reason for Moving</div>
+                  <div class="info-value">
+                    Seeking more independence and community integration
+                  </div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">PWD Status</div>
+                  <div class="info-value">Yes - Approved</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">RDSP Status</div>
+                  <div class="info-value">Yes - Active</div>
+                </div>
+
+                <!-- Financial Support -->
+                <div class="info-item">
+                  <div class="info-label">Financial Assistance</div>
+                  <div class="info-value">Public Trustee Office</div>
+                </div>
+                <div class="info-item">
+                  <div class="info-label">Tax Assistance</div>
+                  <div class="info-value">H&R Block Tax Services</div>
+                </div>
+
+                <!-- Support Network -->
+                <div class="info-item">
+                  <div class="info-label">Primary Contact</div>
+                  <div class="info-value">
+                    Name: Michael Smith<br />
+                    Relationship: Father<br />
+                    Phone: (604) 555-0234
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Day Supports</div>
+                  <div class="info-value">
+                    Name: Emily Wilson<br />
+                    Role: Support Worker<br />
+                    Phone: (604) 555-0235
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Family Contact</div>
+                  <div class="info-value">
+                    Name: Lisa Smith<br />
+                    Relationship: Mother<br />
+                    Phone: (604) 555-0236
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Other Support Network Members</div>
+                  <div class="info-value">
+                    Name: David Chen<br />
+                    Role: Community Support Worker<br />
+                    Phone: (604) 555-0237
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Physician Information</div>
+                  <div class="info-value">
+                    Name: Dr. James Wilson<br />
+                    Role: Family Doctor<br />
+                    Phone: (604) 555-0238
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Other Professional Support</div>
+                  <div class="info-value">
+                    Name: Dr. Amanda Lee<br />
+                    Role: Behavioral Consultant<br />
+                    Phone: (604) 555-0239
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Legal Representative</div>
+                  <div class="info-value">
+                    Name: Robert Thompson<br />
+                    Phone: (604) 555-0240<br />
+                    Email: r.thompson@legalaid.ca
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Emergency Contact</div>
+                  <div class="info-value">
+                    Name: Michael Smith<br />
+                    Relationship: Father<br />
+                    Phone: (604) 555-0234
+                  </div>
+                </div>
+
+                <!-- Health Information -->
+                <div class="info-item full-width">
+                  <div class="info-label">Health Concerns</div>
+                  <div class="info-value">
+                    Allergies: Peanuts, shellfish<br />
+                    Other: Seasonal asthma
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Overall Health Status</div>
+                  <div class="info-value">
+                    Mental: Good, regular counseling support<br />
+                    Spiritual: Attends weekly meditation group<br />
+                    Physical: Active, daily walks and swimming
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Special Diet Requirements</div>
+                  <div class="info-value">Gluten-free diet</div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Medications</div>
+                  <div class="info-value">
+                    1. Ventolin - 2 puffs - As needed<br />
+                    2. Vitamin D - 1000 IU - Daily<br />
+                    3. Omega-3 - 1000mg - Daily
+                  </div>
+                </div>
+
+                <!-- Support Needs -->
+                <div class="info-item full-width">
+                  <div class="info-label">Physical Health Needs</div>
+                  <div class="info-value">
+                    Assistance with medication management and medical
+                    appointments
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Mental Health Needs</div>
+                  <div class="info-value">
+                    Weekly counseling sessions, anxiety management support
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Behavioral Support Needs</div>
+                  <div class="info-value">
+                    Assistance with stress management and social interactions
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Communication Needs</div>
+                  <div class="info-value">
+                    Clear, direct communication preferred. Visual aids helpful
+                    for complex instructions
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Transportation Needs</div>
+                  <div class="info-value">
+                    Assistance with public transit navigation, transportation to
+                    appointments
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Known Risks or Vulnerabilities</div>
+                  <div class="info-value">
+                    Anxiety in crowded spaces, needs support with financial
+                    decisions
+                  </div>
+                </div>
+
+                <!-- Rights and Independence -->
+                <div class="info-item">
+                  <div class="info-label">Rights Awareness</div>
+                  <div class="info-value">Yes - Completed rights training</div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Independent Decision Making</div>
+                  <div class="info-value">
+                    Yes, with support for major decisions
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">
+                    Support Network Contact Frequency
+                  </div>
+                  <div class="info-value">
+                    Weekly family visits, daily support worker contact
+                  </div>
+                </div>
+
+                <!-- Living Preferences -->
+                <div class="info-item full-width">
+                  <div class="info-label">Preferred Living Arrangements</div>
+                  <div class="info-value">
+                    Private bedroom, quiet environment, pet-friendly household
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Daily Routine</div>
+                  <div class="info-value">
+                    Current: Structured day with support worker visits, day
+                    program activities<br />
+                    Desired: More independence in daily activities, maintaining
+                    structured routine
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Current Home Environment</div>
+                  <div class="info-value">
+                    Living with family, private bedroom, structured environment
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">HomeShare Placement Preferences</div>
+                  <div class="info-value">
+                    Seeking supportive, patient household with clear routines
+                    and quiet environment
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Personal Belongings</div>
+                  <div class="info-value">
+                    Bedroom furniture, personal electronics, clothing, hobby
+                    materials
+                  </div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Weekly Schedule</div>
+                  <div class="info-value">
+                    Monday-Friday: Day program 9am-3pm<br />
+                    Tuesday/Thursday: Evening swimming classes<br />
+                    Weekends: Family visits and community activities
+                  </div>
+                </div>
+
+                <!-- Cultural Information -->
+                <div class="info-item">
+                  <div class="info-label">Cultural Background</div>
+                  <div class="info-value">Canadian/European</div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Religious/Spiritual Affiliation</div>
+                  <div class="info-value">Buddhist</div>
+                </div>
+
+                <div class="info-item full-width">
+                  <div class="info-label">Important Values</div>
+                  <div class="info-value">
+                    Respect, independence, community involvement, environmental
+                    consciousness
+                  </div>
+                </div>
+
+                <!-- Financial Information -->
+                <div class="info-item full-width">
+                  <div class="info-label">
+                    Current Benefits/Financial Supports
+                  </div>
+                  <div class="info-value">
+                    PWD Benefits<br />
+                    RDSP<br />
+                    BC Housing Rental Assistance<br />
+                    Medical Services Plan Coverage
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Files Uploaded -->
+          <div class="section">
+            <div class="section-header">
+              <h2 class="section-title">Files Uploaded</h2>
+              <button class="edit-button">
+                <i class="fas fa-upload"></i>
+                Upload
+              </button>
+            </div>
+            <div class="section-content">
+              <div class="info-grid">
+                <div class="info-item">
+                  <div class="info-label">Behavior Support / Safety Plan</div>
+                  <div class="info-value">
+                    Uploaded: Feb 15, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      Valid until Feb 15, 2025
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Health Care Plan</div>
+                  <div class="info-value">
+                    Uploaded: Jan 10, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      Valid until Jan 10, 2025
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Psychological Assessment</div>
+                  <div class="info-value">
+                    Uploaded: Dec 5, 2023
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      No expiry
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">IEP</div>
+                  <div class="info-value">
+                    Uploaded: Nov 20, 2023
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      Valid until Jun 30, 2024
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Legal Documents</div>
+                  <div class="info-value">
+                    Type: Power of Attorney<br />
+                    Uploaded: Jan 5, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      No expiry
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">CLBC Transition Plan / GSA</div>
+                  <div class="info-value">
+                    Uploaded: Mar 1, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      Valid until Mar 1, 2025
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">BC Care Card</div>
+                  <div class="info-value">
+                    Uploaded: Jan 15, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      No expiry
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">SIN</div>
+                  <div class="info-value">
+                    Uploaded: Jan 15, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      No expiry
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">BC ID</div>
+                  <div class="info-value">
+                    Uploaded: Jan 15, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      Valid until Jan 15, 2029
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Passport</div>
+                  <div class="info-value">
+                    Uploaded: Jan 15, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      Valid until Jan 15, 2034
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="info-item">
+                  <div class="info-label">Other - Medical History Summary</div>
+                  <div class="info-value">
+                    Uploaded: Mar 10, 2024
+                    <div class="document-status">
+                      <div class="status-icon status-valid"></div>
+                      Valid until Mar 10, 2025
+                    </div>
+                    <div class="document-actions">
+                      <a href="#" class="action-link">
+                        <i class="fas fa-download"></i> Download
+                      </a>
+                      <a href="#" class="action-link">
+                        <i class="fas fa-upload"></i> Update
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle dropdown toggle
+        const userProfile = document.querySelector(".user-profile");
+        const dropdownMenu = document.querySelector(".dropdown-menu");
+
+        userProfile.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdownMenu.classList.toggle("active");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", () => {
+          dropdownMenu.classList.remove("active");
+        });
+
+        // Handle Search HSP button click
+        document
+          .querySelector(".search-hsp-button")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            alert("Search HSP feature coming soon!");
+          });
+
+        // Handle edit buttons
+        const editButtons = document.querySelectorAll(".edit-button");
+        editButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            alert("Edit functionality coming soon!");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

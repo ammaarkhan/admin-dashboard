@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      /* Top Navigation */
+      .top-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        background: white;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .logo {
+        font-weight: 600;
+        color: #1e293b;
+        text-decoration: none;
+      }
+
+      .search-container {
+        position: relative;
+      }
+
+      .search-input {
+        padding: 0.5rem 1rem 0.5rem 2.5rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        width: 300px;
+        font-size: 0.875rem;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-gray);
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .favorites-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 6px;
+      }
+
+      .user-profile:hover {
+        background: #f1f5f9;
+      }
+
+      .profile-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e2e8f0;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        min-height: calc(100vh - 64px);
+      }
+
+      /* Sidebar */
+      .sidebar {
+        background: var(--sidebar-bg);
+        padding: 2rem;
+      }
+
+      .nav-menu {
+        list-style: none;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-gray);
+        padding: 12px;
+        margin-bottom: 4px;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      /* Main Content */
+      .main-content {
+        padding: 2rem;
+      }
+
+      .section-header {
+        margin-bottom: 2rem;
+      }
+
+      .section-header h1 {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #1e293b;
+      }
+
+      /* Settings Specific Styles */
+      .settings-container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .settings-section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .settings-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .settings-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      .settings-content {
+        padding: 1.5rem;
+      }
+
+      .settings-group {
+        margin-bottom: 2rem;
+      }
+
+      .settings-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .setting-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .setting-item:last-child {
+        border-bottom: none;
+      }
+
+      .setting-info {
+        flex: 1;
+      }
+
+      .setting-label {
+        font-weight: 500;
+        color: #1e293b;
+        margin-bottom: 0.25rem;
+      }
+
+      .setting-description {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .setting-control {
+        margin-left: 2rem;
+      }
+
+      /* Toggle Switch */
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 48px;
+        height: 24px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .toggle-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #e2e8f0;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
+
+      .toggle-slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .toggle-slider {
+        background-color: var(--primary);
+      }
+
+      input:checked + .toggle-slider:before {
+        transform: translateX(24px);
+      }
+
+      /* Button Styles */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--text-gray);
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+        border: none;
+      }
+
+      .btn-danger {
+        background: #fee2e2;
+        color: #ef4444;
+        border: 1px solid #fecaca;
+      }
+
+      /* Add Search HSP button styles */
+      .search-hsp-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      /* Add dropdown styles */
+      .user-dropdown {
+        position: relative;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        margin-top: 0.5rem;
+        background: white;
+        border-radius: 6px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border);
+        min-width: 200px;
+        display: none;
+      }
+
+      .dropdown-menu.active {
+        display: block;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .dropdown-item:hover {
+        background: #f8fafc;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-left">
+        <a href="#" class="logo">Happipad</a>
+        <div class="search-container">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" placeholder="Search HSP" class="search-input" />
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-actions">
+          <a href="#" class="search-hsp-button">
+            <i class="fas fa-search"></i>
+            Search HSP
+          </a>
+          <a href="individual-user-favorites.html" class="favorites-link">
+            <i class="fas fa-heart"></i>
+            <span>Favorited</span>
+          </a>
+        </div>
+        <div class="user-dropdown">
+          <div class="user-profile">
+            <div class="profile-image"></div>
+            <span>John</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="dropdown-menu">
+            <a href="individual-user-dashboard.html" class="dropdown-item">
+              <i class="fas fa-home"></i>
+              Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="dashboard">
+      <aside class="sidebar">
+        <nav>
+          <ul class="nav-menu">
+            <li>
+              <a href="individual-user-dashboard.html" class="nav-item">
+                <span><i class="fas fa-home"></i></span>
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="individual-user-profile.html" class="nav-item">
+                <span><i class="fas fa-user"></i></span>
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="individual-user-contracts.html" class="nav-item">
+                <span><i class="fas fa-file-contract"></i></span>
+                My Stay
+              </a>
+            </li>
+            <li>
+              <a href="individual-user-settings.html" class="nav-item active">
+                <span><i class="fas fa-cog"></i></span>
+                Settings
+              </a>
+            </li>
+          </ul>
+          <div
+            style="
+              margin-top: 2rem;
+              padding-top: 1.5rem;
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
+            "
+          >
+            <a href="individual-user-support.html" class="nav-item">
+              <span><i class="fas fa-headset"></i></span>
+              Support
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <div class="section-header">
+          <h1>Settings</h1>
+        </div>
+
+        <div class="settings-container">
+          <!-- Account Settings -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Account Settings</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Email Address</div>
+                    <div class="setting-description">john.doe@email.com</div>
+                  </div>
+                  <div class="setting-control">
+                    <button class="btn">Change</button>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Password</div>
+                    <div class="setting-description">
+                      Last changed 3 months ago
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <button class="btn">Update</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notification Settings -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Notification Settings</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Email Notifications</div>
+                    <div class="setting-description">
+                      Receive updates about new HSP matches and messages
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">SMS Notifications</div>
+                    <div class="setting-description">
+                      Receive text messages for important updates
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Match Alerts</div>
+                    <div class="setting-description">
+                      Get notified when new HSPs match your preferences
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy Settings -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Privacy Settings</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Profile Visibility</div>
+                    <div class="setting-description">
+                      Control who can see your profile
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <select class="btn">
+                      <option>Public</option>
+                      <option>Private</option>
+                      <option>HSPs Only</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Contact Information</div>
+                    <div class="setting-description">
+                      Show contact details to matched HSPs
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" checked />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">Danger Zone</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Delete Account</div>
+                    <div class="setting-description">
+                      Permanently delete your account and all data
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <button class="btn btn-danger">Delete Account</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle dropdown toggle
+        const userProfile = document.querySelector(".user-profile");
+        const dropdownMenu = document.querySelector(".dropdown-menu");
+
+        userProfile.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdownMenu.classList.toggle("active");
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener("click", () => {
+          dropdownMenu.classList.remove("active");
+        });
+
+        // Handle Search HSP button click
+        document
+          .querySelector(".search-hsp-button")
+          .addEventListener("click", (e) => {
+            e.preventDefault();
+            alert("Search HSP feature coming soon!");
+          });
+
+        // Handle button clicks
+        document.querySelectorAll(".btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            alert("This feature is coming soon!");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
