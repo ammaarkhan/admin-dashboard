@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listing Details - HappiPad</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --sidebar-bg: #1e293b;
+        --text-gray: #64748b;
+        --primary: #4f46e5;
+        --success: #10b981;
+        --border: #e2e8f0;
+      }
+
+      body {
+        background: #f8fafc;
+      }
+
+      /* Top Navigation (reused from other pages) */
+      .top-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        background: white;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .logo {
+        font-weight: 600;
+        color: #1e293b;
+        text-decoration: none;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      /* Image Gallery Container */
+      .gallery-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* Image Gallery */
+      .image-gallery {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 180px 180px;
+        gap: 8px;
+        padding: 0;
+        position: relative;
+      }
+
+      .gallery-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #e2e8f0;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .gallery-image:hover {
+        opacity: 0.9;
+      }
+
+      .main-image {
+        grid-row: span 2;
+      }
+
+      .image-count {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
+
+      /* Content Area */
+      .content-container {
+        max-width: 1200px;
+        margin: 1rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Tabs Navigation */
+      .tabs-nav {
+        display: flex;
+        gap: 2rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1.5rem;
+        padding: 0.5rem 2rem;
+        background: white;
+        border-radius: 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .tabs-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab-item {
+        padding: 0.75rem 1rem;
+        color: var(--text-gray);
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.875rem;
+        border-radius: 6px;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+
+      .tab-item:hover {
+        color: #334155;
+        background: #f1f5f9;
+      }
+
+      .tab-item.active {
+        color: #0f172a;
+        background: #f1f5f9;
+      }
+
+      /* Tab Content */
+      .section-content {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: white;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 1.5rem;
+        padding: 0;
+        border: none;
+      }
+
+      .subsection-title {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+        margin: 1rem 0 0.5rem;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* Listing Header */
+      .listing-header {
+        margin-bottom: 2rem;
+      }
+
+      .listing-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+
+      .listing-location {
+        color: var(--text-gray);
+        font-size: 1.125rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      /* Favorite Button */
+      .favorite-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .favorite-button.active {
+        color: #ef4444;
+      }
+
+      /* Tab Content Styles */
+      .section-content {
+        padding: 2rem;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: white;
+      }
+
+      /* Feature Grid Layout */
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      /* Single Column Grid */
+      .feature-grid.single-column {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+        border: 1px solid var(--border);
+      }
+
+      .feature-item:hover {
+        background-color: #f8fafc;
+      }
+
+      .feature-icon {
+        width: 32px;
+        height: 32px;
+        background: #f8fafc;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-gray);
+      }
+
+      .feature-text {
+        flex: 1;
+      }
+
+      .feature-title {
+        font-weight: 500;
+        color: #1e293b;
+        font-size: 0.875rem;
+      }
+
+      .feature-description {
+        color: var(--text-gray);
+        font-size: 0.875rem;
+        line-height: 1.5;
+      }
+
+      /* Host Profile Layout */
+      .host-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .host-profile:hover {
+        background: #f8fafc;
+      }
+
+      .host-image {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: #e2e8f0;
+        flex-shrink: 0;
+      }
+
+      .host-info {
+        flex: 1;
+      }
+
+      .host-name {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+        margin-bottom: 0.25rem;
+      }
+
+      .host-title {
+        color: #64748b;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .host-details {
+        display: none;
+      }
+
+      .qualifications-grid {
+        display: none;
+      }
+
+      .learn-more-btn {
+        display: none;
+      }
+
+      .host-profile .chevron-right {
+        color: #64748b;
+        margin-left: auto;
+      }
+
+      /* Add Search HSP button styles */
+      .search-hsp-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .search-hsp-button.active {
+        background-color: #4338ca;
+      }
+
+      .favorites-link {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      /* User Profile Styles */
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 6px;
+      }
+
+      .user-profile:hover {
+        background: #f1f5f9;
+      }
+
+      .profile-image {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #e2e8f0;
+      }
+
+      /* Description Layout */
+      .description-container {
+        display: block;
+        max-width: 100%;
+      }
+
+      .description-text {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        color: var(--text-gray);
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 6px;
+        font-size: 0.875rem;
+      }
+
+      .learn-more-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s;
+        width: fit-content;
+        margin-top: 1rem;
+      }
+
+      .learn-more-btn:hover {
+        background-color: #4338ca;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-left">
+        <a href="#" class="logo">Happipad</a>
+      </div>
+      <div class="nav-right">
+        <div class="nav-actions">
+          <a href="individual-user-search.html" class="search-hsp-button">
+            <i class="fas fa-search"></i>
+            Search HSP
+          </a>
+          <a href="individual-user-favorites.html" class="favorites-link">
+            <i class="fas fa-heart"></i>
+            <span>Favorited</span>
+          </a>
+        </div>
+        <div class="user-dropdown">
+          <div class="user-profile">
+            <div class="profile-image"></div>
+            <span>John</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Image Gallery -->
+    <div class="gallery-container">
+      <div class="image-gallery">
+        <div class="gallery-image main-image"></div>
+        <div class="gallery-image"></div>
+        <div class="gallery-image"></div>
+        <div class="gallery-image"></div>
+        <div class="gallery-image"></div>
+        <button class="favorite-button">
+          <i class="far fa-heart"></i>
+        </button>
+        <div class="image-count">+15</div>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-container">
+      <div class="listing-header">
+        <h1 class="listing-title">Cozy Private Room in Family Home</h1>
+        <div class="listing-location">
+          <i class="fas fa-map-marker-alt"></i>
+          Kelowna, BC
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="tabs-nav">
+        <a href="#description" class="tab-item active">Description</a>
+        <a href="#house-features" class="tab-item">House/Condo Features</a>
+        <a href="#renters-bedroom" class="tab-item">Room Furniture</a>
+        <a href="#house-rules" class="tab-item">House Rules</a>
+        <a href="#host-info" class="tab-item">Host Information</a>
+        <a href="#availability" class="tab-item">Availability</a>
+      </div>
+
+      <!-- Description Section -->
+      <section id="description" class="section-content">
+        <h2 class="section-title">About This Home Share</h2>
+        <div class="description-container">
+          <p class="description-text">
+            Welcome to our CLBC-approved home share, where we provide a
+            supportive and inclusive living environment for adults with
+            developmental disabilities. Our home is designed to foster
+            independence while ensuring 24/7 support is available when needed.
+            With over 10 years of experience in home sharing, we understand the
+            importance of creating a safe, nurturing, and engaging environment.
+            Located in a quiet, accessible neighborhood with easy access to
+            community resources, medical facilities, and recreational
+            activities. Our home is fully equipped to accommodate various
+            support needs while maintaining a warm, family atmosphere.
+          </p>
+        </div>
+      </section>
+
+      <!-- House Features Section -->
+      <section id="house-features" class="section-content">
+        <h2 class="section-title">House/Condo Features</h2>
+
+        <!-- Bathroom -->
+        <h3 class="subsection-title">Bathroom</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bath"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Shared Full Bath</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-toilet"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Shared Half Bath</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Shared with 3 people</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <h3 class="subsection-title">Amenities</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-snowflake"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Air conditioning</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-tv"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Television</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-washer"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Washer</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-wifi"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Wi-Fi</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Kitchenware</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-dryer"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Dryer</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Other Shared Rooms -->
+        <h3 class="subsection-title">Other Shared Rooms</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-kitchen-set"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Kitchen</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-couch"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Living Room</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-umbrella-beach"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Patio</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Safety Features -->
+        <h3 class="subsection-title">Safety Features</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-fire-extinguisher"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Fire Extinguisher</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bell"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Security Alarm</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Building Facilities -->
+        <h3 class="subsection-title">Building Facilities</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-elevator"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Elevator</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-building-user"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Onsite Management</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Renter's Bedroom Section -->
+      <section id="renters-bedroom" class="section-content">
+        <h2 class="section-title">Room Furniture</h2>
+
+        <!-- Size -->
+        <h3 class="subsection-title">Size</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-ruler-combined"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">200 ft²</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Furniture -->
+        <h3 class="subsection-title">Furniture</h3>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bed"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Queen Bed</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-table"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Table</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-box"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">In-room Safe</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bath"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Towels</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-door-closed"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Closet</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-chair"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Chair</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- House Rules Section -->
+      <section id="house-rules" class="section-content">
+        <h2 class="section-title">House Rules</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-smoking"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Smoking Only Outside</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-ban"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">No Animals Allowed</h3>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bell"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Notice on Visitors</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Host Information Section -->
+      <section id="host-info" class="section-content">
+        <h2 class="section-title">Meet the host</h2>
+        <a href="host-profile.html" class="host-profile">
+          <div class="host-image"></div>
+          <div class="host-info">
+            <h3 class="host-name">John K.</h3>
+            <p class="host-title">Property owner</p>
+            <p class="host-details">
+              I've been a CLBC home share provider for over 10 years, with a
+              background in healthcare and special education. My family and I
+              are committed to creating an inclusive, supportive environment
+              where individuals can thrive and achieve their goals.
+            </p>
+            <div class="qualifications-grid">
+              <div class="qualification-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Certified Healthcare Assistant</span>
+              </div>
+              <div class="qualification-item">
+                <i class="fas fa-check-circle"></i>
+                <span>First Aid & CPR Certified</span>
+              </div>
+              <div class="qualification-item">
+                <i class="fas fa-check-circle"></i>
+                <span>CLBC Approved Home Share Provider</span>
+              </div>
+              <div class="qualification-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Criminal Record Check Cleared</span>
+              </div>
+            </div>
+          </div>
+          <i class="fas fa-chevron-right chevron-right"></i>
+        </a>
+      </section>
+
+      <!-- Availability Section -->
+      <section id="availability" class="section-content">
+        <h2 class="section-title">Availability</h2>
+        <div class="feature-grid single-column">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="feature-text">
+              <h3 class="feature-title">Current Status</h3>
+              <p class="feature-description">
+                Available for placement starting July 1, 2024. Initial meeting
+                and transition period can be arranged before move-in date.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const section = document.querySelector(this.getAttribute("href"));
+
+            // Update active tab
+            document.querySelectorAll(".tab-item").forEach((tab) => {
+              tab.classList.remove("active");
+            });
+            this.classList.add("active");
+
+            // Smooth scroll to section
+            section.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          });
+        });
+
+        // Handle favorite button
+        const favoriteButton = document.querySelector(".favorite-button");
+        favoriteButton.addEventListener("click", () => {
+          const icon = favoriteButton.querySelector("i");
+          if (icon.classList.contains("far")) {
+            icon.classList.remove("far");
+            icon.classList.add("fas");
+            favoriteButton.classList.add("active");
+          } else {
+            icon.classList.remove("fas");
+            icon.classList.add("far");
+            favoriteButton.classList.remove("active");
+          }
+        });
+
+        // Update active tab on scroll
+        window.addEventListener("scroll", () => {
+          const sections = document.querySelectorAll("section");
+          const navItems = document.querySelectorAll(".tab-item");
+
+          let current = "";
+
+          sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            if (window.pageYOffset >= sectionTop - 100) {
+              current = section.getAttribute("id");
+            }
+          });
+
+          navItems.forEach((item) => {
+            item.classList.remove("active");
+            if (item.getAttribute("href").slice(1) === current) {
+              item.classList.add("active");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
