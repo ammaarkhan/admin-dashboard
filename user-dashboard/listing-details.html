@@ -221,6 +221,62 @@
         color: #ef4444;
       }
 
+      /* Sticky Favorite Action Button */
+      .favorite-action {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 1rem 2rem;
+        border-radius: 100px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        z-index: 100;
+        transition: all 0.2s ease;
+      }
+
+      .favorite-action-button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 100px;
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: all 0.2s ease;
+      }
+
+      .favorite-action-button:hover {
+        background: #4338ca;
+        transform: translateY(-1px);
+      }
+
+      .favorite-action-button.active {
+        background: #ef4444;
+      }
+
+      .favorite-action-button.active:hover {
+        background: #dc2626;
+      }
+
+      .favorite-count {
+        color: var(--text-gray);
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+        background: #f8fafc;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
       /* Tab Content Styles */
       .section-content {
         padding: 2rem;
@@ -835,6 +891,18 @@
       </section>
     </div>
 
+    <!-- Sticky Favorite Action -->
+    <div class="favorite-action">
+      <div class="favorite-count">
+        <i class="fas fa-heart"></i>
+        <span>2/3 favorites selected</span>
+      </div>
+      <button class="favorite-action-button">
+        <i class="far fa-heart"></i>
+        <span>Add to Favorites</span>
+      </button>
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Handle smooth scrolling for anchor links
@@ -859,17 +927,62 @@
 
         // Handle favorite button
         const favoriteButton = document.querySelector(".favorite-button");
-        favoriteButton.addEventListener("click", () => {
-          const icon = favoriteButton.querySelector("i");
-          if (icon.classList.contains("far")) {
-            icon.classList.remove("far");
-            icon.classList.add("fas");
-            favoriteButton.classList.add("active");
+        const favoriteActionButton = document.querySelector(
+          ".favorite-action-button"
+        );
+        const favoriteCount = document.querySelector(".favorite-count span");
+        let currentFavorites = 2; // This would come from your actual data
+
+        const updateFavoriteUI = (isActive) => {
+          // Update gallery favorite button
+          const galleryIcon = favoriteButton.querySelector("i");
+          galleryIcon.className = isActive ? "fas fa-heart" : "far fa-heart";
+          favoriteButton.classList.toggle("active", isActive);
+
+          // Update action button
+          const actionIcon = favoriteActionButton.querySelector("i");
+          const actionText = favoriteActionButton.querySelector("span");
+          actionIcon.className = isActive ? "fas fa-heart" : "far fa-heart";
+          actionText.textContent = isActive
+            ? "Remove from Favorites"
+            : "Add to Favorites";
+          favoriteActionButton.classList.toggle("active", isActive);
+
+          // Update count
+          currentFavorites = isActive
+            ? currentFavorites + 1
+            : currentFavorites - 1;
+          favoriteCount.textContent = `${currentFavorites}/3 favorites selected`;
+
+          // Disable if max reached
+          if (currentFavorites >= 3 && !isActive) {
+            favoriteActionButton.disabled = true;
+            favoriteActionButton.style.opacity = "0.5";
+            favoriteActionButton.style.cursor = "not-allowed";
           } else {
-            icon.classList.remove("fas");
-            icon.classList.add("far");
-            favoriteButton.classList.remove("active");
+            favoriteActionButton.disabled = false;
+            favoriteActionButton.style.opacity = "1";
+            favoriteActionButton.style.cursor = "pointer";
           }
+        };
+
+        // Handle favorite button clicks
+        [favoriteButton, favoriteActionButton].forEach((button) => {
+          button.addEventListener("click", () => {
+            const isCurrentlyActive =
+              favoriteActionButton.classList.contains("active");
+            const wouldExceedLimit =
+              currentFavorites >= 3 && !isCurrentlyActive;
+
+            if (wouldExceedLimit) {
+              alert(
+                "You can only select up to 3 listings. Please remove a listing before adding another."
+              );
+              return;
+            }
+
+            updateFavoriteUI(!isCurrentlyActive);
+          });
         });
 
         // Update active tab on scroll
