@@ -54,26 +54,6 @@
         text-decoration: none;
       }
 
-      .search-container {
-        position: relative;
-      }
-
-      .search-input {
-        padding: 0.5rem 1rem 0.5rem 2.5rem;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        width: 300px;
-        font-size: 0.875rem;
-      }
-
-      .search-icon {
-        position: absolute;
-        left: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--text-gray);
-      }
-
       .nav-right {
         display: flex;
         align-items: center;
@@ -358,14 +338,10 @@
     <nav class="top-nav">
       <div class="nav-left">
         <a href="#" class="logo">Happipad</a>
-        <div class="search-container">
-          <i class="fas fa-search search-icon"></i>
-          <input type="text" placeholder="Search HSP" class="search-input" />
-        </div>
       </div>
       <div class="nav-right">
         <div class="nav-actions">
-          <a href="#" class="search-hsp-button">
+          <a href="individual-user-search.html" class="search-hsp-button">
             <i class="fas fa-search"></i>
             Search HSP
           </a>
@@ -384,6 +360,22 @@
             <a href="individual-user-dashboard.html" class="dropdown-item">
               <i class="fas fa-home"></i>
               Dashboard
+            </a>
+            <a href="individual-user-profile.html" class="dropdown-item">
+              <i class="fas fa-user"></i>
+              Profile
+            </a>
+            <a href="individual-user-contracts.html" class="dropdown-item">
+              <i class="fas fa-file-contract"></i>
+              My Stay
+            </a>
+            <a href="individual-user-settings.html" class="dropdown-item">
+              <i class="fas fa-cog"></i>
+              Settings
+            </a>
+            <a href="individual-user-support.html" class="dropdown-item">
+              <i class="fas fa-headset"></i>
+              Support
             </a>
           </div>
         </div>
@@ -604,14 +596,6 @@
         document.addEventListener("click", () => {
           dropdownMenu.classList.remove("active");
         });
-
-        // Handle Search HSP button click
-        document
-          .querySelector(".search-hsp-button")
-          .addEventListener("click", (e) => {
-            e.preventDefault();
-            alert("Search HSP feature coming soon!");
-          });
 
         // Handle button clicks
         document.querySelectorAll(".btn").forEach((btn) => {
