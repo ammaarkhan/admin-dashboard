@@ -42,6 +42,11 @@
         border-bottom: 1px solid var(--border);
       }
 
+      /* Hide elements when user is matched */
+      .matched-hide {
+        display: none !important;
+      }
+
       .nav-left {
         display: flex;
         align-items: center;
@@ -404,16 +409,21 @@
       </div>
       <div class="nav-right">
         <div class="nav-actions">
-          <a href="individual-user-search.html" class="search-hsp-button">
+          <a
+            href="individual-user-search.html"
+            class="search-hsp-button matched-hide"
+            data-matched-hide="true"
+          >
             <i class="fas fa-search"></i>
             Search HSP
           </a>
           <a
             href="individual-user-favorites.html"
-            class="favorites-link active"
+            class="favorites-link matched-hide"
+            data-matched-hide="true"
           >
             <i class="fas fa-heart"></i>
-            <span>Favorited</span>
+            Favorited
           </a>
         </div>
         <div class="user-dropdown">
@@ -645,6 +655,19 @@
 
         // Initial counter update
         updateCounter();
+
+        // Apply matched state on page load
+        const applyMatchedState = () => {
+          const isMatched = localStorage.getItem("isMatched") === "true";
+          document
+            .querySelectorAll('[data-matched-hide="true"]')
+            .forEach((element) => {
+              element.classList.toggle("matched-hide", isMatched);
+            });
+        };
+
+        // Apply state immediately
+        applyMatchedState();
       });
     </script>
   </body>

@@ -331,6 +331,11 @@
       .dropdown-item:hover {
         background: #f8fafc;
       }
+
+      /* Hide elements when user is matched */
+      .matched-hide {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
@@ -341,13 +346,21 @@
       </div>
       <div class="nav-right">
         <div class="nav-actions">
-          <a href="individual-user-search.html" class="search-hsp-button">
+          <a
+            href="individual-user-search.html"
+            class="search-hsp-button matched-hide"
+            data-matched-hide="true"
+          >
             <i class="fas fa-search"></i>
             Search HSP
           </a>
-          <a href="individual-user-favorites.html" class="favorites-link">
+          <a
+            href="individual-user-favorites.html"
+            class="favorites-link matched-hide"
+            data-matched-hide="true"
+          >
             <i class="fas fa-heart"></i>
-            <span>Favorited</span>
+            Favorited
           </a>
         </div>
         <div class="user-dropdown">
@@ -556,6 +569,32 @@
             </div>
           </div>
 
+          <!-- HomeShare Program Demo Settings -->
+          <div class="settings-section">
+            <div class="settings-header">
+              <h2 class="settings-title">HomeShare Program Demo Settings</h2>
+            </div>
+            <div class="settings-content">
+              <div class="settings-group">
+                <div class="setting-item">
+                  <div class="setting-info">
+                    <div class="setting-label">Matched State</div>
+                    <div class="setting-description">
+                      Toggle this to demonstrate how the interface changes when
+                      a user is matched with an HSP.
+                    </div>
+                  </div>
+                  <div class="setting-control">
+                    <label class="toggle-switch">
+                      <input type="checkbox" id="matchedStateToggle" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Danger Zone -->
           <div class="settings-section">
             <div class="settings-header">
@@ -603,6 +642,40 @@
             alert("This feature is coming soon!");
           });
         });
+
+        // Get the toggle element
+        const matchedStateToggle =
+          document.getElementById("matchedStateToggle");
+
+        // Initialize toggle state from localStorage
+        const isMatched = localStorage.getItem("isMatched") === "true";
+        matchedStateToggle.checked = isMatched;
+
+        // Update matched state when toggle changes
+        matchedStateToggle.addEventListener("change", function () {
+          const isMatched = this.checked;
+          localStorage.setItem("isMatched", isMatched);
+
+          // Update UI immediately if we're on the settings page
+          document
+            .querySelectorAll('[data-matched-hide="true"]')
+            .forEach((element) => {
+              element.classList.toggle("matched-hide", isMatched);
+            });
+        });
+
+        // Apply matched state on page load
+        const applyMatchedState = () => {
+          const isMatched = localStorage.getItem("isMatched") === "true";
+          document
+            .querySelectorAll('[data-matched-hide="true"]')
+            .forEach((element) => {
+              element.classList.toggle("matched-hide", isMatched);
+            });
+        };
+
+        // Apply state immediately
+        applyMatchedState();
       });
     </script>
   </body>

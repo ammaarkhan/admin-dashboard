@@ -361,6 +361,11 @@
         background: #f8fafc;
         border-color: #cbd5e1;
       }
+
+      /* Hide elements when user is matched */
+      .matched-hide {
+        display: none !important;
+      }
     </style>
   </head>
   <body>
@@ -373,14 +378,19 @@
         <div class="nav-actions">
           <a
             href="individual-user-search.html"
-            class="search-hsp-button active"
+            class="search-hsp-button matched-hide"
+            data-matched-hide="true"
           >
             <i class="fas fa-search"></i>
             Search HSP
           </a>
-          <a href="individual-user-favorites.html" class="favorites-link">
+          <a
+            href="individual-user-favorites.html"
+            class="favorites-link matched-hide"
+            data-matched-hide="true"
+          >
             <i class="fas fa-heart"></i>
-            <span>Favorited</span>
+            Favorited
           </a>
         </div>
         <div class="user-dropdown">
@@ -681,6 +691,19 @@
             console.log("Filter changed:", input.value);
           });
         });
+
+        // Apply matched state on page load
+        const applyMatchedState = () => {
+          const isMatched = localStorage.getItem("isMatched") === "true";
+          document
+            .querySelectorAll('[data-matched-hide="true"]')
+            .forEach((element) => {
+              element.classList.toggle("matched-hide", isMatched);
+            });
+        };
+
+        // Apply state immediately
+        applyMatchedState();
       });
     </script>
   </body>
