@@ -340,6 +340,60 @@
         background: #f8fafc;
         padding: 2rem;
       }
+
+      /* Submit Favorites Section */
+      .submit-favorites {
+        background: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .favorites-counter {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .counter-text {
+        color: var(--text-gray);
+      }
+
+      .counter-number {
+        background: #f1f5f9;
+        color: #1e293b;
+        font-weight: 500;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+      }
+
+      .submit-button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background-color 0.2s;
+      }
+
+      .submit-button:hover {
+        background: #4338ca;
+      }
+
+      .submit-button:disabled {
+        background: #e2e8f0;
+        cursor: not-allowed;
+      }
     </style>
   </head>
   <body>
@@ -398,6 +452,19 @@
       <div class="section-header">
         <h1>Favorited Listings</h1>
         <p>Your saved home share opportunities</p>
+      </div>
+
+      <!-- Submit Favorites Section -->
+      <div class="submit-favorites">
+        <div class="favorites-counter">
+          <span class="counter-text">Selected Favorites:</span>
+          <span class="counter-number">2/3</span>
+          <span class="counter-text">You can select up to 3 listings</span>
+        </div>
+        <button class="submit-button">
+          <i class="fas fa-paper-plane"></i>
+          Submit Favorites
+        </button>
       </div>
 
       <!-- Listings Grid -->
@@ -513,6 +580,58 @@
         // Handle dropdown toggle
         const userProfile = document.querySelector(".user-profile");
         const dropdownMenu = document.querySelector(".dropdown-menu");
+        const submitButton = document.querySelector(".submit-button");
+        const counterNumber = document.querySelector(".counter-number");
+        const favoriteButtons = document.querySelectorAll(".favorite-button");
+
+        // Initialize counter
+        const updateCounter = () => {
+          const favoriteCount = document.querySelectorAll(
+            ".favorite-button.active"
+          ).length;
+          counterNumber.textContent = `${favoriteCount}/3`;
+
+          // Enable/disable submit button based on count
+          if (favoriteCount > 0) {
+            submitButton.disabled = false;
+          } else {
+            submitButton.disabled = true;
+          }
+        };
+
+        // Handle submit button click
+        submitButton.addEventListener("click", () => {
+          const favoriteCount = document.querySelectorAll(
+            ".favorite-button.active"
+          ).length;
+          if (favoriteCount > 0) {
+            // Here you would typically make an API call to submit the favorites
+            alert(`Successfully submitted ${favoriteCount} favorite listings!`);
+          }
+        });
+
+        // Handle favorite button clicks
+        favoriteButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const currentCount = document.querySelectorAll(
+              ".favorite-button.active"
+            ).length;
+
+            if (!button.classList.contains("active") && currentCount >= 3) {
+              alert(
+                "You can only select up to 3 listings. Please remove a listing before adding another."
+              );
+              return;
+            }
+
+            button.classList.toggle("active");
+            const icon = button.querySelector("i");
+            icon.classList.toggle("fas");
+            icon.classList.toggle("far");
+
+            updateCounter();
+          });
+        });
 
         userProfile.addEventListener("click", (e) => {
           e.stopPropagation();
@@ -524,13 +643,8 @@
           dropdownMenu.classList.remove("active");
         });
 
-        // Handle remove and view actions
-        document.querySelectorAll(".action-button").forEach((button) => {
-          button.addEventListener("click", (e) => {
-            e.preventDefault();
-            alert("This feature is coming soon!");
-          });
-        });
+        // Initial counter update
+        updateCounter();
       });
     </script>
   </body>
