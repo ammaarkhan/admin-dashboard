@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contracts - HappiPad</title>
+    <title>Invoices - HappiPad</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
@@ -97,29 +97,29 @@
         overflow: hidden;
       }
 
-      .users-table {
+      .invoices-table {
         width: 100%;
         border-collapse: collapse;
       }
 
-      .users-table th,
-      .users-table td {
+      .invoices-table th,
+      .invoices-table td {
         padding: 1rem;
         text-align: left;
         border-bottom: 1px solid var(--border);
       }
 
-      .users-table th {
+      .invoices-table th {
         background: #f8fafc;
         font-weight: 500;
         color: var(--text-gray);
       }
 
-      .users-table tr:last-child td {
+      .invoices-table tr:last-child td {
         border-bottom: none;
       }
 
-      /* Status Styles */
+      /* Status Badges */
       .status-badge {
         display: inline-flex;
         align-items: center;
@@ -129,7 +129,7 @@
         font-weight: 500;
       }
 
-      .status-active {
+      .status-paid {
         background-color: #dcfce7;
         color: #166534;
       }
@@ -139,85 +139,46 @@
         color: #92400e;
       }
 
-      .status-expired {
+      .status-overdue {
         background-color: #fee2e2;
         color: #991b1b;
       }
 
-      /* File Upload Styles */
-      .file-upload {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .file-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: var(--text-gray);
-      }
-
-      .file-actions {
+      /* Action Buttons */
+      .action-buttons {
         display: flex;
         gap: 0.5rem;
       }
 
-      .btn-download,
-      .btn-view {
-        background: none;
-        border: none;
-        color: var(--text-gray);
-        cursor: pointer;
-        padding: 0.25rem;
-      }
-
-      .btn-download:hover,
-      .btn-view:hover {
-        color: var(--primary);
-      }
-
-      /* E-signature Styles */
-      .e-sign-status {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .e-sign-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
-        font-weight: 500;
-      }
-
-      .e-sign-pending {
-        background-color: #fef3c7;
-        color: #92400e;
-      }
-
-      .e-sign-signed {
-        background-color: #dcfce7;
-        color: #166534;
-      }
-
-      .btn-sign {
-        background-color: var(--primary);
-        color: white;
-        border: none;
+      .btn {
         padding: 0.5rem 1rem;
         border-radius: 6px;
         font-size: 0.875rem;
         cursor: pointer;
+        border: none;
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
       }
 
-      .btn-sign:hover {
-        background-color: #4338ca;
+      .btn-view {
+        background-color: #f1f5f9;
+        color: #475569;
+      }
+
+      .btn-download {
+        background-color: #e0e7ff;
+        color: #4338ca;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+      }
+
+      /* Amount */
+      .amount {
+        font-family: "Inter", monospace;
+        font-weight: 500;
       }
     </style>
   </head>
@@ -258,13 +219,13 @@
               </a>
             </li>
             <li>
-              <a href="hsp-user-contracts.html" class="nav-item active">
+              <a href="hsp-user-contracts.html" class="nav-item">
                 <span><i class="fas fa-file-contract"></i></span>
                 Contracts
               </a>
             </li>
             <li>
-              <a href="hsp-user-invoices.html" class="nav-item">
+              <a href="hsp-user-invoices.html" class="nav-item active">
                 <span><i class="fas fa-file-invoice-dollar"></i></span>
                 Invoices
               </a>
@@ -293,55 +254,67 @@
 
       <main class="main-content">
         <div class="section-header">
-          <h1>Contracts</h1>
+          <h1>Invoices</h1>
         </div>
 
         <div class="table-container">
-          <table class="users-table">
+          <table class="invoices-table">
             <thead>
               <tr>
-                <th>Contract ID</th>
-                <th>Individual</th>
+                <th>Invoice #</th>
+                <th>Room</th>
+                <th>Tenant</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Amount</th>
                 <th>Status</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Individual Agreement</th>
-                <th>HSP Contract</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>CTR-0001</td>
-                <td>Emily Davis</td>
+                <td>INV-2024-001</td>
+                <td>Room 1 - Corktown</td>
+                <td>Sarah Johnson</td>
+                <td>Mar 1, 2024</td>
+                <td>Mar 15, 2024</td>
+                <td class="amount">$850.00</td>
                 <td>
-                  <span class="status-badge status-active">Active</span>
+                  <span class="status-badge status-paid">Paid</span>
                 </td>
-                <td>2024-03-15</td>
-                <td>2025-03-15</td>
                 <td>
-                  <div class="file-upload">
-                    <div class="file-info">
-                      <i class="fas fa-file-alt"></i>
-                      <span>consent_agreement.pdf</span>
-                    </div>
-                    <div class="file-actions">
-                      <button class="btn-download" title="Download">
-                        <i class="fas fa-download"></i>
-                      </button>
-                    </div>
+                  <div class="action-buttons">
+                    <button class="btn btn-view">
+                      <i class="fas fa-eye"></i>
+                      View
+                    </button>
+                    <button class="btn btn-download">
+                      <i class="fas fa-download"></i>
+                      Download
+                    </button>
                   </div>
                 </td>
+              </tr>
+              <tr>
+                <td>INV-2024-002</td>
+                <td>Room 1 - Corktown</td>
+                <td>Sarah Johnson</td>
+                <td>Apr 1, 2024</td>
+                <td>Apr 15, 2024</td>
+                <td class="amount">$850.00</td>
                 <td>
-                  <div class="file-upload">
-                    <div class="file-info">
-                      <i class="fas fa-file-alt"></i>
-                      <span>hsp_contract.pdf</span>
-                    </div>
-                    <div class="file-actions">
-                      <button class="btn-download" title="Download">
-                        <i class="fas fa-download"></i>
-                      </button>
-                    </div>
+                  <span class="status-badge status-pending">Pending</span>
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn btn-view">
+                      <i class="fas fa-eye"></i>
+                      View
+                    </button>
+                    <button class="btn btn-download">
+                      <i class="fas fa-download"></i>
+                      Download
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -353,10 +326,11 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Handle file download
-        document.querySelectorAll(".btn-download").forEach((btn) => {
+        // Handle action buttons
+        document.querySelectorAll(".btn").forEach((btn) => {
           btn.addEventListener("click", () => {
-            alert("Downloading contract...");
+            const action = btn.textContent.trim();
+            alert(`${action} functionality coming soon!`);
           });
         });
       });
