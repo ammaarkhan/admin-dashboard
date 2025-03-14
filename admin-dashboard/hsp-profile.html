@@ -255,6 +255,49 @@
       .action-btn:hover {
         background: #e5e7eb;
       }
+
+      /* Additional styles for listings */
+      .listing-container {
+        padding: 1.5rem;
+      }
+
+      .listing-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .listing-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .listing-section h3 {
+        color: #1e293b;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+      }
+
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .feature-list li {
+        padding: 0.25rem 0;
+        color: #4b5563;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .feature-list li::before {
+        content: "•";
+        color: var(--primary);
+      }
     </style>
   </head>
   <body>
@@ -318,6 +361,9 @@
             </button>
             <button class="tab-button" data-tab="documents">
               File Uploads
+            </button>
+            <button class="tab-button" data-tab="listings">
+              Room Listings
             </button>
           </div>
 
@@ -511,28 +557,6 @@
                 best support all service providers.
               </p>
 
-              <div class="file-upload-grid">
-                <div class="file-upload-item">
-                  <div class="document-header">
-                    <h4>Criminal Record Check</h4>
-                  </div>
-                  <div class="document-details">
-                    <p>
-                      <i class="fas fa-file-pdf"></i>
-                      criminal-record-check-2024.pdf
-                    </p>
-                    <p class="file-meta">1.2 MB</p>
-                    <div class="document-actions">
-                      <button class="action-btn">
-                        <i class="fas fa-download"></i> Download
-                      </button>
-                      <button class="action-btn">
-                        <i class="fas fa-upload"></i> Update File
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
                 <div class="file-upload-item">
                   <div class="document-header">
                     <h4>First Aid Certificate</h4>
@@ -625,6 +649,140 @@
                       <button class="action-btn">
                         <i class="fas fa-upload"></i> Update File
                       </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Room Listings -->
+          <div class="tab-content" id="listings-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Active Listings</h2>
+                <button class="edit-button">
+                  <i class="fas fa-plus"></i> Add New Listing
+                </button>
+              </div>
+
+              <div class="listing-container">
+                <div class="listing-section">
+                  <h3>Listing Info</h3>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>Property Type</label>
+                      <p>House</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Room Type</label>
+                      <p>Private Room</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Bathroom Type</label>
+                      <p>Shared Bathroom</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Location</label>
+                      <p>Corktown, Vancouver</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Available From</label>
+                      <p>March 1, 2024</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Minimum Stay</label>
+                      <p>6 months</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Room Size</label>
+                      <p>200 sq ft</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Furnished</label>
+                      <p>Yes</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>About Listing</h3>
+                  <div class="info-grid">
+                    <div class="info-item full-width">
+                      <label>Description</label>
+                      <p>
+                        Comfortable, affordable stay in a well-maintained house.
+                        The room comes with a queen bed, en-suite bathroom, work
+                        desk, and essential amenities. Located in Corktown, this
+                        room offers a perfect blend of comfort and convenience.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>Features</h3>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>Amenities</label>
+                      <ul class="feature-list">
+                        <li>Queen size bed</li>
+                        <li>Work desk</li>
+                        <li>Closet</li>
+                        <li>High-speed internet</li>
+                        <li>Air conditioning</li>
+                        <li>Heating</li>
+                      </ul>
+                    </div>
+                    <div class="info-item">
+                      <label>Shared Spaces</label>
+                      <ul class="feature-list">
+                        <li>Kitchen</li>
+                        <li>Living room</li>
+                        <li>Laundry room</li>
+                        <li>Garden</li>
+                        <li>Parking</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>Housing Rules</h3>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>House Rules</label>
+                      <ul class="feature-list">
+                        <li>No smoking indoors</li>
+                        <li>Quiet hours: 10 PM - 7 AM</li>
+                        <li>Clean up after using common areas</li>
+                        <li>Guests allowed with prior notice</li>
+                        <li>No overnight guests without approval</li>
+                      </ul>
+                    </div>
+                    <div class="info-item">
+                      <label>Additional Policies</label>
+                      <ul class="feature-list">
+                        <li>Monthly cleaning schedule</li>
+                        <li>Shared utility costs</li>
+                        <li>Recycling program</li>
+                        <li>Pet policy available</li>
+                        <li>Security deposit required</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>Safety & Security</h3>
+                  <div class="info-grid">
+                    <div class="info-item full-width">
+                      <p>
+                        The house is equipped with smoke detectors, carbon
+                        monoxide detectors, and security cameras in common
+                        areas. All residents receive a set of keys and access
+                        codes for secure entry.
+                      </p>
                     </div>
                   </div>
                 </div>
