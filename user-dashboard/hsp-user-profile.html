@@ -238,95 +238,68 @@
         position: fixed;
         top: 0;
         left: 0;
-        right: 0;
-        bottom: 0;
+        width: 100%;
+        height: 100%;
         background: rgba(0, 0, 0, 0.5);
         z-index: 1000;
-        align-items: center;
-        justify-content: center;
       }
 
       .modal-overlay.active {
         display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .modal {
         background: white;
         border-radius: 8px;
-        padding: 2rem;
-        width: 100%;
+        width: 90%;
         max-width: 500px;
-        position: relative;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       }
 
       .modal-header {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1.5rem;
       }
 
       .modal-title {
         font-size: 1.25rem;
-        font-weight: 500;
         color: #1e293b;
       }
 
       .close-modal {
         background: none;
         border: none;
-        color: var(--text-gray);
+        font-size: 1.5rem;
         cursor: pointer;
-        font-size: 1.25rem;
+        color: var(--text-gray);
       }
 
       .modal-content {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
+        padding: 1.5rem;
       }
 
       .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+        margin-bottom: 1rem;
       }
 
       .form-label {
-        font-size: 0.875rem;
-        color: var(--text-gray);
-        font-weight: 500;
-      }
-
-      .form-select {
-        padding: 0.5rem;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        font-size: 0.875rem;
+        display: block;
+        margin-bottom: 0.5rem;
         color: #1e293b;
-      }
-
-      .form-input {
-        padding: 0.5rem;
-        border: 1px solid var(--border);
-        border-radius: 6px;
         font-size: 0.875rem;
       }
 
-      .custom-file-input {
-        display: none;
-      }
-
-      .file-upload-button {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: #f1f5f9;
+      .form-input,
+      .form-select {
+        width: 100%;
+        padding: 0.5rem;
         border: 1px solid var(--border);
         border-radius: 6px;
-        color: var(--text-gray);
-        cursor: pointer;
         font-size: 0.875rem;
       }
 
@@ -337,7 +310,8 @@
       }
 
       .modal-footer {
-        margin-top: 2rem;
+        padding: 1rem;
+        border-top: 1px solid var(--border);
         display: flex;
         justify-content: flex-end;
         gap: 1rem;
@@ -360,15 +334,6 @@
         background: var(--primary);
         border: none;
         color: white;
-      }
-
-      .other-input {
-        display: none;
-      }
-
-      .other-input.active {
-        display: block;
-        margin-top: 0.5rem;
       }
     </style>
   </head>
@@ -922,69 +887,88 @@
     </div>
 
     <!-- Upload Modal -->
-    <div class="modal-overlay" id="uploadModal">
+    <div id="uploadModal" class="modal-overlay">
       <div class="modal">
         <div class="modal-header">
           <h3 class="modal-title">Upload Document</h3>
-          <button class="close-modal" id="closeModal">
-            <i class="fas fa-times"></i>
-          </button>
+          <button id="closeModal" class="close-modal">&times;</button>
         </div>
         <div class="modal-content">
           <div class="form-group">
-            <label class="form-label">Document Type</label>
-            <select class="form-select" id="documentType">
+            <label class="form-label" for="documentType">Document Type*</label>
+            <select class="form-select" id="documentType" required>
               <option value="">Select document type</option>
-              <option value="physicians-cert">
+              <option value="physicians-cert" data-requires-expiry="true">
                 Physician's certification of good health
               </option>
-              <option value="drivers-license">
+              <option value="drivers-license" data-requires-expiry="true">
                 Valid class 5 driver's licence
               </option>
-              <option value="drivers-abstract">Clean driver's abstract</option>
-              <option value="vehicle-insurance">
+              <option value="drivers-abstract" data-requires-expiry="true">
+                Clean driver's abstract
+              </option>
+              <option value="vehicle-insurance" data-requires-expiry="true">
                 Valid vehicle insurance ($3 million Liability, Personal Use)
               </option>
-              <option value="home-insurance">
+              <option value="home-insurance" data-requires-expiry="true">
                 Valid home/renter's insurance
               </option>
-              <option value="evacuation-plan">
+              <option value="evacuation-plan" data-requires-expiry="false">
                 Emergency evacuation plan and home diagram
               </option>
-              <option value="first-aid">
+              <option value="first-aid" data-requires-expiry="true">
                 First Aid Certificate with CPR Level C
               </option>
-              <option value="worksafe">Work Safe BC clearance</option>
-              <option value="banking">Banking Information / Void Cheque</option>
+              <option value="worksafe" data-requires-expiry="true">
+                Work Safe BC clearance
+              </option>
+              <option value="banking" data-requires-expiry="false">
+                Banking Information / Void Cheque
+              </option>
               <option value="other">Other</option>
             </select>
+          </div>
+
+          <div
+            class="form-group"
+            id="otherDocumentTypeContainer"
+            style="display: none"
+          >
+            <label class="form-label" for="otherDocumentType"
+              >Document Name*</label
+            >
             <input
               type="text"
-              class="form-input other-input"
+              class="form-input"
               id="otherDocumentType"
-              placeholder="Enter document type"
+              placeholder="Enter document name"
             />
           </div>
-          <div class="form-group">
-            <label class="form-label">Upload File</label>
-            <input
-              type="file"
-              id="fileInput"
-              class="custom-file-input"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-            />
-            <label for="fileInput" class="file-upload-button">
-              <i class="fas fa-upload"></i>
-              Choose File
+
+          <div
+            class="form-group"
+            id="expiryDateContainer"
+            style="display: none"
+          >
+            <label class="form-label" for="expiryDate">
+              Expiry Date
+              <span id="expiryRequired">*</span>
+              <span id="expiryOptional" style="display: none">(optional)</span>
             </label>
-            <div class="file-name" id="fileName"></div>
+            <input type="date" class="form-input" id="expiryDate" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="fileInput">Select File*</label>
+            <input type="file" id="fileInput" class="form-input" required />
+            <div id="fileName" class="file-name"></div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="modal-button cancel-button" id="cancelUpload">
+          <button id="cancelUpload" class="modal-button cancel-button">
             Cancel
           </button>
-          <button class="modal-button upload-button" id="confirmUpload">
+          <button id="confirmUpload" class="modal-button upload-button">
             Upload
           </button>
         </div>
@@ -1000,6 +984,15 @@
         const uploadButton = document.querySelector(".upload-trigger");
         const documentType = document.getElementById("documentType");
         const otherDocumentType = document.getElementById("otherDocumentType");
+        const otherDocumentTypeContainer = document.getElementById(
+          "otherDocumentTypeContainer"
+        );
+        const expiryDate = document.getElementById("expiryDate");
+        const expiryDateContainer = document.getElementById(
+          "expiryDateContainer"
+        );
+        const expiryRequired = document.getElementById("expiryRequired");
+        const expiryOptional = document.getElementById("expiryOptional");
         const fileInput = document.getElementById("fileInput");
         const fileName = document.getElementById("fileName");
         const confirmUpload = document.getElementById("confirmUpload");
@@ -1016,7 +1009,9 @@
           otherDocumentType.value = "";
           fileInput.value = "";
           fileName.textContent = "";
-          otherDocumentType.classList.remove("active");
+          expiryDate.value = "";
+          otherDocumentTypeContainer.style.display = "none";
+          expiryDateContainer.style.display = "none";
         };
 
         closeModal.addEventListener("click", hideModal);
@@ -1027,10 +1022,31 @@
 
         // Handle Document Type Selection
         documentType.addEventListener("change", () => {
-          otherDocumentType.classList.toggle(
-            "active",
-            documentType.value === "other"
+          const selectedOption =
+            documentType.options[documentType.selectedIndex];
+          const requiresExpiry = selectedOption.getAttribute(
+            "data-requires-expiry"
           );
+
+          // Handle "Other" document type
+          otherDocumentTypeContainer.style.display =
+            documentType.value === "other" ? "block" : "none";
+
+          // Handle expiry date field
+          if (documentType.value === "other") {
+            expiryDateContainer.style.display = "block";
+            expiryRequired.style.display = "none";
+            expiryOptional.style.display = "inline";
+            expiryDate.required = false;
+          } else if (requiresExpiry === "true") {
+            expiryDateContainer.style.display = "block";
+            expiryRequired.style.display = "inline";
+            expiryOptional.style.display = "none";
+            expiryDate.required = true;
+          } else {
+            expiryDateContainer.style.display = "none";
+            expiryDate.required = false;
+          }
         });
 
         // Handle File Selection
@@ -1047,9 +1063,15 @@
               ? otherDocumentType.value
               : documentType.options[documentType.selectedIndex].text;
           const file = fileInput.files[0];
+          const expiry = expiryDate.value;
 
           if (!selectedType) {
             alert("Please select a document type");
+            return;
+          }
+
+          if (documentType.value === "other" && !otherDocumentType.value) {
+            alert("Please enter the document name");
             return;
           }
 
@@ -1058,8 +1080,17 @@
             return;
           }
 
+          if (expiryDate.required && !expiry) {
+            alert("Please select an expiry date");
+            return;
+          }
+
           // Here you would typically handle the file upload to your server
-          alert(`Uploading ${file.name} as ${selectedType}`);
+          alert(
+            `Uploading ${file.name} as ${selectedType}${
+              expiry ? ` with expiry date ${expiry}` : ""
+            }`
+          );
           hideModal();
         });
 
