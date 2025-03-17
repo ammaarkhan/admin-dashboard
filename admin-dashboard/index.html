@@ -844,6 +844,38 @@
       </div>
     </div>
 
+    <!-- Bio Warning Modal -->
+    <div id="bioModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Missing Bio Information</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="warning-message">
+            <i
+              class="fas fa-exclamation-triangle"
+              style="color: #f59e0b; margin-right: 8px"
+            ></i>
+            <p>
+              The following required bios have not been filled out for this HSP:
+            </p>
+            <ul style="margin-top: 1rem; margin-left: 1.5rem">
+              <li>Profile Bio</li>
+              <li>Room Listing Bio</li>
+            </ul>
+            <p style="margin-top: 1rem">
+              Would you like to continue with the approval process anyway?
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Continue to Approval</button>
+        </div>
+      </div>
+    </div>
+
     <!-- Approval Confirmation Modal -->
     <div id="approvalModal" class="modal hidden">
       <div class="modal-content">
@@ -861,6 +893,46 @@
         </div>
       </div>
     </div>
+
+    <style>
+      .bio-input-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .bio-input-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .bio-input-section label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+
+      .bio-description {
+        font-size: 0.875rem;
+        color: #64748b;
+        margin-bottom: 0.75rem;
+      }
+
+      .modal-content textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+        resize: vertical;
+      }
+
+      .modal-content textarea:focus {
+        outline: none;
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+      }
+    </style>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -1151,6 +1223,42 @@
         }
 
         function showApprovalModal(select, email, name, isApplicationSection) {
+          if (isApplicationSection) {
+            showBioWarningModal(select, email, name);
+          } else {
+            showFinalApprovalModal(select, email, name, isApplicationSection);
+          }
+        }
+
+        function showBioWarningModal(select, email, name) {
+          const modal = document.getElementById("bioModal");
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+
+          modal.classList.remove("hidden");
+
+          const closeModal = () => {
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            modal.classList.add("hidden");
+            showFinalApprovalModal(select, email, name, true);
+          };
+        }
+
+        function showFinalApprovalModal(
+          select,
+          email,
+          name,
+          isApplicationSection
+        ) {
           const modal = document.getElementById("approvalModal");
           const closeBtn = modal.querySelector(".close-modal");
           const cancelBtn = modal.querySelector(".btn-cancel");
