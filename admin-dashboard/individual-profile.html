@@ -962,8 +962,8 @@
             <div class="profile-section">
               <div class="section-header">
                 <h2>Required Documents</h2>
-                <button class="edit-button">
-                  <i class="fas fa-edit"></i> Edit
+                <button class="edit-button upload-trigger">
+                  <i class="fas fa-upload"></i> Upload
                 </button>
               </div>
               <p class="section-description">
@@ -1149,6 +1149,79 @@
       </main>
     </div>
 
+    <!-- Upload Document Modal -->
+    <div id="uploadModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Upload Document</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="documentType">Document Type:</label>
+            <select id="documentType" class="form-select">
+              <option value="">Select document type...</option>
+              <option value="behavior" data-requires-expiry="true">
+                Behavior Support / Safety Plan
+              </option>
+              <option value="health" data-requires-expiry="true">
+                Health Care Plan
+              </option>
+              <option value="psychological" data-requires-expiry="false">
+                Psychological Assessment
+              </option>
+              <option value="transition" data-requires-expiry="true">
+                CLBC Transition Plan / GSA
+              </option>
+              <option value="bcid" data-requires-expiry="true">BC ID</option>
+              <option value="legal" data-requires-expiry="false">
+                Legal Documents (POA)
+              </option>
+              <option value="diet" data-requires-expiry="true">
+                Medical Diet Plan
+              </option>
+              <option value="lifePlan" data-requires-expiry="true">
+                Personal Life Plan
+              </option>
+              <option value="financial" data-requires-expiry="true">
+                Financial Review
+              </option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div id="otherDocumentType" class="form-group hidden">
+            <label for="otherType">Specify Document Type:</label>
+            <input
+              type="text"
+              id="otherType"
+              class="form-input"
+              placeholder="Enter document type"
+            />
+          </div>
+
+          <div id="expiryDateField" class="form-group hidden">
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="date" id="expiryDate" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label for="documentFile">Upload File:</label>
+            <input
+              type="file"
+              id="documentFile"
+              class="form-input"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Upload Document</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Tab Navigation
@@ -1210,6 +1283,115 @@
             individual.status.charAt(0).toUpperCase() +
             individual.status.slice(1);
           statusElement.className = `profile-status ${individual.status}`;
+        }
+
+        // Upload Modal Functionality
+        const uploadModal = document.getElementById("uploadModal");
+        const uploadTrigger = document.querySelector(".upload-trigger");
+        const closeModal = uploadModal.querySelector(".close-modal");
+        const cancelBtn = uploadModal.querySelector(".btn-cancel");
+        const documentTypeSelect = document.getElementById("documentType");
+        const otherDocumentType = document.getElementById("otherDocumentType");
+        const expiryDateField = document.getElementById("expiryDateField");
+
+        uploadTrigger.addEventListener("click", () => {
+          uploadModal.classList.remove("hidden");
+        });
+
+        closeModal.addEventListener("click", () => {
+          uploadModal.classList.add("hidden");
+          resetForm();
+        });
+
+        cancelBtn.addEventListener("click", () => {
+          uploadModal.classList.add("hidden");
+          resetForm();
+        });
+
+        documentTypeSelect.addEventListener("change", function () {
+          // Handle "Other" option visibility
+          otherDocumentType.classList.toggle("hidden", this.value !== "other");
+
+          // Handle expiry date field visibility
+          const requiresExpiry =
+            this.options[this.selectedIndex].getAttribute(
+              "data-requires-expiry"
+            ) === "true";
+          expiryDateField.classList.toggle(
+            "hidden",
+            !requiresExpiry && this.value !== "other"
+          );
+
+          if (this.value === "other") {
+            expiryDateField.classList.remove("hidden"); // Always show for other, but make optional
+            expiryDateField.querySelector("input").required = false;
+          } else if (requiresExpiry) {
+            expiryDateField.querySelector("input").required = true;
+          }
+        });
+
+        function resetForm() {
+          documentTypeSelect.value = "";
+          otherDocumentType.classList.add("hidden");
+          expiryDateField.classList.add("hidden");
+          document.getElementById("otherType").value = "";
+          document.getElementById("expiryDate").value = "";
+          document.getElementById("documentFile").value = "";
+        }
+
+        // Handle form submission
+        const submitBtn = uploadModal.querySelector(".btn-submit");
+        submitBtn.addEventListener("click", function () {
+          const fileInput = document.getElementById("documentFile");
+          if (!fileInput.files.length) {
+            showToast("Please select a file to upload", "error");
+            return;
+          }
+
+          const documentType = documentTypeSelect.value;
+          if (!documentType) {
+            showToast("Please select a document type", "error");
+            return;
+          }
+
+          if (
+            documentType === "other" &&
+            !document.getElementById("otherType").value.trim()
+          ) {
+            showToast("Please specify the document type", "error");
+            return;
+          }
+
+          const requiresExpiry =
+            documentTypeSelect.options[
+              documentTypeSelect.selectedIndex
+            ].getAttribute("data-requires-expiry") === "true";
+          if (requiresExpiry && !document.getElementById("expiryDate").value) {
+            showToast("Please select an expiry date", "error");
+            return;
+          }
+
+          // Simulate upload
+          showToast("Document uploaded successfully", "success");
+          uploadModal.classList.add("hidden");
+          resetForm();
+        });
+
+        function showToast(message, type = "success") {
+          const toast = document.createElement("div");
+          toast.className = `toast ${type}`;
+          toast.innerHTML = `
+            <i class="fas ${
+              type === "success" ? "fa-check-circle" : "fa-exclamation-circle"
+            }"></i>
+            <span>${message}</span>
+          `;
+          document.body.appendChild(toast);
+
+          setTimeout(() => {
+            toast.style.animation = "slideOut 0.3s ease-out forwards";
+            setTimeout(() => toast.remove(), 300);
+          }, 3000);
         }
       });
 
