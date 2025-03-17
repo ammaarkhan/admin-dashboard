@@ -405,6 +405,7 @@
                   <th>Contract ID</th>
                   <th>Individual</th>
                   <th>Home Share Provider</th>
+                  <th>Assigned Admin</th>
                   <th>Status</th>
                   <th>Start Date</th>
                   <th>End Date</th>
@@ -418,6 +419,7 @@
                   <td>CTR-0001</td>
                   <td>Emily Davis</td>
                   <td>Sarah Wilson</td>
+                  <td>John Anderson</td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
@@ -486,6 +488,7 @@
                   <td>CTR-0002</td>
                   <td>James Wilson</td>
                   <td>Michael Chen</td>
+                  <td>Sarah Thompson</td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
@@ -598,6 +601,16 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="assignedAdmin">Assigned Admin</label>
+            <select id="assignedAdmin" required>
+              <option value="">Select Admin</option>
+              <option value="1">John Anderson</option>
+              <option value="2">Sarah Thompson</option>
+              <option value="3">Michael Williams</option>
+              <option value="4">Lisa Chen</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="startDate">Start Date</label>
             <input type="date" id="startDate" required />
           </div>
@@ -704,6 +717,7 @@
 
           const individual = document.getElementById("individual");
           const provider = document.getElementById("provider");
+          const assignedAdmin = document.getElementById("assignedAdmin");
           const startDate = document.getElementById("startDate");
           const endDate = document.getElementById("endDate");
 
@@ -714,6 +728,7 @@
             <td>CTR-${String(contractId).padStart(4, "0")}</td>
             <td>${individual.options[individual.selectedIndex].text}</td>
             <td>${provider.options[provider.selectedIndex].text}</td>
+            <td>${assignedAdmin.options[assignedAdmin.selectedIndex].text}</td>
             <td>
               <div class="status-dropdown">
                 <select class="status-select">
