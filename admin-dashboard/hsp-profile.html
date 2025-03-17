@@ -298,6 +298,40 @@
         content: "•";
         color: var(--primary);
       }
+
+      .bio-content {
+        background: #ffffff;
+        padding: 1.25rem;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        margin-top: 0.5rem;
+      }
+
+      .bio-content p {
+        color: #374151;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        margin: 0 0 1rem 0;
+      }
+
+      .bio-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .info-item label {
+        display: block;
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .info-item.full-width {
+        grid-column: 1 / -1;
+        background: #f9fafb;
+        padding: 1.25rem;
+        border-radius: 6px;
+      }
     </style>
   </head>
   <body>
@@ -418,6 +452,29 @@
                 <div class="info-item">
                   <label>Postal Code</label>
                   <p>M5V 2K7</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Profile Bio (Written by Home Share Coordinator)</label>
+                  <div class="bio-content">
+                    <p>
+                      John is a dedicated and experienced home share provider
+                      with a warm personality and strong commitment to
+                      supporting individuals with diverse needs. With his
+                      background in caregiving and current role as a software
+                      engineer, he brings a unique blend of technical
+                      problem-solving skills and compassionate care to his role.
+                      John maintains a structured yet flexible environment that
+                      promotes independence and personal growth.
+                    </p>
+                    <p>
+                      His home provides a peaceful and inclusive atmosphere, and
+                      his experience with various support needs makes him
+                      well-equipped to handle different situations. John's
+                      multilingual abilities and patient approach to
+                      communication ensure effective interaction with
+                      individuals of diverse backgrounds.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -728,6 +785,31 @@
                 <div class="listing-section">
                   <h3>About Listing</h3>
                   <div class="info-grid">
+                    <div class="info-item full-width">
+                      <label
+                        >Room Listing Bio (Written by Home Share
+                        Coordinator)</label
+                      >
+                      <div class="bio-content">
+                        <p>
+                          This thoughtfully designed living space offers an
+                          ideal environment for individuals seeking a supportive
+                          and inclusive home share arrangement. The room is
+                          situated in a quiet neighborhood with excellent
+                          accessibility to community resources and public
+                          transportation. John has created a living space that
+                          perfectly balances privacy with community engagement.
+                        </p>
+                        <p>
+                          The home's layout and amenities have been carefully
+                          considered to accommodate various support needs while
+                          maintaining a comfortable, home-like atmosphere. The
+                          shared spaces are well-maintained and designed to
+                          foster both independence and social interaction when
+                          desired.
+                        </p>
+                      </div>
+                    </div>
                     <div class="info-item full-width">
                       <label>Description</label>
                       <p>
