@@ -393,7 +393,7 @@
 
         <section class="contracts-section">
           <div class="section-header">
-            <h2>Contracts</h2>
+            <h2>Active Contracts</h2>
             <button class="add-user-btn" id="newContractBtn">
               + New Contract
             </button>
@@ -414,7 +414,7 @@
                 </tr>
               </thead>
               <tbody id="contractsTableBody">
-                <!-- Sample contract rows -->
+                <!-- Active contract rows -->
                 <tr>
                   <td>CTR-0001</td>
                   <td>Emily Davis</td>
@@ -448,38 +448,118 @@
                   <td>2024-03-15</td>
                   <td>2025-03-15</td>
                   <td class="file-upload-cell">
-                    <div class="file-upload" data-user-id="1-consent">
-                      <div class="upload-state uploaded">
-                        <div class="file-info">
-                          <i class="fas fa-file-alt"></i>
-                          <span class="file-name">consent_agreement.pdf</span>
-                        </div>
-                        <div class="file-actions">
-                          <button class="btn-download" title="Download">
-                            <i class="fas fa-download"></i>
+                    <div class="file-upload multiple" data-user-id="1-consent">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file1-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
                           </button>
-                          <button class="btn-update" title="Upload New Version">
-                            <i class="fas fa-sync-alt"></i>
-                          </button>
                         </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >consent_agreement_2024.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">medical_consent.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="1"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
                       </div>
                     </div>
                   </td>
                   <td class="file-upload-cell">
-                    <div class="file-upload" data-user-id="1-hsp">
-                      <div class="upload-state uploaded">
-                        <div class="file-info">
-                          <i class="fas fa-file-alt"></i>
-                          <span class="file-name">hsp_contract.pdf</span>
-                        </div>
-                        <div class="file-actions">
-                          <button class="btn-download" title="Download">
-                            <i class="fas fa-download"></i>
+                    <div class="file-upload multiple" data-user-id="1-hsp">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-hsp"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file1-hsp" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload HSP Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
                           </button>
-                          <button class="btn-update" title="Upload New Version">
-                            <i class="fas fa-sync-alt"></i>
-                          </button>
                         </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">hsp_contract_2024.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
                       </div>
                     </div>
                   </td>
@@ -513,49 +593,264 @@
                   <td>2024-03-18</td>
                   <td>2025-03-18</td>
                   <td class="file-upload-cell">
-                    <div class="file-upload" data-user-id="2-consent">
-                      <div class="upload-state uploaded">
-                        <div class="file-info">
-                          <i class="fas fa-file-alt"></i>
-                          <span class="file-name">consent_agreement.pdf</span>
-                        </div>
-                        <div class="file-actions">
-                          <button class="btn-download" title="Download">
-                            <i class="fas fa-download"></i>
+                    <div class="file-upload multiple" data-user-id="2-consent">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file2-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
                           </button>
-                          <button class="btn-update" title="Upload New Version">
-                            <i class="fas fa-sync-alt"></i>
-                          </button>
                         </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">consent_2024.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
                       </div>
                     </div>
                   </td>
                   <td class="file-upload-cell">
-                    <div class="file-upload" data-user-id="2-hsp">
+                    <div class="file-upload multiple" data-user-id="2-hsp">
                       <div class="upload-state initial">
                         <input
                           type="file"
                           id="file2-hsp"
                           class="file-input"
                           accept=".pdf,.doc,.docx"
+                          multiple
                         />
                         <label for="file2-hsp" class="file-label">
                           <i class="fas fa-upload"></i>
-                          <span>Upload HSP Contract</span>
+                          <span>Upload HSP Files</span>
                         </label>
                       </div>
-                      <div class="upload-state uploaded hidden">
-                        <div class="file-info">
-                          <i class="fas fa-file-alt"></i>
-                          <span class="file-name">document.pdf</span>
+                      <div class="uploaded-files hidden">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
                         </div>
-                        <div class="file-actions">
-                          <button class="btn-download" title="Download">
-                            <i class="fas fa-download"></i>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">consent_agreement.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >medical_consent_2023.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="contracts-section" style="margin-top: 2rem">
+          <div class="section-header">
+            <h2>Archived Contracts</h2>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Contract ID</th>
+                  <th>Individual</th>
+                  <th>Home Share Provider</th>
+                  <th>Assigned Admin</th>
+                  <th>Status</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Individual Consent Agreement</th>
+                  <th>HSP Contract</th>
+                </tr>
+              </thead>
+              <tbody id="archivedContractsTableBody">
+                <!-- Sample archived contract -->
+                <tr>
+                  <td>CTR-0003</td>
+                  <td>Maria Garcia</td>
+                  <td>John Smith</td>
+                  <td>Michael Williams</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select" disabled>
+                        <option
+                          value="complete"
+                          data-icon="fa-flag-checkered"
+                          selected
+                        >
+                          Complete
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>2023-03-15</td>
+                  <td>2024-03-15</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="3-consent">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file3-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file3-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
                           </button>
-                          <button class="btn-update" title="Upload New Version">
-                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">consent_agreement.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >medical_consent_2023.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="3-hsp">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file3-hsp"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file3-hsp" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload HSP Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
                           </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">hsp_contract.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">payment_schedule.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">terms_2023.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
                         </div>
                       </div>
                       <div class="upload-progress hidden">
@@ -745,26 +1040,47 @@
             <td>${startDate.value}</td>
             <td>${endDate.value}</td>
             <td class="file-upload-cell">
-              <div class="file-upload" data-user-id="${contractId}-consent">
-                <div class="upload-state initial">
-                  <input type="file" id="${fileUploadId}" class="file-input" accept=".pdf,.doc,.docx" />
+              <div class="file-upload multiple" data-user-id="${contractId}-consent">
+                <div class="upload-state initial hidden">
+                  <input type="file" id="${fileUploadId}" class="file-input" accept=".pdf,.doc,.docx" multiple />
                   <label for="${fileUploadId}" class="file-label">
                     <i class="fas fa-upload"></i>
-                    <span>Upload Agreement</span>
+                    <span>Upload Consent Files</span>
                   </label>
                 </div>
-                <div class="upload-state uploaded hidden">
-                  <div class="file-info">
-                    <i class="fas fa-file-alt"></i>
-                    <span class="file-name">document.pdf</span>
+                <div class="uploaded-files">
+                  <div class="add-more-files">
+                    <button class="btn-add-file">
+                      <i class="fas fa-plus"></i> Add More Files
+                    </button>
                   </div>
-                  <div class="file-actions">
-                    <button class="btn-download" title="Download">
-                      <i class="fas fa-download"></i>
-                    </button>
-                    <button class="btn-update" title="Upload New Version">
-                      <i class="fas fa-sync-alt"></i>
-                    </button>
+                  <div class="file-item">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span class="file-name">consent_agreement_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn-delete" title="Delete" data-index="0">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="file-item">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span class="file-name">medical_consent.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn-delete" title="Delete" data-index="1">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div class="upload-progress hidden">
@@ -776,31 +1092,33 @@
               </div>
             </td>
             <td class="file-upload-cell">
-              <div class="file-upload" data-user-id="${contractId}-hsp">
-                <div class="upload-state initial">
-                  <input
-                    type="file"
-                    id="${contractId}-hsp"
-                    class="file-input"
-                    accept=".pdf,.doc,.docx"
-                  />
+              <div class="file-upload multiple" data-user-id="${contractId}-hsp">
+                <div class="upload-state initial hidden">
+                  <input type="file" id="${contractId}-hsp" class="file-input" accept=".pdf,.doc,.docx" multiple />
                   <label for="${contractId}-hsp" class="file-label">
                     <i class="fas fa-upload"></i>
-                    <span>Upload HSP Contract</span>
+                    <span>Upload HSP Files</span>
                   </label>
                 </div>
-                <div class="upload-state uploaded hidden">
-                  <div class="file-info">
-                    <i class="fas fa-file-alt"></i>
-                    <span class="file-name">document.pdf</span>
+                <div class="uploaded-files">
+                  <div class="add-more-files">
+                    <button class="btn-add-file">
+                      <i class="fas fa-plus"></i> Add More Files
+                    </button>
                   </div>
-                  <div class="file-actions">
-                    <button class="btn-download" title="Download">
-                      <i class="fas fa-download"></i>
-                    </button>
-                    <button class="btn-update" title="Upload New Version">
-                      <i class="fas fa-sync-alt"></i>
-                    </button>
+                  <div class="file-item">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span class="file-name">hsp_contract_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn-delete" title="Delete" data-index="0">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div class="upload-progress hidden">
