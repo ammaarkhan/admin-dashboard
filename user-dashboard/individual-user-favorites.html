@@ -471,10 +471,6 @@
           <span class="counter-number">2/3</span>
           <span class="counter-text">You can select up to 3 listings</span>
         </div>
-        <button class="submit-button">
-          <i class="fas fa-paper-plane"></i>
-          Submit Favorites
-        </button>
       </div>
 
       <!-- Listings Grid -->
@@ -590,7 +586,6 @@
         // Handle dropdown toggle
         const userProfile = document.querySelector(".user-profile");
         const dropdownMenu = document.querySelector(".dropdown-menu");
-        const submitButton = document.querySelector(".submit-button");
         const counterNumber = document.querySelector(".counter-number");
         const favoriteButtons = document.querySelectorAll(".favorite-button");
 
@@ -600,25 +595,7 @@
             ".favorite-button.active"
           ).length;
           counterNumber.textContent = `${favoriteCount}/3`;
-
-          // Enable/disable submit button based on count
-          if (favoriteCount > 0) {
-            submitButton.disabled = false;
-          } else {
-            submitButton.disabled = true;
-          }
         };
-
-        // Handle submit button click
-        submitButton.addEventListener("click", () => {
-          const favoriteCount = document.querySelectorAll(
-            ".favorite-button.active"
-          ).length;
-          if (favoriteCount > 0) {
-            // Here you would typically make an API call to submit the favorites
-            alert(`Successfully submitted ${favoriteCount} favorite listings!`);
-          }
-        });
 
         // Handle favorite button clicks
         favoriteButtons.forEach((button) => {
