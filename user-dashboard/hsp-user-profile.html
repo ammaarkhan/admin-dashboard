@@ -231,6 +231,145 @@
       .action-link:hover {
         text-decoration: underline;
       }
+
+      /* Add Modal Styles */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        width: 100%;
+        max-width: 500px;
+        position: relative;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-title {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      .close-modal {
+        background: none;
+        border: none;
+        color: var(--text-gray);
+        cursor: pointer;
+        font-size: 1.25rem;
+      }
+
+      .modal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-label {
+        font-size: 0.875rem;
+        color: var(--text-gray);
+        font-weight: 500;
+      }
+
+      .form-select {
+        padding: 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.875rem;
+        color: #1e293b;
+      }
+
+      .form-input {
+        padding: 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.875rem;
+      }
+
+      .custom-file-input {
+        display: none;
+      }
+
+      .file-upload-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        color: var(--text-gray);
+        cursor: pointer;
+        font-size: 0.875rem;
+      }
+
+      .file-name {
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+        color: var(--text-gray);
+      }
+
+      .modal-footer {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+
+      .modal-button {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        cursor: pointer;
+      }
+
+      .cancel-button {
+        background: white;
+        border: 1px solid var(--border);
+        color: var(--text-gray);
+      }
+
+      .upload-button {
+        background: var(--primary);
+        border: none;
+        color: white;
+      }
+
+      .other-input {
+        display: none;
+      }
+
+      .other-input.active {
+        display: block;
+        margin-top: 0.5rem;
+      }
     </style>
   </head>
   <body>
@@ -659,7 +798,7 @@
           <div class="section">
             <div class="section-header">
               <h2 class="section-title">File Uploads</h2>
-              <button class="edit-button">
+              <button class="edit-button upload-trigger">
                 <i class="fas fa-upload"></i>
                 Upload
               </button>
@@ -782,10 +921,152 @@
       </main>
     </div>
 
+    <!-- Upload Modal -->
+    <div class="modal-overlay" id="uploadModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Upload Document</h3>
+          <button class="close-modal" id="closeModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="form-group">
+            <label class="form-label">Document Type</label>
+            <select class="form-select" id="documentType">
+              <option value="">Select document type</option>
+              <option value="physicians-cert">
+                Physician's certification of good health
+              </option>
+              <option value="drivers-license">
+                Valid class 5 driver's licence
+              </option>
+              <option value="drivers-abstract">Clean driver's abstract</option>
+              <option value="vehicle-insurance">
+                Valid vehicle insurance ($3 million Liability, Personal Use)
+              </option>
+              <option value="home-insurance">
+                Valid home/renter's insurance
+              </option>
+              <option value="evacuation-plan">
+                Emergency evacuation plan and home diagram
+              </option>
+              <option value="first-aid">
+                First Aid Certificate with CPR Level C
+              </option>
+              <option value="worksafe">Work Safe BC clearance</option>
+              <option value="banking">Banking Information / Void Cheque</option>
+              <option value="other">Other</option>
+            </select>
+            <input
+              type="text"
+              class="form-input other-input"
+              id="otherDocumentType"
+              placeholder="Enter document type"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Upload File</label>
+            <input
+              type="file"
+              id="fileInput"
+              class="custom-file-input"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+            />
+            <label for="fileInput" class="file-upload-button">
+              <i class="fas fa-upload"></i>
+              Choose File
+            </label>
+            <div class="file-name" id="fileName"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-button cancel-button" id="cancelUpload">
+            Cancel
+          </button>
+          <button class="modal-button upload-button" id="confirmUpload">
+            Upload
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Edit Button Functionality
-        const editButtons = document.querySelectorAll(".edit-button");
+        // Modal Elements
+        const modalOverlay = document.getElementById("uploadModal");
+        const closeModal = document.getElementById("closeModal");
+        const cancelUpload = document.getElementById("cancelUpload");
+        const uploadButton = document.querySelector(".upload-trigger");
+        const documentType = document.getElementById("documentType");
+        const otherDocumentType = document.getElementById("otherDocumentType");
+        const fileInput = document.getElementById("fileInput");
+        const fileName = document.getElementById("fileName");
+        const confirmUpload = document.getElementById("confirmUpload");
+
+        // Show Modal
+        uploadButton.addEventListener("click", () => {
+          modalOverlay.classList.add("active");
+        });
+
+        // Hide Modal
+        const hideModal = () => {
+          modalOverlay.classList.remove("active");
+          documentType.value = "";
+          otherDocumentType.value = "";
+          fileInput.value = "";
+          fileName.textContent = "";
+          otherDocumentType.classList.remove("active");
+        };
+
+        closeModal.addEventListener("click", hideModal);
+        cancelUpload.addEventListener("click", hideModal);
+        modalOverlay.addEventListener("click", (e) => {
+          if (e.target === modalOverlay) hideModal();
+        });
+
+        // Handle Document Type Selection
+        documentType.addEventListener("change", () => {
+          otherDocumentType.classList.toggle(
+            "active",
+            documentType.value === "other"
+          );
+        });
+
+        // Handle File Selection
+        fileInput.addEventListener("change", () => {
+          fileName.textContent = fileInput.files[0]
+            ? fileInput.files[0].name
+            : "";
+        });
+
+        // Handle Upload
+        confirmUpload.addEventListener("click", () => {
+          const selectedType =
+            documentType.value === "other"
+              ? otherDocumentType.value
+              : documentType.options[documentType.selectedIndex].text;
+          const file = fileInput.files[0];
+
+          if (!selectedType) {
+            alert("Please select a document type");
+            return;
+          }
+
+          if (!file) {
+            alert("Please select a file to upload");
+            return;
+          }
+
+          // Here you would typically handle the file upload to your server
+          alert(`Uploading ${file.name} as ${selectedType}`);
+          hideModal();
+        });
+
+        // Edit Button Functionality (for non-upload buttons only)
+        const editButtons = document.querySelectorAll(
+          ".edit-button:not(.upload-trigger)"
+        );
         editButtons.forEach((button) => {
           button.addEventListener("click", () => {
             alert("Edit functionality coming soon!");
