@@ -90,14 +90,11 @@
                         <option value="approved" data-icon="fa-check-circle">
                           Approved
                         </option>
-                        <option value="in-progress" data-icon="fa-clock">
-                          In Progress
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
                         </option>
-                        <option
-                          value="in-contract"
-                          data-icon="fa-file-contract"
-                        >
-                          In Contract
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
                         </option>
                         <option value="disabled" data-icon="fa-ban">
                           Disabled
@@ -288,14 +285,11 @@
                         <option value="approved" data-icon="fa-check-circle">
                           Approved
                         </option>
-                        <option value="in-progress" data-icon="fa-clock">
-                          In Progress
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
                         </option>
-                        <option
-                          value="in-contract"
-                          data-icon="fa-file-contract"
-                        >
-                          In Contract
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
                         </option>
                         <option value="disabled" data-icon="fa-ban">
                           Disabled
@@ -516,14 +510,17 @@
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
-                        <option value="disabled" data-icon="fa-ban" selected>
-                          Disabled
-                        </option>
                         <option value="approved" data-icon="fa-check-circle">
                           Approved
                         </option>
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
+                        </option>
                         <option value="declined" data-icon="fa-times-circle">
                           Declined
+                        </option>
+                        <option value="disabled" data-icon="fa-ban" selected>
+                          Disabled
                         </option>
                       </select>
                       <div class="select-icon">
@@ -676,14 +673,17 @@
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
-                        <option value="disabled" data-icon="fa-ban" selected>
-                          Disabled
-                        </option>
                         <option value="approved" data-icon="fa-check-circle">
                           Approved
                         </option>
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
+                        </option>
                         <option value="declined" data-icon="fa-times-circle">
                           Declined
+                        </option>
+                        <option value="disabled" data-icon="fa-ban" selected>
+                          Disabled
                         </option>
                       </select>
                       <div class="select-icon">
@@ -931,6 +931,58 @@
         outline: none;
         border-color: #4f46e5;
         box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+      }
+
+      /* Update status dropdown styles */
+      .status-dropdown {
+        position: relative;
+        width: 120px;
+      }
+
+      .status-dropdown select {
+        width: 100%;
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        appearance: none;
+        background: white;
+        cursor: pointer;
+        font-size: 0.875rem;
+        line-height: 1.2;
+        white-space: normal; /* Allow text wrapping */
+        height: auto; /* Allow height to adjust */
+        min-height: 36px; /* Ensure minimum height */
+      }
+
+      .status-dropdown .select-icon {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      /* Status colors */
+      .status-select[data-status="approved"] {
+        color: var(--success-color);
+      }
+
+      .status-select[data-status="conditional"] {
+        color: var(--warning-color);
+      }
+
+      .status-select[data-status="declined"] {
+        color: var(--danger-color);
+      }
+
+      .status-select[data-status="disabled"] {
+        color: var(--text-secondary);
+      }
+
+      /* Adjust option text wrapping */
+      .status-select option {
+        white-space: normal;
+        line-height: 1.2;
       }
     </style>
 
@@ -1313,8 +1365,8 @@
             <div class="status-dropdown">
               <select class="status-select">
                 <option value="approved" data-icon="fa-check-circle">Approved</option>
-                <option value="in-progress" data-icon="fa-clock">In Progress</option>
-                <option value="in-contract" data-icon="fa-file-contract">In Contract</option>
+                <option value="conditional" data-icon="fa-clock">Conditional Approved</option>
+                <option value="declined" data-icon="fa-times-circle">Declined</option>
                 <option value="disabled" data-icon="fa-ban">Disabled</option>
               </select>
               <div class="select-icon">
@@ -1389,6 +1441,9 @@
           switch (status) {
             case "approved":
               iconContainer.style.color = "var(--success-color)";
+              break;
+            case "conditional":
+              iconContainer.style.color = "var(--warning-color)";
               break;
             case "declined":
               iconContainer.style.color = "var(--danger-color)";
