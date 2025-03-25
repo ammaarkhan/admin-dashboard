@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happipad - Dashboard Selection</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      :root {
+        --primary-color: #4f46e5;
+        --text-primary: #1e293b;
+        --text-secondary: #64748b;
+        --border-color: #e2e8f0;
+      }
+
+      body {
+        background-color: #f1f5f9;
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      .container {
+        background-color: white;
+        padding: 3rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+      }
+
+      .logo {
+        margin-bottom: 2rem;
+      }
+
+      .logo h1 {
+        color: var(--primary-color);
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .logo p {
+        color: var(--text-secondary);
+        font-size: 1rem;
+      }
+
+      .dashboard-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .dashboard-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        color: white;
+      }
+
+      .dashboard-button i {
+        font-size: 1.25rem;
+      }
+
+      .admin-button {
+        background-color: var(--primary-color);
+      }
+
+      .admin-button:hover {
+        background-color: #4338ca;
+      }
+
+      .hsp-button {
+        background-color: #10b981;
+      }
+
+      .hsp-button:hover {
+        background-color: #059669;
+      }
+
+      .individual-button {
+        background-color: #f59e0b;
+      }
+
+      .individual-button:hover {
+        background-color: #d97706;
+      }
+
+      .button-description {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 2rem;
+        }
+
+        .dashboard-button {
+          padding: 0.875rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <h1>Happipad</h1>
+        <p>Dashboard Selection</p>
+      </div>
+      <div class="dashboard-buttons">
+        <a
+          href="admin-dashboard/index.html"
+          class="dashboard-button admin-button"
+        >
+          <i class="fas fa-user-shield"></i>
+          Admin Dashboard
+        </a>
+        <span class="button-description"
+          >Manage users, documents, and system settings</span
+        >
+
+        <a
+          href="user-dashboard/hsp-user-dashboard.html"
+          class="dashboard-button hsp-button"
+        >
+          <i class="fas fa-home"></i>
+          HSP User Dashboard
+        </a>
+        <span class="button-description"
+          >Home Share Provider portal for managing listings and contracts</span
+        >
+
+        <a
+          href="user-dashboard/individual-user-search.html"
+          class="dashboard-button individual-button"
+        >
+          <i class="fas fa-search"></i>
+          Individual User Dashboard
+        </a>
+        <span class="button-description"
+          >Search and browse available home share opportunities</span
+        >
+      </div>
+    </div>
+  </body>
+</html>
