@@ -36,12 +36,18 @@
         display: grid;
         grid-template-columns: 250px 1fr;
         min-height: 100vh;
+        max-width: 100vw;
+        overflow-x: hidden;
       }
 
       /* Sidebar */
       .sidebar {
         background: var(--sidebar-bg);
         padding: 2rem;
+        width: 250px;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
       }
 
       .logo-container {
@@ -74,6 +80,9 @@
       /* Main Content */
       .main-content {
         padding: 2rem;
+        margin-left: 250px;
+        width: calc(100vw - 250px);
+        overflow-x: hidden;
       }
 
       /* Table Styles */
@@ -94,12 +103,15 @@
         background: white;
         border-radius: 8px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
       }
 
       .users-table {
         width: 100%;
         border-collapse: collapse;
+        min-width: 1400px;
       }
 
       .users-table th,
@@ -107,16 +119,44 @@
         padding: 1rem;
         text-align: left;
         border-bottom: 1px solid var(--border);
+        white-space: nowrap;
       }
 
       .users-table th {
         background: #f8fafc;
         font-weight: 500;
         color: var(--text-gray);
+        position: sticky;
+        top: 0;
+        z-index: 1;
       }
 
       .users-table tr:last-child td {
         border-bottom: none;
+      }
+
+      /* File upload cells need special handling */
+      .file-upload {
+        min-width: 200px;
+      }
+
+      /* Add a subtle scrollbar style */
+      .table-container::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .table-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      .table-container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 4px;
+      }
+
+      .table-container::-webkit-scrollbar-thumb:hover {
+        background: #555;
       }
 
       /* Status Styles */
@@ -308,6 +348,7 @@
                 <th>End Date</th>
                 <th>Individual Agreement</th>
                 <th>HSP Contract</th>
+                <th>Incident Reports</th>
               </tr>
             </thead>
             <tbody>
@@ -346,6 +387,79 @@
                     </div>
                   </div>
                 </td>
+                <td>
+                  <div class="file-upload">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span>incident_report_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="file-upload" style="margin-top: 0.5rem">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span>medical_incident_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>CTR-0002</td>
+                <td>James Wilson</td>
+                <td>Jane Smith</td>
+                <td>
+                  <span class="status-badge status-pending">Pending</span>
+                </td>
+                <td>2024-03-18</td>
+                <td>2025-03-18</td>
+                <td>
+                  <div class="file-upload">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span>consent_agreement.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="file-upload">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span>hsp_contract.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="file-upload">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span>incident_report_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -358,7 +472,7 @@
         // Handle file download
         document.querySelectorAll(".btn-download").forEach((btn) => {
           btn.addEventListener("click", () => {
-            alert("Downloading contract...");
+            alert("Downloading file...");
           });
         });
       });
