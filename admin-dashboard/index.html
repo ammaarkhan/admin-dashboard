@@ -93,6 +93,12 @@
                         <option value="conditional" data-icon="fa-clock">
                           Conditional Approved
                         </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
+                        </option>
                         <option value="declined" data-icon="fa-times-circle">
                           Declined
                         </option>
@@ -287,6 +293,12 @@
                         </option>
                         <option value="conditional" data-icon="fa-clock">
                           Conditional Approved
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
                         </option>
                         <option value="declined" data-icon="fa-times-circle">
                           Declined
@@ -837,7 +849,6 @@
               <thead>
                 <tr>
                   <th>Document Name</th>
-                  <th>Category</th>
                   <th>Last Updated</th>
                   <th>Visibility</th>
                   <th>File</th>
@@ -847,7 +858,6 @@
               <tbody>
                 <tr>
                   <td>HSP Handbook 2024</td>
-                  <td>Essential Documents</td>
                   <td>Mar 15, 2024</td>
                   <td>
                     <div class="visibility-toggle">
@@ -886,7 +896,6 @@
                 </tr>
                 <tr>
                   <td>Safety Guidelines</td>
-                  <td>Safety & Procedures</td>
                   <td>Mar 10, 2024</td>
                   <td>
                     <div class="visibility-toggle">
@@ -943,16 +952,6 @@
                   id="documentName"
                   placeholder="Enter document name"
                 />
-              </div>
-              <div class="form-group">
-                <label for="documentCategory">Category</label>
-                <select id="documentCategory">
-                  <option value="essential">Essential Documents</option>
-                  <option value="safety">Safety & Procedures</option>
-                  <option value="forms">Forms & Templates</option>
-                  <option value="training">Training Materials</option>
-                  <option value="policies">Policies & Guidelines</option>
-                </select>
               </div>
               <div class="form-group">
                 <label for="documentFile">Upload File</label>
@@ -1294,10 +1293,9 @@
             // Reset form
             function resetForm() {
               document.getElementById("documentName").value = "";
-              document.getElementById("documentCategory").selectedIndex = 0;
+              document.getElementById("documentVisibility").checked = true;
               fileInput.value = "";
               fileLabel.textContent = "Choose a file or drag it here";
-              document.getElementById("documentVisibility").checked = true;
             }
 
             // Handle visibility toggles
@@ -1312,6 +1310,321 @@
                 });
               });
           });
+
+          // Status dropdown functionality
+          const statusSelects = document.querySelectorAll(".status-select");
+          console.log("Found status selects:", statusSelects.length); // Debug: Check if selects are found
+
+          statusSelects.forEach((select) => {
+            // Set initial status
+            console.log("Initializing select:", select); // Debug: Check each select being initialized
+            updateSelectStatus(select);
+
+            select.addEventListener("change", function () {
+              console.log("Status changed to:", this.value); // Debug: Check if change event fires
+              const isApplicationSection = this.closest(
+                ".applications-section"
+              );
+              console.log("Is in application section:", isApplicationSection); // Debug: Check section context
+              const row = this.closest("tr");
+              const userEmail =
+                row.querySelector("td:nth-child(2)").textContent;
+              const userName = row.querySelector(".user-cell span").textContent;
+              console.log("User info:", { email: userEmail, name: userName }); // Debug: Check user info
+
+              if (this.value === "declined") {
+                console.log("Attempting to show decline modal"); // Debug: Check if this block is reached
+                showDeclineModal(this, userEmail, userName);
+              } else if (this.value === "approved") {
+                showApprovalModal(
+                  this,
+                  userEmail,
+                  userName,
+                  isApplicationSection
+                );
+              }
+
+              updateSelectStatus(this);
+            });
+          });
+
+          function showDeclineModal(select, email, name) {
+            console.log("showDeclineModal called with:", {
+              select,
+              email,
+              name,
+            }); // Debug: Check function call
+            const modal = document.getElementById("declineModal");
+            console.log("Found modal element:", modal); // Debug: Check if modal is found
+            const closeBtn = modal.querySelector(".close-modal");
+            const cancelBtn = modal.querySelector(".btn-cancel");
+            const submitBtn = modal.querySelector(".btn-submit");
+            const reasonTextarea = modal.querySelector("#declineReason");
+            console.log("Modal elements:", {
+              closeBtn: !!closeBtn,
+              cancelBtn: !!cancelBtn,
+              submitBtn: !!submitBtn,
+              reasonTextarea: !!reasonTextarea,
+            }); // Debug: Check if all modal elements are found
+
+            modal.dataset.selectElement = select;
+            console.log("Before removing hidden class"); // Debug: Check before class removal
+            modal.classList.remove("hidden");
+            console.log("After removing hidden class"); // Debug: Check after class removal
+            console.log(
+              "Modal display style:",
+              window.getComputedStyle(modal).display
+            ); // Debug: Check computed style
+            reasonTextarea.value = "";
+
+            const closeModal = () => {
+              console.log("Closing modal"); // Debug: Check if close is triggered
+              modal.classList.add("hidden");
+              select.value = "disabled";
+              updateSelectStatus(select);
+            };
+
+            closeBtn.onclick = closeModal;
+            cancelBtn.onclick = closeModal;
+
+            submitBtn.onclick = () => {
+              console.log("Submit clicked"); // Debug: Check if submit is clicked
+              const reason = reasonTextarea.value.trim();
+              if (!reason) {
+                showToast("Please provide a reason for declining", "error");
+                return;
+              }
+              sendDeclineEmail(email, name, reason);
+              modal.classList.add("hidden");
+              showToast("Application declined and email sent", "success");
+            };
+          }
+
+          function showApprovalModal(
+            select,
+            email,
+            name,
+            isApplicationSection
+          ) {
+            if (isApplicationSection) {
+              showBioWarningModal(select, email, name);
+            } else {
+              showFinalApprovalModal(select, email, name, isApplicationSection);
+            }
+          }
+
+          function showBioWarningModal(select, email, name) {
+            const modal = document.getElementById("bioModal");
+            const closeBtn = modal.querySelector(".close-modal");
+            const cancelBtn = modal.querySelector(".btn-cancel");
+            const submitBtn = modal.querySelector(".btn-submit");
+
+            modal.classList.remove("hidden");
+
+            const closeModal = () => {
+              modal.classList.add("hidden");
+              select.value = "disabled";
+              updateSelectStatus(select);
+            };
+
+            closeBtn.onclick = closeModal;
+            cancelBtn.onclick = closeModal;
+
+            submitBtn.onclick = () => {
+              modal.classList.add("hidden");
+              showFinalApprovalModal(select, email, name, true);
+            };
+          }
+
+          function showFinalApprovalModal(
+            select,
+            email,
+            name,
+            isApplicationSection
+          ) {
+            const modal = document.getElementById("approvalModal");
+            const closeBtn = modal.querySelector(".close-modal");
+            const cancelBtn = modal.querySelector(".btn-cancel");
+            const submitBtn = modal.querySelector(".btn-submit");
+
+            modal.classList.remove("hidden");
+
+            const closeModal = () => {
+              modal.classList.add("hidden");
+              select.value = "disabled";
+              updateSelectStatus(select);
+            };
+
+            closeBtn.onclick = closeModal;
+            cancelBtn.onclick = closeModal;
+
+            submitBtn.onclick = () => {
+              modal.classList.add("hidden");
+              if (isApplicationSection) {
+                moveToUsersList(select.closest("tr"));
+              }
+              sendApprovalEmail(email, name);
+              showToast("Application approved and email sent", "success");
+            };
+          }
+
+          function moveToUsersList(row) {
+            console.log("moveToUsersList called with row:", row);
+            const usersList = document.querySelector(
+              ".users-section .users-table tbody"
+            );
+            console.log("Found users list:", usersList);
+            const newUserRow = createUserRowFromApplication(row);
+            console.log("Created new user row:", newUserRow);
+            usersList.insertBefore(newUserRow, usersList.firstChild);
+            console.log("Inserted new row at the top of users list");
+            row.remove();
+            console.log("Removed original row from applications section");
+          }
+
+          function createUserRowFromApplication(applicationRow) {
+            console.log(
+              "Creating new user row from application row:",
+              applicationRow
+            );
+            const newUserRow = document.createElement("tr");
+
+            // Copy user cell (name and avatar)
+            const userCell = applicationRow
+              .querySelector(".user-cell")
+              .cloneNode(true);
+            console.log("Cloned user cell:", userCell);
+            newUserRow.appendChild(userCell);
+
+            // Copy email cell
+            const emailCell = applicationRow
+              .querySelector("td:nth-child(2)")
+              .cloneNode(true);
+            console.log("Cloned email cell:", emailCell);
+            newUserRow.appendChild(emailCell);
+
+            // Add status cell with approved status
+            console.log("Creating new status cell with approved status");
+            const statusCell = document.createElement("td");
+            statusCell.innerHTML = `
+                <div class="status-dropdown">
+                    <select class="status-select">
+                        <option value="approved" data-icon="fa-check-circle">Approved</option>
+                        <option value="conditional" data-icon="fa-clock">Conditional Approved</option>
+                        <option value="in-contract" data-icon="fa-file-contract">In Contract</option>
+                        <option value="declined" data-icon="fa-times-circle">Declined</option>
+                        <option value="disabled" data-icon="fa-ban">Disabled</option>
+                    </select>
+                    <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            `;
+            const statusSelect = statusCell.querySelector(".status-select");
+            statusSelect.value = "approved";
+            updateSelectStatus(statusSelect);
+            console.log("Created and initialized status cell:", statusCell);
+            newUserRow.appendChild(statusCell);
+
+            // Copy CRC Check cell
+            const crcCell = applicationRow
+              .querySelector("td:nth-child(5)")
+              .cloneNode(true);
+            console.log("Cloned CRC check cell:", crcCell);
+            newUserRow.appendChild(crcCell);
+
+            // Copy Reference Check cell
+            const refCell = applicationRow
+              .querySelector("td:nth-child(6)")
+              .cloneNode(true);
+            console.log("Cloned reference check cell:", refCell);
+            newUserRow.appendChild(refCell);
+
+            // Copy Home Study Recommendation cell
+            const studyCell = applicationRow
+              .querySelector("td:nth-child(7)")
+              .cloneNode(true);
+            console.log("Cloned home study cell:", studyCell);
+            newUserRow.appendChild(studyCell);
+
+            // Copy actions cell
+            const actionsCell = applicationRow
+              .querySelector(".actions-cell")
+              .cloneNode(true);
+            console.log("Cloned actions cell:", actionsCell);
+            newUserRow.appendChild(actionsCell);
+
+            console.log("Returning completed new user row:", newUserRow);
+            return newUserRow;
+          }
+
+          function sendApprovalEmail(email, name) {
+            console.log("Sending approval email to:", email);
+            console.log("User:", name);
+            // In a real application, this would make an API call to send the email
+          }
+
+          function updateSelectStatus(select) {
+            const selectedOption = select.options[select.selectedIndex];
+            const status = selectedOption.value;
+
+            // Update select appearance
+            select.dataset.status = status;
+
+            // Update icon color based on status
+            const iconContainer =
+              select.parentElement.querySelector(".select-icon");
+
+            // Reset classes
+            iconContainer.classList.remove(
+              "text-gray-400",
+              "text-green-500",
+              "text-red-500"
+            );
+
+            // Add appropriate color class
+            switch (status) {
+              case "approved":
+                iconContainer.style.color = "var(--success-color)";
+                break;
+              case "conditional":
+                iconContainer.style.color = "var(--warning-color)";
+                break;
+              case "declined":
+                iconContainer.style.color = "var(--danger-color)";
+                break;
+              default:
+                iconContainer.style.color = "var(--text-secondary)";
+            }
+          }
+
+          // Function to show toast notifications
+          function showToast(message, type = "success") {
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+              <i class="fas ${
+                type === "success" ? "fa-check-circle" : "fa-exclamation-circle"
+              }"></i>
+              <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+              toast.style.animation = "slideOut 0.3s ease-out forwards";
+              setTimeout(() => toast.remove(), 300);
+            }, 3000);
+          }
+
+          // Function to simulate sending decline email
+          function sendDeclineEmail(email, name, reason) {
+            console.log("Sending decline email to:", email);
+            console.log("User:", name);
+            console.log("Reason:", reason);
+            // In a real application, this would make an API call to your backend
+            // to send the actual email
+          }
         </script>
       </main>
     </div>
@@ -1715,15 +2028,20 @@
 
         statusSelects.forEach((select) => {
           // Set initial status
+          console.log("Initializing select:", select); // Debug: Check each select being initialized
           updateSelectStatus(select);
 
           select.addEventListener("change", function () {
+            console.log("Status changed to:", this.value); // Debug: Check if change event fires
             const isApplicationSection = this.closest(".applications-section");
+            console.log("Is in application section:", isApplicationSection); // Debug: Check section context
             const row = this.closest("tr");
             const userEmail = row.querySelector("td:nth-child(2)").textContent;
             const userName = row.querySelector(".user-cell span").textContent;
+            console.log("User info:", { email: userEmail, name: userName }); // Debug: Check user info
 
             if (this.value === "declined") {
+              console.log("Attempting to show decline modal"); // Debug: Check if this block is reached
               showDeclineModal(this, userEmail, userName);
             } else if (this.value === "approved") {
               showApprovalModal(
@@ -1739,17 +2057,32 @@
         });
 
         function showDeclineModal(select, email, name) {
+          console.log("showDeclineModal called with:", { select, email, name }); // Debug: Check function call
           const modal = document.getElementById("declineModal");
+          console.log("Found modal element:", modal); // Debug: Check if modal is found
           const closeBtn = modal.querySelector(".close-modal");
           const cancelBtn = modal.querySelector(".btn-cancel");
           const submitBtn = modal.querySelector(".btn-submit");
           const reasonTextarea = modal.querySelector("#declineReason");
+          console.log("Modal elements:", {
+            closeBtn: !!closeBtn,
+            cancelBtn: !!cancelBtn,
+            submitBtn: !!submitBtn,
+            reasonTextarea: !!reasonTextarea,
+          }); // Debug: Check if all modal elements are found
 
           modal.dataset.selectElement = select;
+          console.log("Before removing hidden class"); // Debug: Check before class removal
           modal.classList.remove("hidden");
+          console.log("After removing hidden class"); // Debug: Check after class removal
+          console.log(
+            "Modal display style:",
+            window.getComputedStyle(modal).display
+          ); // Debug: Check computed style
           reasonTextarea.value = "";
 
           const closeModal = () => {
+            console.log("Closing modal"); // Debug: Check if close is triggered
             modal.classList.add("hidden");
             select.value = "disabled";
             updateSelectStatus(select);
@@ -1759,6 +2092,7 @@
           cancelBtn.onclick = closeModal;
 
           submitBtn.onclick = () => {
+            console.log("Submit clicked"); // Debug: Check if submit is clicked
             const reason = reasonTextarea.value.trim();
             if (!reason) {
               showToast("Please provide a reason for declining", "error");
@@ -1834,78 +2168,92 @@
         }
 
         function moveToUsersList(row) {
+          console.log("moveToUsersList called with row:", row);
           const usersList = document.querySelector(
             ".users-section .users-table tbody"
           );
+          console.log("Found users list:", usersList);
           const newUserRow = createUserRowFromApplication(row);
+          console.log("Created new user row:", newUserRow);
           usersList.insertBefore(newUserRow, usersList.firstChild);
+          console.log("Inserted new row at the top of users list");
           row.remove();
+          console.log("Removed original row from applications section");
         }
 
         function createUserRowFromApplication(applicationRow) {
+          console.log(
+            "Creating new user row from application row:",
+            applicationRow
+          );
           const newUserRow = document.createElement("tr");
 
           // Copy user cell (name and avatar)
-          newUserRow.appendChild(
-            applicationRow.querySelector(".user-cell").cloneNode(true)
-          );
+          const userCell = applicationRow
+            .querySelector(".user-cell")
+            .cloneNode(true);
+          console.log("Cloned user cell:", userCell);
+          newUserRow.appendChild(userCell);
 
           // Copy email cell
-          newUserRow.appendChild(
-            applicationRow.querySelector("td:nth-child(2)").cloneNode(true)
-          );
+          const emailCell = applicationRow
+            .querySelector("td:nth-child(2)")
+            .cloneNode(true);
+          console.log("Cloned email cell:", emailCell);
+          newUserRow.appendChild(emailCell);
 
           // Add status cell with approved status
+          console.log("Creating new status cell with approved status");
           const statusCell = document.createElement("td");
           statusCell.innerHTML = `
-            <div class="status-dropdown">
-              <select class="status-select">
-                <option value="approved" data-icon="fa-check-circle">Approved</option>
-                <option value="conditional" data-icon="fa-clock">Conditional Approved</option>
-                <option value="declined" data-icon="fa-times-circle">Declined</option>
-                <option value="disabled" data-icon="fa-ban">Disabled</option>
-              </select>
-              <div class="select-icon">
-                <i class="fas fa-chevron-down"></i>
+              <div class="status-dropdown">
+                  <select class="status-select">
+                      <option value="approved" data-icon="fa-check-circle">Approved</option>
+                      <option value="conditional" data-icon="fa-clock">Conditional Approved</option>
+                      <option value="in-contract" data-icon="fa-file-contract">In Contract</option>
+                      <option value="declined" data-icon="fa-times-circle">Declined</option>
+                      <option value="disabled" data-icon="fa-ban">Disabled</option>
+                  </select>
+                  <div class="select-icon">
+                      <i class="fas fa-chevron-down"></i>
+                  </div>
               </div>
-            </div>
           `;
           const statusSelect = statusCell.querySelector(".status-select");
           statusSelect.value = "approved";
           updateSelectStatus(statusSelect);
+          console.log("Created and initialized status cell:", statusCell);
           newUserRow.appendChild(statusCell);
 
           // Copy CRC Check cell
-          newUserRow.appendChild(
-            applicationRow.querySelector("td:nth-child(5)").cloneNode(true)
-          );
+          const crcCell = applicationRow
+            .querySelector("td:nth-child(5)")
+            .cloneNode(true);
+          console.log("Cloned CRC check cell:", crcCell);
+          newUserRow.appendChild(crcCell);
 
           // Copy Reference Check cell
-          newUserRow.appendChild(
-            applicationRow.querySelector("td:nth-child(6)").cloneNode(true)
-          );
+          const refCell = applicationRow
+            .querySelector("td:nth-child(6)")
+            .cloneNode(true);
+          console.log("Cloned reference check cell:", refCell);
+          newUserRow.appendChild(refCell);
 
           // Copy Home Study Recommendation cell
-          newUserRow.appendChild(
-            applicationRow.querySelector("td:nth-child(7)").cloneNode(true)
-          );
+          const studyCell = applicationRow
+            .querySelector("td:nth-child(7)")
+            .cloneNode(true);
+          console.log("Cloned home study cell:", studyCell);
+          newUserRow.appendChild(studyCell);
 
           // Copy actions cell
-          newUserRow.appendChild(
-            applicationRow.querySelector(".actions-cell").cloneNode(true)
-          );
+          const actionsCell = applicationRow
+            .querySelector(".actions-cell")
+            .cloneNode(true);
+          console.log("Cloned actions cell:", actionsCell);
+          newUserRow.appendChild(actionsCell);
 
-          // Initialize file upload functionality for the new row
-          newUserRow
-            .querySelectorAll(".file-upload")
-            .forEach((uploadContainer) => {
-              if (uploadContainer.classList.contains("multiple")) {
-                initializeMultipleFileUpload(uploadContainer);
-              } else {
-                initializeSingleFileUpload(uploadContainer);
-              }
-            });
-
+          console.log("Returning completed new user row:", newUserRow);
           return newUserRow;
         }
 
