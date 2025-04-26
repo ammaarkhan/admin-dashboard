@@ -68,6 +68,8 @@
                   <th>CRC Check</th>
                   <th>Reference Check</th>
                   <th>Home Study Recommendation</th>
+                  <th>Profile Bio</th>
+                  <th>Room Listing Bio</th>
                 </tr>
               </thead>
               <tbody>
@@ -266,6 +268,26 @@
                       </div>
                     </div>
                   </td>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
+                  </td>
                 </tr>
                 <tr>
                   <td class="user-cell">
@@ -461,6 +483,26 @@
                         <span class="progress-text">Uploading... 0%</span>
                       </div>
                     </div>
+                  </td>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -1659,6 +1701,18 @@
             console.log("Cloned home study cell:", studyCell);
             newUserRow.appendChild(studyCell);
 
+            // Copy Profile Bio cell
+            const profileBioCell = applicationRow
+              .querySelector('td.bio-cell[data-bio-type="profile"]')
+              .cloneNode(true);
+            newUserRow.appendChild(profileBioCell);
+
+            // Copy Room Listing Bio cell
+            const roomBioCell = applicationRow
+              .querySelector('td.bio-cell[data-bio-type="room"]')
+              .cloneNode(true);
+            newUserRow.appendChild(roomBioCell);
+
             console.log("Returning completed new user row:", newUserRow);
             return newUserRow;
           }
@@ -2378,6 +2432,18 @@
             .cloneNode(true);
           console.log("Cloned home study cell:", studyCell);
           newUserRow.appendChild(studyCell);
+
+          // Copy Profile Bio cell
+          const profileBioCell = applicationRow
+            .querySelector('td.bio-cell[data-bio-type="profile"]')
+            .cloneNode(true);
+          newUserRow.appendChild(profileBioCell);
+
+          // Copy Room Listing Bio cell
+          const roomBioCell = applicationRow
+            .querySelector('td.bio-cell[data-bio-type="room"]')
+            .cloneNode(true);
+          newUserRow.appendChild(roomBioCell);
 
           console.log("Returning completed new user row:", newUserRow);
           return newUserRow;
