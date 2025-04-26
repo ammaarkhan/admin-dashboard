@@ -120,6 +120,14 @@
         margin-top: 0.25rem;
       }
 
+      .super-admin-button {
+        background-color: #1e293b;
+      }
+
+      .super-admin-button:hover {
+        background-color: #0f172a;
+      }
+
       @media (max-width: 640px) {
         .container {
           padding: 2rem;
@@ -138,6 +146,17 @@
         <p>Dashboard Selection</p>
       </div>
       <div class="dashboard-buttons">
+        <a
+          href="super-admin/index.html"
+          class="dashboard-button super-admin-button"
+        >
+          <i class="fas fa-user-cog"></i>
+          Super Admin Dashboard
+        </a>
+        <span class="button-description"
+          >Advanced system configuration and administrative controls</span
+        >
+
         <a
           href="admin-dashboard/index.html"
           class="dashboard-button admin-button"

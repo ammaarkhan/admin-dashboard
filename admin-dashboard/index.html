@@ -68,7 +68,6 @@
                   <th>CRC Check</th>
                   <th>Reference Check</th>
                   <th>Home Study Recommendation</th>
-                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -267,11 +266,6 @@
                       </div>
                     </div>
                   </td>
-                  <td class="actions-cell">
-                    <div class="actions">
-                      <button class="btn-delete">Delete</button>
-                    </div>
-                  </td>
                 </tr>
                 <tr>
                   <td class="user-cell">
@@ -468,11 +462,6 @@
                       </div>
                     </div>
                   </td>
-                  <td class="actions-cell">
-                    <div class="actions">
-                      <button class="btn-delete">Delete</button>
-                    </div>
-                  </td>
                 </tr>
               </tbody>
             </table>
@@ -495,7 +484,8 @@
                   <th>CRC Check</th>
                   <th>Reference Check</th>
                   <th>Home Study Recommendation</th>
-                  <th>Actions</th>
+                  <th>Profile Bio</th>
+                  <th>Room Listing Bio</th>
                 </tr>
               </thead>
               <tbody>
@@ -656,10 +646,25 @@
                       </div>
                     </div>
                   </td>
-                  <td class="actions-cell">
-                    <div class="actions">
-                      <button class="btn-delete">Delete</button>
-                    </div>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
                   </td>
                 </tr>
                 <tr>
@@ -819,10 +824,25 @@
                       </div>
                     </div>
                   </td>
-                  <td class="actions-cell">
-                    <div class="actions">
-                      <button class="btn-delete">Delete</button>
-                    </div>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -1309,6 +1329,75 @@
                     : "Hidden from HSPs";
                 });
               });
+
+            // Bio editing logic
+            const bioModalEdit = document.getElementById("bioModalEdit");
+            const bioTextarea = document.getElementById("bioTextarea");
+            let currentBioCell = null;
+            let currentBioType = null;
+            let currentRow = null;
+            // Store bios in-memory for demo
+            const bioData = new Map(); // key: row, value: {profile: '', room: ''}
+
+            function attachBioButtonListeners() {
+              document
+                .querySelectorAll(".applications-section .users-table tbody tr")
+                .forEach((row) => {
+                  row.querySelectorAll(".btn-bio").forEach((btn) => {
+                    btn.onclick = function (e) {
+                      currentBioCell = btn.closest(".bio-cell");
+                      currentBioType = btn.getAttribute("data-bio");
+                      currentRow = row;
+                      // Load existing value if any
+                      const rowKey =
+                        row.dataset.rowKey || row.rowIndex || row.innerText;
+                      const bios = bioData.get(rowKey) || {
+                        profile: "",
+                        room: "",
+                      };
+                      bioTextarea.value = bios[currentBioType] || "";
+                      bioModalEdit.classList.remove("hidden");
+                    };
+                  });
+                });
+            }
+            attachBioButtonListeners();
+
+            // Modal close/cancel
+            bioModalEdit.querySelector(".close-modal").onclick = closeBioModal;
+            bioModalEdit.querySelector(".btn-cancel").onclick = closeBioModal;
+            function closeBioModal() {
+              bioModalEdit.classList.add("hidden");
+              bioTextarea.value = "";
+              currentBioCell = null;
+              currentBioType = null;
+              currentRow = null;
+            }
+
+            // Modal save
+            bioModalEdit.querySelector(".btn-submit").onclick = function () {
+              if (!currentBioCell || !currentBioType || !currentRow) return;
+              const rowKey =
+                currentRow.dataset.rowKey ||
+                currentRow.rowIndex ||
+                currentRow.innerText;
+              let bios = bioData.get(rowKey) || { profile: "", room: "" };
+              bios[currentBioType] = bioTextarea.value;
+              bioData.set(rowKey, bios);
+              // Show preview (icon or short text)
+              const preview = currentBioCell.querySelector(".bio-preview");
+              if (bioTextarea.value.trim()) {
+                preview.textContent = "✔";
+                preview.title = bioTextarea.value;
+              } else {
+                preview.textContent = "";
+                preview.title = "";
+              }
+              closeBioModal();
+            };
+
+            // Re-attach listeners if rows are moved (e.g., after approval)
+            window.attachBioButtonListeners = attachBioButtonListeners;
           });
 
           // Status dropdown functionality
@@ -1335,12 +1424,16 @@
               if (this.value === "declined") {
                 console.log("Attempting to show decline modal"); // Debug: Check if this block is reached
                 showDeclineModal(this, userEmail, userName);
-              } else if (this.value === "approved") {
+              } else if (
+                this.value === "approved" ||
+                this.value === "conditional"
+              ) {
                 showApprovalModal(
                   this,
                   userEmail,
                   userName,
-                  isApplicationSection
+                  isApplicationSection,
+                  this.value // pass the new status
                 );
               }
 
@@ -1404,16 +1497,23 @@
             select,
             email,
             name,
-            isApplicationSection
+            isApplicationSection,
+            newStatus // pass the new status
           ) {
             if (isApplicationSection) {
-              showBioWarningModal(select, email, name);
+              showBioWarningModal(select, email, name, newStatus);
             } else {
-              showFinalApprovalModal(select, email, name, isApplicationSection);
+              showFinalApprovalModal(
+                select,
+                email,
+                name,
+                isApplicationSection,
+                newStatus
+              );
             }
           }
 
-          function showBioWarningModal(select, email, name) {
+          function showBioWarningModal(select, email, name, newStatus) {
             const modal = document.getElementById("bioModal");
             const closeBtn = modal.querySelector(".close-modal");
             const cancelBtn = modal.querySelector(".btn-cancel");
@@ -1432,7 +1532,7 @@
 
             submitBtn.onclick = () => {
               modal.classList.add("hidden");
-              showFinalApprovalModal(select, email, name, true);
+              showFinalApprovalModal(select, email, name, true, newStatus);
             };
           }
 
@@ -1440,7 +1540,8 @@
             select,
             email,
             name,
-            isApplicationSection
+            isApplicationSection,
+            newStatus
           ) {
             const modal = document.getElementById("approvalModal");
             const closeBtn = modal.querySelector(".close-modal");
@@ -1461,28 +1562,38 @@
             submitBtn.onclick = () => {
               modal.classList.add("hidden");
               if (isApplicationSection) {
-                moveToUsersList(select.closest("tr"));
+                moveToUsersList(select.closest("tr"), newStatus);
               }
               sendApprovalEmail(email, name);
-              showToast("Application approved and email sent", "success");
+              showToast(
+                "Application " +
+                  (newStatus === "conditional"
+                    ? "conditionally approved"
+                    : "approved") +
+                  " and email sent",
+                "success"
+              );
             };
           }
 
-          function moveToUsersList(row) {
+          function moveToUsersList(row, newStatus) {
             console.log("moveToUsersList called with row:", row);
             const usersList = document.querySelector(
               ".users-section .users-table tbody"
             );
             console.log("Found users list:", usersList);
-            const newUserRow = createUserRowFromApplication(row);
+            const newUserRow = createUserRowFromApplication(row, newStatus);
             console.log("Created new user row:", newUserRow);
             usersList.insertBefore(newUserRow, usersList.firstChild);
             console.log("Inserted new row at the top of users list");
             row.remove();
             console.log("Removed original row from applications section");
+            // Re-attach bio button listeners for new row
+            if (window.attachBioButtonListeners)
+              window.attachBioButtonListeners();
           }
 
-          function createUserRowFromApplication(applicationRow) {
+          function createUserRowFromApplication(applicationRow, newStatus) {
             console.log(
               "Creating new user row from application row:",
               applicationRow
@@ -1521,7 +1632,8 @@
                 </div>
             `;
             const statusSelect = statusCell.querySelector(".status-select");
-            statusSelect.value = "approved";
+            statusSelect.value =
+              newStatus === "conditional" ? "conditional" : "approved";
             updateSelectStatus(statusSelect);
             console.log("Created and initialized status cell:", statusCell);
             newUserRow.appendChild(statusCell);
@@ -1546,13 +1658,6 @@
               .cloneNode(true);
             console.log("Cloned home study cell:", studyCell);
             newUserRow.appendChild(studyCell);
-
-            // Copy actions cell
-            const actionsCell = applicationRow
-              .querySelector(".actions-cell")
-              .cloneNode(true);
-            console.log("Cloned actions cell:", actionsCell);
-            newUserRow.appendChild(actionsCell);
 
             console.log("Returning completed new user row:", newUserRow);
             return newUserRow;
@@ -2043,12 +2148,16 @@
             if (this.value === "declined") {
               console.log("Attempting to show decline modal"); // Debug: Check if this block is reached
               showDeclineModal(this, userEmail, userName);
-            } else if (this.value === "approved") {
+            } else if (
+              this.value === "approved" ||
+              this.value === "conditional"
+            ) {
               showApprovalModal(
                 this,
                 userEmail,
                 userName,
-                isApplicationSection
+                isApplicationSection,
+                this.value // pass the new status
               );
             }
 
@@ -2104,15 +2213,27 @@
           };
         }
 
-        function showApprovalModal(select, email, name, isApplicationSection) {
+        function showApprovalModal(
+          select,
+          email,
+          name,
+          isApplicationSection,
+          newStatus // pass the new status
+        ) {
           if (isApplicationSection) {
-            showBioWarningModal(select, email, name);
+            showBioWarningModal(select, email, name, newStatus);
           } else {
-            showFinalApprovalModal(select, email, name, isApplicationSection);
+            showFinalApprovalModal(
+              select,
+              email,
+              name,
+              isApplicationSection,
+              newStatus
+            );
           }
         }
 
-        function showBioWarningModal(select, email, name) {
+        function showBioWarningModal(select, email, name, newStatus) {
           const modal = document.getElementById("bioModal");
           const closeBtn = modal.querySelector(".close-modal");
           const cancelBtn = modal.querySelector(".btn-cancel");
@@ -2131,7 +2252,7 @@
 
           submitBtn.onclick = () => {
             modal.classList.add("hidden");
-            showFinalApprovalModal(select, email, name, true);
+            showFinalApprovalModal(select, email, name, true, newStatus);
           };
         }
 
@@ -2139,7 +2260,8 @@
           select,
           email,
           name,
-          isApplicationSection
+          isApplicationSection,
+          newStatus
         ) {
           const modal = document.getElementById("approvalModal");
           const closeBtn = modal.querySelector(".close-modal");
@@ -2160,28 +2282,38 @@
           submitBtn.onclick = () => {
             modal.classList.add("hidden");
             if (isApplicationSection) {
-              moveToUsersList(select.closest("tr"));
+              moveToUsersList(select.closest("tr"), newStatus);
             }
             sendApprovalEmail(email, name);
-            showToast("Application approved and email sent", "success");
+            showToast(
+              "Application " +
+                (newStatus === "conditional"
+                  ? "conditionally approved"
+                  : "approved") +
+                " and email sent",
+              "success"
+            );
           };
         }
 
-        function moveToUsersList(row) {
+        function moveToUsersList(row, newStatus) {
           console.log("moveToUsersList called with row:", row);
           const usersList = document.querySelector(
             ".users-section .users-table tbody"
           );
           console.log("Found users list:", usersList);
-          const newUserRow = createUserRowFromApplication(row);
+          const newUserRow = createUserRowFromApplication(row, newStatus);
           console.log("Created new user row:", newUserRow);
           usersList.insertBefore(newUserRow, usersList.firstChild);
           console.log("Inserted new row at the top of users list");
           row.remove();
           console.log("Removed original row from applications section");
+          // Re-attach bio button listeners for new row
+          if (window.attachBioButtonListeners)
+            window.attachBioButtonListeners();
         }
 
-        function createUserRowFromApplication(applicationRow) {
+        function createUserRowFromApplication(applicationRow, newStatus) {
           console.log(
             "Creating new user row from application row:",
             applicationRow
@@ -2220,7 +2352,8 @@
               </div>
           `;
           const statusSelect = statusCell.querySelector(".status-select");
-          statusSelect.value = "approved";
+          statusSelect.value =
+            newStatus === "conditional" ? "conditional" : "approved";
           updateSelectStatus(statusSelect);
           console.log("Created and initialized status cell:", statusCell);
           newUserRow.appendChild(statusCell);
@@ -2245,13 +2378,6 @@
             .cloneNode(true);
           console.log("Cloned home study cell:", studyCell);
           newUserRow.appendChild(studyCell);
-
-          // Copy actions cell
-          const actionsCell = applicationRow
-            .querySelector(".actions-cell")
-            .cloneNode(true);
-          console.log("Cloned actions cell:", actionsCell);
-          newUserRow.appendChild(actionsCell);
 
           console.log("Returning completed new user row:", newUserRow);
           return newUserRow;
@@ -2326,5 +2452,53 @@
         }
       });
     </script>
+
+    <!-- Add this modal at the end of the file, before </body> -->
+    <div id="bioModalEdit" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Bio</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="bioTextarea">Enter bio content:</label>
+          <textarea
+            id="bioTextarea"
+            rows="5"
+            placeholder="Enter bio..."
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .bio-cell {
+        text-align: center;
+      }
+      .btn-bio {
+        background: #eef2ff;
+        color: var(--primary-color);
+        border: 1px solid #e0e7ff;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .btn-bio:hover {
+        background: #e0e7ff;
+      }
+      .bio-preview {
+        margin-right: 0.5rem;
+        font-weight: bold;
+        color: var(--success-color);
+      }
+    </style>
   </body>
 </html>
