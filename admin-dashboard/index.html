@@ -523,6 +523,7 @@
                   <th>Email</th>
                   <th>Application Progress</th>
                   <th>Status</th>
+                  <th>Case Manager</th>
                   <th>CRC Check</th>
                   <th>Reference Check</th>
                   <th>Home Study Recommendation</th>
@@ -572,6 +573,7 @@
                       </div>
                     </div>
                   </td>
+                  <td class="case-manager-cell">Taylor Smith</td>
                   <td class="file-upload-cell">
                     <div class="file-upload" data-user-id="6-crc">
                       <div class="upload-state initial">
@@ -750,6 +752,7 @@
                       </div>
                     </div>
                   </td>
+                  <td class="case-manager-cell">Morgan Lee</td>
                   <td class="file-upload-cell">
                     <div class="file-upload" data-user-id="7-crc">
                       <div class="upload-state initial">
@@ -1708,21 +1711,21 @@
 
             // Copy CRC Check cell
             const crcCell = applicationRow
-              .querySelector("td:nth-child(5)")
+              .querySelector("td:nth-child(6)")
               .cloneNode(true);
             console.log("Cloned CRC check cell:", crcCell);
             newUserRow.appendChild(crcCell);
 
             // Copy Reference Check cell
             const refCell = applicationRow
-              .querySelector("td:nth-child(6)")
+              .querySelector("td:nth-child(7)")
               .cloneNode(true);
             console.log("Cloned reference check cell:", refCell);
             newUserRow.appendChild(refCell);
 
             // Copy Home Study Recommendation cell
             const studyCell = applicationRow
-              .querySelector("td:nth-child(7)")
+              .querySelector("td:nth-child(8)")
               .cloneNode(true);
             console.log("Cloned home study cell:", studyCell);
             newUserRow.appendChild(studyCell);
@@ -2438,25 +2441,22 @@
           console.log("Created and initialized status cell:", statusCell);
           newUserRow.appendChild(statusCell);
 
-          // Copy CRC Check cell
+          // Copy CRC Check cell (skip Case Manager column)
           const crcCell = applicationRow
-            .querySelector("td:nth-child(5)")
+            .querySelector("td:nth-child(6)")
             .cloneNode(true);
-          console.log("Cloned CRC check cell:", crcCell);
           newUserRow.appendChild(crcCell);
 
           // Copy Reference Check cell
           const refCell = applicationRow
-            .querySelector("td:nth-child(6)")
+            .querySelector("td:nth-child(7)")
             .cloneNode(true);
-          console.log("Cloned reference check cell:", refCell);
           newUserRow.appendChild(refCell);
 
           // Copy Home Study Recommendation cell
           const studyCell = applicationRow
-            .querySelector("td:nth-child(7)")
+            .querySelector("td:nth-child(8)")
             .cloneNode(true);
-          console.log("Cloned home study cell:", studyCell);
           newUserRow.appendChild(studyCell);
 
           // Copy Profile Bio cell
@@ -2471,7 +2471,6 @@
             .cloneNode(true);
           newUserRow.appendChild(roomBioCell);
 
-          console.log("Returning completed new user row:", newUserRow);
           return newUserRow;
         }
 
