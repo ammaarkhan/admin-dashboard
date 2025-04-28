@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <i class="fas fa-home"></i>
+              <a href="index.html" class="nav-link">Home Share Providers</a>
+            </li>
+            <li>
+              <i class="fas fa-users"></i>
+              <a href="individuals.html" class="nav-link">Individuals</a>
+            </li>
+            <li>
+              <i class="fas fa-file-contract"></i>
+              <a href="contracts.html" class="nav-link">Contracts</a>
+            </li>
+            <li class="active">
+              <i class="fas fa-user-cog"></i>
+              <a href="user-management.html" class="nav-link"
+                >User Management</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search">
+            <input
+              type="text"
+              placeholder="Search case managers..."
+              aria-label="Search case managers"
+            />
+          </div>
+          <div class="user-info">
+            <span class="notifications"><i class="fas fa-bell"></i></span>
+            <span class="profile">Admin User</span>
+          </div>
+        </header>
+        <section class="users-section">
+          <div class="section-header">
+            <h2>Case Manager Directory</h2>
+            <button class="add-user-btn" id="addCaseManagerBtn">
+              + Add Case Manager
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Date Added</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Priya Patel</td>
+                  <td>priya@email.com</td>
+                  <td>555-123-4567</td>
+                  <td>
+                    <span
+                      class="badge"
+                      style="background: #dcfce7; color: #166534"
+                      >Active</span
+                    >
+                  </td>
+                  <td>2024-06-01</td>
+                  <td>
+                    <button class="btn-edit" aria-label="Edit Priya Patel">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Jordan Lee</td>
+                  <td>jordan@email.com</td>
+                  <td>555-987-6543</td>
+                  <td>
+                    <span
+                      class="badge"
+                      style="background: #f1f5f9; color: #64748b"
+                      >Inactive</span
+                    >
+                  </td>
+                  <td>2024-05-15</td>
+                  <td>
+                    <button class="btn-edit" aria-label="Edit Jordan Lee">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Lisa Chen</td>
+                  <td>lisa@email.com</td>
+                  <td>555-555-5555</td>
+                  <td>
+                    <span
+                      class="badge"
+                      style="background: #dcfce7; color: #166534"
+                      >Active</span
+                    >
+                  </td>
+                  <td>2024-04-20</td>
+                  <td>
+                    <button class="btn-edit" aria-label="Edit Lisa Chen">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <!-- Add Case Manager Modal -->
+        <div
+          class="modal hidden"
+          id="addCaseManagerModal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="addCaseManagerTitle"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 id="addCaseManagerTitle">Add New Case Manager</h3>
+              <button class="close-modal" aria-label="Close modal">
+                &times;
+              </button>
+            </div>
+            <div class="modal-body">
+              <form id="addCaseManagerForm">
+                <div class="form-group">
+                  <label for="caseManagerName">Name</label>
+                  <input
+                    type="text"
+                    id="caseManagerName"
+                    class="form-input"
+                    required
+                    aria-required="true"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="caseManagerEmail">Email</label>
+                  <input
+                    type="email"
+                    id="caseManagerEmail"
+                    class="form-input"
+                    required
+                    aria-required="true"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="caseManagerPhone">Phone</label>
+                  <input
+                    type="tel"
+                    id="caseManagerPhone"
+                    class="form-input"
+                    required
+                    aria-required="true"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="caseManagerStatus">Status</label>
+                  <select
+                    id="caseManagerStatus"
+                    class="form-input"
+                    required
+                    aria-required="true"
+                  >
+                    <option value="active" selected>Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-cancel"
+                    id="cancelAddCaseManager"
+                  >
+                    Cancel
+                  </button>
+                  <button type="submit" class="btn btn-submit">Create</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <script>
+          // Modal open/close logic (UI only)
+          document.getElementById("addCaseManagerBtn").onclick = function () {
+            document
+              .getElementById("addCaseManagerModal")
+              .classList.remove("hidden");
+          };
+          document.querySelector("#addCaseManagerModal .close-modal").onclick =
+            function () {
+              document
+                .getElementById("addCaseManagerModal")
+                .classList.add("hidden");
+            };
+          document.getElementById("cancelAddCaseManager").onclick =
+            function () {
+              document
+                .getElementById("addCaseManagerModal")
+                .classList.add("hidden");
+            };
+          // Prevent form submission (mockup only)
+          document.getElementById("addCaseManagerForm").onsubmit = function (
+            e
+          ) {
+            e.preventDefault();
+            document
+              .getElementById("addCaseManagerModal")
+              .classList.add("hidden");
+          };
+        </script>
+      </main>
+    </div>
+  </body>
+</html>
