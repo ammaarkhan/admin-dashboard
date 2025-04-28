@@ -420,7 +420,22 @@
                   <td>CTR-0001</td>
                   <td>Emily Davis</td>
                   <td>Sarah Wilson</td>
-                  <td>John Anderson</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select
+                        class="case-manager-select"
+                        aria-label="Select Case Manager"
+                      >
+                        <option value="1" selected>John Anderson</option>
+                        <option value="2">Sarah Thompson</option>
+                        <option value="3">Michael Williams</option>
+                        <option value="4">Lisa Chen</option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
@@ -619,7 +634,22 @@
                   <td>CTR-0002</td>
                   <td>James Wilson</td>
                   <td>Michael Chen</td>
-                  <td>Sarah Thompson</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select
+                        class="case-manager-select"
+                        aria-label="Select Case Manager"
+                      >
+                        <option value="1">John Anderson</option>
+                        <option value="2" selected>Sarah Thompson</option>
+                        <option value="3">Michael Williams</option>
+                        <option value="4">Lisa Chen</option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
@@ -807,7 +837,23 @@
                   <td>CTR-0003</td>
                   <td>Maria Garcia</td>
                   <td>John Smith</td>
-                  <td>Michael Williams</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select
+                        class="case-manager-select"
+                        aria-label="Select Case Manager"
+                        disabled
+                      >
+                        <option value="1">John Anderson</option>
+                        <option value="2">Sarah Thompson</option>
+                        <option value="3" selected>Michael Williams</option>
+                        <option value="4">Lisa Chen</option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select" disabled>
@@ -1148,7 +1194,19 @@
             <td>CTR-${String(contractId).padStart(4, "0")}</td>
             <td>${individual.options[individual.selectedIndex].text}</td>
             <td>${provider.options[provider.selectedIndex].text}</td>
-            <td>${assignedAdmin.options[assignedAdmin.selectedIndex].text}</td>
+            <td>
+              <div class="status-dropdown">
+                <select class="case-manager-select" aria-label="Select Case Manager">
+                  <option value="1" selected>John Anderson</option>
+                  <option value="2">Sarah Thompson</option>
+                  <option value="3">Michael Williams</option>
+                  <option value="4">Lisa Chen</option>
+                </select>
+                <div class="select-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+            </td>
             <td>
               <div class="status-dropdown">
                 <select class="status-select">
