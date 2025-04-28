@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contracts - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      /* Additional styles for contracts page */
+      .contract-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .contract-modal.show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .modal-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #111827;
+      }
+
+      .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: #6b7280;
+        cursor: pointer;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #374151;
+      }
+
+      .form-group select,
+      .form-group input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+        font-size: 1rem;
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .btn-cancel,
+      .btn-create {
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .btn-cancel {
+        background-color: #f3f4f6;
+        border: 1px solid #d1d5db;
+        color: #374151;
+      }
+
+      .btn-create {
+        background-color: #2563eb;
+        border: none;
+        color: white;
+      }
+
+      .contract-status {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
+      .status-active {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .status-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+
+      .status-expired {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* E-signature styles */
+      .e-sign-cell {
+        min-width: 200px;
+      }
+
+      .e-sign-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+      }
+
+      .e-sign-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 500;
+      }
+
+      .e-sign-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+
+      .e-sign-signed {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .e-sign-actions {
+        margin-top: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .btn-sign {
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .btn-sign:hover {
+        background-color: #1d4ed8;
+      }
+
+      .btn-view-signed {
+        background-color: #f3f4f6;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .btn-view-signed:hover {
+        background-color: #e5e7eb;
+      }
+
+      /* E-signature modal styles */
+      .e-sign-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+      }
+
+      .e-sign-modal.show {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .e-sign-modal .modal-content {
+        width: 800px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .signature-area {
+        margin-top: 1rem;
+        border: 2px dashed #d1d5db;
+        padding: 1rem;
+        text-align: center;
+        background-color: #f9fafb;
+      }
+
+      .signature-options {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .signature-preview {
+        min-height: 100px;
+        border: 1px solid #d1d5db;
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Dancing Script", cursive;
+        font-size: 2rem;
+        color: #1f2937;
+      }
+
+      .signature-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+      }
+
+      .signature-type-select {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .signature-type-option {
+        padding: 0.5rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+        cursor: pointer;
+      }
+
+      .signature-type-option.active {
+        background-color: #2563eb;
+        color: white;
+        border-color: #2563eb;
+      }
+
+      .btn-send-contract {
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .btn-send-contract:disabled {
+        background-color: #e5e7eb;
+        cursor: not-allowed;
+      }
+
+      .btn-view-contract {
+        background-color: #f3f4f6;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .status-dropdown {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        min-width: 140px;
+      }
+
+      .status-dropdown .status-select {
+        appearance: none;
+        width: 100%;
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+        font-size: 0.875rem;
+        color: #374151;
+        background-color: white;
+        cursor: pointer;
+      }
+
+      .status-dropdown .select-icon {
+        position: absolute;
+        right: 0.75rem;
+        pointer-events: none;
+        color: #6b7280;
+      }
+
+      .status-select option[value="active"] {
+        color: #166534;
+      }
+
+      .status-select option[value="pending"] {
+        color: #92400e;
+      }
+
+      .status-select option[value="disabled"] {
+        color: #991b1b;
+      }
+
+      .status-select option[value="complete"] {
+        color: #1d4ed8;
+      }
+    </style>
+    <!-- Add Google Fonts for signature styles -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <i class="fas fa-home"></i>
+              <a href="index.html" class="nav-link">Home Share Providers</a>
+            </li>
+            <li>
+              <i class="fas fa-users"></i>
+              <a href="individuals.html" class="nav-link">Individuals</a>
+            </li>
+            <li class="active">
+              <i class="fas fa-file-contract"></i>
+              <a href="contracts.html" class="nav-link">Contracts</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search">
+            <input type="text" placeholder="Search contracts..." />
+          </div>
+          <div class="user-info">
+            <span class="notifications"><i class="fas fa-bell"></i></span>
+            <span class="profile">Admin User</span>
+          </div>
+        </header>
+
+        <section class="contracts-section">
+          <div class="section-header">
+            <h2>Active Contracts</h2>
+            <button class="add-user-btn" id="newContractBtn">
+              + New Contract
+            </button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Contract ID</th>
+                  <th>Individual</th>
+                  <th>Home Share Provider</th>
+                  <th>Case Manager</th>
+                  <th>Status</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Individual Consent Agreement</th>
+                  <th>HSP Contract</th>
+                  <th>Incident Reports</th>
+                </tr>
+              </thead>
+              <tbody id="contractsTableBody">
+                <!-- Active contract rows -->
+                <tr>
+                  <td>CTR-0001</td>
+                  <td>Emily Davis</td>
+                  <td>Sarah Wilson</td>
+                  <td>John Anderson</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option
+                          value="active"
+                          data-icon="fa-check-circle"
+                          selected
+                        >
+                          Active
+                        </option>
+                        <option value="pending" data-icon="fa-clock">
+                          Pending
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                        <option value="complete" data-icon="fa-flag-checkered">
+                          Complete
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>2024-03-15</td>
+                  <td>2025-03-15</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="1-consent">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file1-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >consent_agreement_2024.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">medical_consent.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="1"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="1-hsp">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-hsp"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file1-hsp" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload HSP Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">hsp_contract_2024.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="1-incident">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-incident"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file1-incident" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Incident Reports</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >incident_report_2024.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>CTR-0002</td>
+                  <td>James Wilson</td>
+                  <td>Michael Chen</td>
+                  <td>Sarah Thompson</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="active" data-icon="fa-check-circle">
+                          Active
+                        </option>
+                        <option value="pending" data-icon="fa-clock" selected>
+                          Pending
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                        <option value="complete" data-icon="fa-flag-checkered">
+                          Complete
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>2024-03-18</td>
+                  <td>2025-03-18</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="2-consent">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file2-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">consent_2024.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="2-hsp">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file2-hsp"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file2-hsp" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload HSP Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files hidden">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">consent_agreement.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >medical_consent_2023.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="2-incident">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file2-incident"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file2-incident" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Incident Reports</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files hidden">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="contracts-section" style="margin-top: 2rem">
+          <div class="section-header">
+            <h2>Inactive Contracts</h2>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Contract ID</th>
+                  <th>Individual</th>
+                  <th>Home Share Provider</th>
+                  <th>Case Manager</th>
+                  <th>Status</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Individual Consent Agreement</th>
+                  <th>HSP Contract</th>
+                  <th>Incident Reports</th>
+                </tr>
+              </thead>
+              <tbody id="archivedContractsTableBody">
+                <!-- Sample archived contract -->
+                <tr>
+                  <td>CTR-0003</td>
+                  <td>Maria Garcia</td>
+                  <td>John Smith</td>
+                  <td>Michael Williams</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select" disabled>
+                        <option
+                          value="complete"
+                          data-icon="fa-flag-checkered"
+                          selected
+                        >
+                          Complete
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>2023-03-15</td>
+                  <td>2024-03-15</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="3-consent">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file3-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file3-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">consent_agreement.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >medical_consent_2023.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="3-hsp">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file3-hsp"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file3-hsp" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload HSP Files</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">hsp_contract.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">payment_schedule.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">terms_2023.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="3-incident">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file3-incident"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file3-incident" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Incident Reports</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name"
+                              >incident_report_2023.pdf</span
+                            >
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- New Contract Modal -->
+    <div class="contract-modal" id="newContractModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Create New Contract</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <form id="newContractForm">
+          <div class="form-group">
+            <label for="individual">Individual</label>
+            <select id="individual" required>
+              <option value="">Select Individual</option>
+              <option value="1">Emily Davis</option>
+              <option value="2">James Wilson</option>
+              <option value="3">Maria Garcia</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="provider">Home Share Provider</label>
+            <select id="provider" required>
+              <option value="">Select Provider</option>
+              <option value="1">Sarah Wilson</option>
+              <option value="2">Michael Chen</option>
+              <option value="3">John Smith</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="assignedAdmin">Case Manager</label>
+            <select id="assignedAdmin" required>
+              <option value="">Select Admin</option>
+              <option value="1">John Anderson</option>
+              <option value="2">Sarah Thompson</option>
+              <option value="3">Michael Williams</option>
+              <option value="4">Lisa Chen</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" required />
+          </div>
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" required />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" id="cancelContract">
+              Cancel
+            </button>
+            <button type="submit" class="btn-create">Create Contract</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- E-signature Modal -->
+    <div class="e-sign-modal" id="signatureModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Sign HSP Contract</h2>
+          <button class="close-modal" onclick="closeSignatureModal()">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="signature-options">
+            <div class="signature-type-select">
+              <div
+                class="signature-type-option active"
+                onclick="selectSignatureType('draw')"
+              >
+                Draw Signature
+              </div>
+              <div
+                class="signature-type-option"
+                onclick="selectSignatureType('type')"
+              >
+                Type Signature
+              </div>
+            </div>
+          </div>
+
+          <div class="signature-area">
+            <div id="signaturePreview" class="signature-preview">
+              <!-- Signature will appear here -->
+            </div>
+            <div id="signatureInput" style="display: none">
+              <input
+                type="text"
+                placeholder="Type your signature"
+                style="width: 100%; padding: 0.5rem"
+              />
+            </div>
+          </div>
+
+          <div class="signature-actions">
+            <button class="btn-cancel" onclick="clearSignature()">Clear</button>
+            <button class="btn-create" onclick="completeSignature()">
+              Complete Signing
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("newContractModal");
+        const newContractBtn = document.getElementById("newContractBtn");
+        const closeModalBtn = document.querySelector(".close-modal");
+        const cancelBtn = document.getElementById("cancelContract");
+        const contractForm = document.getElementById("newContractForm");
+        const contractsTableBody =
+          document.getElementById("contractsTableBody");
+
+        let contractId = 1; // Simple counter for demo purposes
+
+        // Open modal
+        newContractBtn.addEventListener("click", () => {
+          modal.classList.add("show");
+        });
+
+        // Close modal functions
+        function closeModal() {
+          modal.classList.remove("show");
+          contractForm.reset();
+        }
+
+        closeModalBtn.addEventListener("click", closeModal);
+        cancelBtn.addEventListener("click", closeModal);
+
+        // Close modal if clicking outside
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+
+        // Handle form submission
+        contractForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const individual = document.getElementById("individual");
+          const provider = document.getElementById("provider");
+          const assignedAdmin = document.getElementById("assignedAdmin");
+          const startDate = document.getElementById("startDate");
+          const endDate = document.getElementById("endDate");
+
+          // Create new contract row
+          const newRow = document.createElement("tr");
+          const fileUploadId = `file-${contractId}-consent`;
+          newRow.innerHTML = `
+            <td>CTR-${String(contractId).padStart(4, "0")}</td>
+            <td>${individual.options[individual.selectedIndex].text}</td>
+            <td>${provider.options[provider.selectedIndex].text}</td>
+            <td>${assignedAdmin.options[assignedAdmin.selectedIndex].text}</td>
+            <td>
+              <div class="status-dropdown">
+                <select class="status-select">
+                  <option value="active" data-icon="fa-check-circle">Active</option>
+                  <option value="pending" data-icon="fa-clock" selected>Pending</option>
+                  <option value="disabled" data-icon="fa-ban">Disabled</option>
+                  <option value="complete" data-icon="fa-flag-checkered">Complete</option>
+                </select>
+                <div class="select-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+            </td>
+            <td>${startDate.value}</td>
+            <td>${endDate.value}</td>
+            <td class="file-upload-cell">
+              <div class="file-upload multiple" data-user-id="${contractId}-consent">
+                <div class="upload-state initial hidden">
+                  <input type="file" id="${fileUploadId}" class="file-input" accept=".pdf,.doc,.docx" multiple />
+                  <label for="${fileUploadId}" class="file-label">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload Consent Files</span>
+                  </label>
+                </div>
+                <div class="uploaded-files">
+                  <div class="add-more-files">
+                    <button class="btn-add-file">
+                      <i class="fas fa-plus"></i> Add More Files
+                    </button>
+                  </div>
+                  <div class="file-item">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span class="file-name">consent_agreement_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn-delete" title="Delete" data-index="0">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="file-item">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span class="file-name">medical_consent.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn-delete" title="Delete" data-index="1">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="upload-progress hidden">
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                  </div>
+                  <span class="progress-text">Uploading... 0%</span>
+                </div>
+              </div>
+            </td>
+            <td class="file-upload-cell">
+              <div class="file-upload multiple" data-user-id="${contractId}-hsp">
+                <div class="upload-state initial hidden">
+                  <input type="file" id="${contractId}-hsp" class="file-input" accept=".pdf,.doc,.docx" multiple />
+                  <label for="${contractId}-hsp" class="file-label">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload HSP Files</span>
+                  </label>
+                </div>
+                <div class="uploaded-files">
+                  <div class="add-more-files">
+                    <button class="btn-add-file">
+                      <i class="fas fa-plus"></i> Add More Files
+                    </button>
+                  </div>
+                  <div class="file-item">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span class="file-name">hsp_contract_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn-delete" title="Delete" data-index="0">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="upload-progress hidden">
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                  </div>
+                  <span class="progress-text">Uploading... 0%</span>
+                </div>
+              </div>
+            </td>
+            <td class="file-upload-cell">
+              <div class="file-upload multiple" data-user-id="${contractId}-incident">
+                <div class="upload-state initial hidden">
+                  <input
+                    type="file"
+                    id="${contractId}-incident"
+                    class="file-input"
+                    accept=".pdf,.doc,.docx"
+                    multiple
+                  />
+                  <label for="${contractId}-incident" class="file-label">
+                    <i class="fas fa-upload"></i>
+                    <span>Upload Incident Reports</span>
+                  </label>
+                </div>
+                <div class="uploaded-files">
+                  <div class="add-more-files">
+                    <button class="btn-add-file">
+                      <i class="fas fa-plus"></i> Add More Files
+                    </button>
+                  </div>
+                  <div class="file-item">
+                    <div class="file-info">
+                      <i class="fas fa-file-alt"></i>
+                      <span class="file-name">incident_report_2024.pdf</span>
+                    </div>
+                    <div class="file-actions">
+                      <button class="btn-download" title="Download">
+                        <i class="fas fa-download"></i>
+                      </button>
+                      <button class="btn-delete" title="Delete" data-index="0">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="upload-progress hidden">
+                  <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                  </div>
+                  <span class="progress-text">Uploading... 0%</span>
+                </div>
+              </div>
+            </td>
+          `;
+
+          contractsTableBody.appendChild(newRow);
+
+          // Initialize file upload functionality for the new row
+          const uploadContainer = newRow.querySelectorAll(".file-upload");
+          uploadContainer.forEach((container) => {
+            initializeSingleFileUpload(container);
+          });
+
+          contractId++;
+          closeModal();
+        });
+
+        // Function for single file uploads
+        function initializeSingleFileUpload(uploadContainer) {
+          const fileInput = uploadContainer.querySelector(".file-input");
+          const initialState = uploadContainer.querySelector(
+            ".upload-state.initial"
+          );
+          const uploadedState = uploadContainer.querySelector(
+            ".upload-state.uploaded"
+          );
+          const progressState =
+            uploadContainer.querySelector(".upload-progress");
+          const fileName = uploadContainer.querySelector(".file-name");
+          const progressBar = uploadContainer.querySelector(".progress-fill");
+          const progressText = uploadContainer.querySelector(".progress-text");
+          const updateBtn = uploadContainer.querySelector(".btn-update");
+          const downloadBtn = uploadContainer.querySelector(".btn-download");
+
+          let uploadedFile = null;
+
+          function showProgress() {
+            initialState.classList.add("hidden");
+            uploadedState.classList.add("hidden");
+            progressState.classList.remove("hidden");
+          }
+
+          function updateProgress(percent) {
+            progressBar.style.width = `${percent}%`;
+            progressText.textContent = `Uploading... ${percent}%`;
+          }
+
+          function showUploadedState(file) {
+            initialState.classList.add("hidden");
+            progressState.classList.add("hidden");
+            uploadedState.classList.remove("hidden");
+            fileName.textContent = file.name;
+            uploadedFile = file;
+
+            // Enable the Send Contract button in the HSP Contract column
+            const row = uploadContainer.closest("tr");
+            const sendContractBtn = row.querySelector(".btn-send-contract");
+            if (sendContractBtn) {
+              sendContractBtn.disabled = false;
+            }
+          }
+
+          function simulateUpload(file) {
+            showProgress();
+            let progress = 0;
+            const interval = setInterval(() => {
+              progress += 10;
+              updateProgress(progress);
+              if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => showUploadedState(file), 500);
+              }
+            }, 200);
+          }
+
+          fileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              simulateUpload(file);
+            }
+          });
+
+          if (updateBtn) {
+            updateBtn.addEventListener("click", () => {
+              fileInput.click();
+            });
+          }
+
+          if (downloadBtn) {
+            downloadBtn.addEventListener("click", () => {
+              if (uploadedFile) {
+                const url = URL.createObjectURL(uploadedFile);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = uploadedFile.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              }
+            });
+          }
+        }
+
+        // E-signature functionality
+        function openSignatureModal(contractId) {
+          const modal = document.getElementById("signatureModal");
+          modal.dataset.contractId = contractId;
+          modal.classList.add("show");
+        }
+
+        function closeSignatureModal() {
+          const modal = document.getElementById("signatureModal");
+          modal.classList.remove("show");
+          clearSignature();
+        }
+
+        function selectSignatureType(type) {
+          const options = document.querySelectorAll(".signature-type-option");
+          options.forEach((opt) => opt.classList.remove("active"));
+          event.target.classList.add("active");
+
+          const preview = document.getElementById("signaturePreview");
+          const input = document.getElementById("signatureInput");
+
+          if (type === "type") {
+            preview.style.display = "none";
+            input.style.display = "block";
+            input.querySelector("input").focus();
+
+            // Update preview as user types
+            input.querySelector("input").addEventListener("input", (e) => {
+              preview.textContent = e.target.value;
+            });
+          } else {
+            preview.style.display = "flex";
+            input.style.display = "none";
+          }
+        }
+
+        function clearSignature() {
+          const preview = document.getElementById("signaturePreview");
+          const input = document
+            .getElementById("signatureInput")
+            .querySelector("input");
+          preview.textContent = "";
+          if (input) input.value = "";
+        }
+
+        function completeSignature() {
+          const modal = document.getElementById("signatureModal");
+          const contractId = modal.dataset.contractId;
+          const signatureCell = document.querySelector(
+            `tr:nth-child(${contractId}) .e-sign-cell`
+          );
+
+          // Update the signature status
+          signatureCell.innerHTML = `
+            <div class="e-sign-status">
+              <span class="e-sign-badge e-sign-signed">
+                <i class="fas fa-check-circle"></i>
+                Signed
+              </span>
+            </div>
+            <div class="e-sign-actions">
+              <button class="btn-view-signed" onclick="viewSignedContract(${contractId})">
+                <i class="fas fa-file-contract"></i>
+                View Signed Contract
+              </button>
+            </div>
+          `;
+
+          closeSignatureModal();
+        }
+
+        function viewSignedContract(contractId) {
+          // In a real implementation, this would open the signed contract
+          alert("Opening signed contract...");
+        }
+
+        // Contract sending functionality
+        function sendContract(contractId) {
+          const row = document.querySelector(`tr:nth-child(${contractId})`);
+          const signatureCell = row.querySelector(".e-sign-cell");
+
+          // Update the signature status to show pending signature
+          signatureCell.innerHTML = `
+            <div class="e-sign-status">
+              <span class="e-sign-badge e-sign-pending">
+                <i class="fas fa-clock"></i>
+                Pending Signature
+              </span>
+            </div>
+            <div class="e-sign-actions">
+              <button class="btn-view-contract">
+                <i class="fas fa-file-contract"></i>
+                View Contract
+              </button>
+            </div>
+          `;
+
+          // Show notification that contract was sent
+          alert(
+            "Contract has been sent to the Home Share Provider for signature."
+          );
+        }
+
+        function viewContract(contractId) {
+          // In a real implementation, this would open the contract document
+          alert("Opening contract document...");
+        }
+
+        // Initialize the sample rows' file upload functionality
+        document.querySelectorAll(".file-upload").forEach((uploadContainer) => {
+          initializeSingleFileUpload(uploadContainer);
+        });
+      });
+    </script>
+  </body>
+</html>

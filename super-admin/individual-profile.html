@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Individual Profile - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .profile-container {
+        padding: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-right: 1.5rem;
+      }
+
+      .profile-title h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #111827;
+      }
+
+      .profile-title p {
+        margin: 0.5rem 0 0;
+        color: #6b7280;
+      }
+
+      .profile-status {
+        margin-left: auto;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-weight: 500;
+      }
+
+      .profile-status.approved {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .profile-status.in-contract {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+
+      .profile-status.disabled {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .profile-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-section h2 {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+        color: #111827;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .form-label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: 4px;
+        font-size: 0.875rem;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #2563eb;
+        ring: 2px solid rgba(37, 99, 235, 0.2);
+      }
+
+      .conditional-field {
+        margin-top: 0.5rem;
+        padding-left: 1rem;
+        border-left: 2px solid #e5e7eb;
+      }
+
+      .file-upload-section {
+        padding: 1rem;
+        background: #f9fafb;
+        border-radius: 6px;
+        margin-top: 1rem;
+      }
+
+      .file-upload-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .file-upload-item {
+        padding: 1rem;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+      }
+
+      .checkbox-group {
+        margin-bottom: 0.5rem;
+      }
+
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+      }
+
+      textarea.form-input {
+        min-height: 100px;
+        resize: vertical;
+      }
+
+      .medication-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .add-medication-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        border: none;
+        border-radius: 4px;
+        color: #374151;
+        cursor: pointer;
+        font-size: 0.875rem;
+      }
+
+      .add-medication-btn i {
+        margin-right: 0.5rem;
+      }
+
+      .support-contact {
+        padding: 1rem;
+        background: #f9fafb;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+      }
+
+      .support-contact h4 {
+        margin: 0 0 1rem;
+        color: #374151;
+      }
+
+      .tab-navigation {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 1rem;
+      }
+
+      .tab-button {
+        padding: 0.75rem 1.25rem;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: #6b7280;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      .tab-button.active {
+        color: #2563eb;
+        border-bottom-color: #2563eb;
+        font-weight: 600;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        border: none;
+        border-radius: 6px;
+        color: #374151;
+        font-size: 0.875rem;
+        cursor: pointer;
+        margin-bottom: 1rem;
+      }
+
+      .back-button i {
+        margin-right: 0.5rem;
+      }
+
+      .back-button:hover {
+        background: #e5e7eb;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .info-item {
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 6px;
+      }
+
+      .info-item.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .info-item label {
+        display: block;
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .info-item p {
+        margin: 0;
+        color: #111827;
+        font-size: 0.9375rem;
+      }
+
+      .sub-info {
+        margin-top: 1rem;
+        padding-left: 1rem;
+        border-left: 2px solid #e5e7eb;
+      }
+
+      .pet-photos {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .pet-photo {
+        width: 100px;
+        height: 100px;
+        border-radius: 4px;
+        object-fit: cover;
+      }
+
+      .support-contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .support-contact {
+        background: #f9fafb;
+        padding: 1.25rem;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+      }
+
+      .support-contact h4 {
+        color: #374151;
+        margin: 0 0 1rem;
+        font-size: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 0.5rem;
+      }
+
+      .contact-details p {
+        margin: 0.5rem 0;
+        font-size: 0.875rem;
+        color: #4b5563;
+      }
+
+      .medication-section {
+        margin-top: 2rem;
+      }
+
+      .medication-section h4 {
+        color: #374151;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      .medication-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+      }
+
+      .medication-item {
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+      }
+
+      .medication-item p {
+        margin: 0.25rem 0;
+        font-size: 0.875rem;
+        color: #4b5563;
+      }
+
+      .support-needs-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .section-description {
+        color: #6b7280;
+        margin-bottom: 1.5rem;
+        font-size: 0.9375rem;
+      }
+
+      .document-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .document-header h4 {
+        margin: 0;
+        font-size: 0.9375rem;
+        color: #111827;
+      }
+
+      .document-details {
+        font-size: 0.875rem;
+      }
+
+      .document-details p {
+        margin: 0.25rem 0;
+        color: #4b5563;
+      }
+
+      .file-meta {
+        font-size: 0.75rem;
+        color: #6b7280;
+      }
+
+      .document-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+
+      .action-btn {
+        padding: 0.375rem 0.75rem;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        color: #374151;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .action-btn:hover {
+        background: #e5e7eb;
+      }
+
+      .file-upload-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .file-upload-item {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+      }
+
+      .section-header h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #111827;
+      }
+
+      .edit-button {
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        color: #374151;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .edit-button:hover {
+        background: #e5e7eb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <i class="fas fa-home"></i>
+              <a href="index.html" class="nav-link">Home Share Providers</a>
+            </li>
+            <li class="active">
+              <i class="fas fa-users"></i>
+              <a href="individuals.html" class="nav-link">Individuals</a>
+            </li>
+            <li>
+              <i class="fas fa-file-contract"></i>
+              <a href="contracts.html" class="nav-link">Contracts</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search">
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-info">
+            <span class="notifications"><i class="fas fa-bell"></i></span>
+            <span class="profile">Admin User</span>
+          </div>
+        </header>
+
+        <button
+          onclick="window.location.href='individuals.html'"
+          class="back-button"
+        >
+          <i class="fas fa-arrow-left"></i>
+          Back to Individuals
+        </button>
+
+        <div class="profile-container">
+          <div class="profile-header">
+            <img src="" alt="" class="profile-avatar" id="profileAvatar" />
+            <div class="profile-title">
+              <h1 id="profileName"></h1>
+              <p id="profileEmail"></p>
+            </div>
+            <div class="profile-status" id="profileStatus"></div>
+          </div>
+
+          <div class="tab-navigation">
+            <button class="tab-button active" data-tab="profile">
+              Profile Information
+            </button>
+            <button class="tab-button" data-tab="custom">
+              HomeShare Custom Fields
+            </button>
+            <button class="tab-button" data-tab="documents">
+              File Uploads
+            </button>
+          </div>
+
+          <!-- Profile Information -->
+          <div class="tab-content active" id="profile-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Basic Information</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Email</label>
+                  <p>emily.davis@email.com</p>
+                </div>
+                <div class="info-item">
+                  <label>Privacy Policy and Terms</label>
+                  <p>Agreed on January 15, 2024</p>
+                </div>
+                <div class="info-item">
+                  <label>First Name</label>
+                  <p>Emily</p>
+                </div>
+                <div class="info-item">
+                  <label>Last Name</label>
+                  <p>Davis</p>
+                </div>
+                <div class="info-item">
+                  <label>Phone</label>
+                  <p>(604) 555-0123</p>
+                </div>
+                <div class="info-item">
+                  <label>Preferred Contact Method</label>
+                  <p>Email</p>
+                </div>
+                <div class="info-item">
+                  <label>Date of Birth</label>
+                  <p>March 15, 1992</p>
+                </div>
+                <div class="info-item">
+                  <label>Postal Code</label>
+                  <p>V6B 1A1</p>
+                </div>
+                <div class="info-item">
+                  <label>Province</label>
+                  <p>British Columbia</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Specific Information</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Looking to Move In</label>
+                  <p>Vancouver - Downtown area</p>
+                </div>
+                <div class="info-item">
+                  <label>Planned Move Date</label>
+                  <p>July 1, 2024</p>
+                </div>
+                <div class="info-item">
+                  <label>Duration</label>
+                  <p>1-2 years</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Moving with Pets</label>
+                  <p>Yes</p>
+                  <div class="sub-info">
+                    <label>Pet Details</label>
+                    <p>
+                      One small dog (Maltese), 3 years old, well-trained and
+                      friendly
+                    </p>
+                    <div class="pet-photos">
+                      <img
+                        src="https://placehold.co/100x100"
+                        alt="Pet photo 1"
+                        class="pet-photo"
+                      />
+                      <img
+                        src="https://placehold.co/100x100"
+                        alt="Pet photo 2"
+                        class="pet-photo"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="info-item">
+                  <label>Gender</label>
+                  <p>Female</p>
+                </div>
+                <div class="info-item">
+                  <label>Host Identity Preference</label>
+                  <p>No specific preference</p>
+                </div>
+                <div class="info-item">
+                  <label>Languages Spoken</label>
+                  <p>English (Primary), French (Conversational)</p>
+                </div>
+                <div class="info-item">
+                  <label>Employment</label>
+                  <p>Full-time - Software Developer at Tech Solutions Inc.</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Hobbies and Interests</label>
+                  <p>
+                    Reading, hiking, photography, cooking, and playing piano.
+                    Active member of local photography club and enjoys weekend
+                    hiking trips.
+                  </p>
+                </div>
+                <div class="info-item full-width">
+                  <label>More About Me</label>
+                  <p>
+                    I'm a friendly and organized person who values a clean and
+                    peaceful living environment. I enjoy spending quiet evenings
+                    at home but also like to maintain an active lifestyle. I'm
+                    looking for a home share situation that provides a balance
+                    of privacy and social interaction. I'm respectful of others'
+                    space and preferences, and I'm always willing to contribute
+                    to maintaining a harmonious living environment.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HomeShare Custom Fields -->
+          <div class="tab-content" id="custom-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Basic Support Information</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>GSA Level</label>
+                  <p>Level 3</p>
+                </div>
+                <div class="info-item">
+                  <label>CLBC Facilitator</label>
+                  <p>Sarah Johnson</p>
+                </div>
+                <div class="info-item">
+                  <label>Reason for Moving</label>
+                  <p>Seeking more independence and community integration</p>
+                </div>
+                <div class="info-item">
+                  <label>PWD</label>
+                  <p>Yes</p>
+                </div>
+                <div class="info-item">
+                  <label>RDSP</label>
+                  <p>Yes - Managed by TD Bank</p>
+                </div>
+                <div class="info-item">
+                  <label>Financial Assistance</label>
+                  <p>Robert Davis (Father) - Monthly budget planning</p>
+                </div>
+                <div class="info-item">
+                  <label>Tax Assistance</label>
+                  <p>H&R Block - Annual tax preparation service</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Support Network</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="support-contact-grid">
+                <div class="support-contact">
+                  <h4>Primary Contact</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Robert Davis</p>
+                    <p><strong>Relationship:</strong> Father</p>
+                    <p><strong>Phone:</strong> (604) 555-1234</p>
+                  </div>
+                </div>
+
+                <div class="support-contact">
+                  <h4>Day Supports</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Community Inclusion Program</p>
+                    <p><strong>Role:</strong> Day Program Coordinator</p>
+                    <p><strong>Phone:</strong> (604) 555-2345</p>
+                  </div>
+                </div>
+
+                <div class="support-contact">
+                  <h4>Family</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Linda Davis</p>
+                    <p><strong>Relationship:</strong> Mother</p>
+                    <p><strong>Phone:</strong> (604) 555-3456</p>
+                  </div>
+                </div>
+
+                <div class="support-contact">
+                  <h4>Other Support Network Member</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Michael Chen</p>
+                    <p><strong>Role:</strong> Community Support Worker</p>
+                    <p><strong>Phone:</strong> (604) 555-4567</p>
+                  </div>
+                </div>
+
+                <div class="support-contact">
+                  <h4>Physician</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Dr. Amanda Thompson</p>
+                    <p><strong>Role:</strong> Family Doctor</p>
+                    <p><strong>Phone:</strong> (604) 555-5678</p>
+                  </div>
+                </div>
+
+                <div class="support-contact">
+                  <h4>Other Professional</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Dr. James Wilson</p>
+                    <p><strong>Role:</strong> Behavioral Consultant</p>
+                    <p><strong>Phone:</strong> (604) 555-6789</p>
+                  </div>
+                </div>
+
+                <div class="support-contact">
+                  <h4>Legal Representative</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Jennifer Lee</p>
+                    <p><strong>Phone:</strong> (604) 555-7890</p>
+                    <p><strong>Email:</strong> j.lee@legalfirm.com</p>
+                  </div>
+                </div>
+
+                <div class="support-contact">
+                  <h4>Emergency Contact</h4>
+                  <div class="contact-details">
+                    <p><strong>Name:</strong> Robert Davis</p>
+                    <p><strong>Relationship:</strong> Father</p>
+                    <p><strong>Phone:</strong> (604) 555-1234</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Health & Support Needs</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item full-width">
+                  <label>Health Concerns</label>
+                  <p>Allergies: Mild peanut allergy</p>
+                  <p>Other: Seasonal asthma</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Overall Health Status</label>
+                  <p>
+                    <strong>Mental:</strong> Good - manages anxiety with regular
+                    counseling
+                  </p>
+                  <p>
+                    <strong>Spiritual:</strong> Attends weekly meditation group
+                  </p>
+                  <p>
+                    <strong>Physical:</strong> Active and maintains regular
+                    exercise routine
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Special Diet Requirements</label>
+                  <p>Gluten-free diet preference</p>
+                </div>
+              </div>
+
+              <div class="medication-section">
+                <h4>Current Medications</h4>
+                <div class="medication-list">
+                  <div class="medication-item">
+                    <p><strong>Name:</strong> Ventolin</p>
+                    <p><strong>Dosage:</strong> 2 puffs</p>
+                    <p><strong>Frequency:</strong> As needed for asthma</p>
+                  </div>
+                  <div class="medication-item">
+                    <p><strong>Name:</strong> Vitamin D</p>
+                    <p><strong>Dosage:</strong> 1000 IU</p>
+                    <p><strong>Frequency:</strong> Daily</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="support-needs-grid">
+                <div class="info-item">
+                  <label>Physical Health Needs</label>
+                  <p>Requires assistance with medication management</p>
+                </div>
+                <div class="info-item">
+                  <label>Mental Health Needs</label>
+                  <p>Weekly counseling sessions for anxiety management</p>
+                </div>
+                <div class="info-item">
+                  <label>Behavioral Support Needs</label>
+                  <p>Support with stress management techniques</p>
+                </div>
+                <div class="info-item">
+                  <label>Communication Needs</label>
+                  <p>Clear and direct communication preferred</p>
+                </div>
+                <div class="info-item">
+                  <label>Transportation Needs</label>
+                  <p>
+                    Independent with public transit, requires assistance for
+                    medical appointments
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Known Risks or Vulnerabilities</label>
+                  <p>
+                    Anxiety in crowded spaces, requires quiet environment when
+                    overwhelmed
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Personal Information & Preferences</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Awareness of Adult Rights</label>
+                  <p>Yes - Completed rights training through CLBC</p>
+                </div>
+                <div class="info-item">
+                  <label>Independent Decision Making</label>
+                  <p>Yes, with support for major financial decisions</p>
+                </div>
+                <div class="info-item">
+                  <label>Support Network Contact Frequency</label>
+                  <p>
+                    Weekly family visits, daily check-ins with support worker
+                  </p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Preferred Living Arrangements</label>
+                  <p>
+                    Private bedroom, shared common spaces, quiet environment,
+                    pet-friendly home
+                  </p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Daily Routine & Future Goals</label>
+                  <p>
+                    Current: Attends day program Mon-Fri, enjoys evening walks
+                    and reading<br />
+                    Future: Would like to incorporate part-time work and cooking
+                    classes
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Current Home Environment</label>
+                  <p>Shared apartment with support worker visits</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Home Share Placement Preferences</label>
+                  <p>
+                    Seeking a supportive environment that encourages
+                    independence, located near public transit, with
+                    opportunities for community involvement
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Personal Belongings</label>
+                  <p>
+                    Bedroom furniture, personal electronics, clothing, books,
+                    craft supplies
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Weekly Schedule</label>
+                  <p>
+                    Day program (M-F, 9-3), Counseling (Wed 4pm), Swimming (Sat
+                    10am)
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Cultural Background</label>
+                  <p>Canadian, English heritage</p>
+                </div>
+                <div class="info-item">
+                  <label>Religious/Spiritual Affiliation</label>
+                  <p>Spiritual but not religious - Practices meditation</p>
+                </div>
+                <div class="info-item">
+                  <label>Important Values</label>
+                  <p>
+                    Environmental consciousness, respect for privacy, animal
+                    welfare
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Current Benefits/Financial Supports</label>
+                  <p>PWD Benefits, RDSP, Community Housing Subsidy</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- File Uploads -->
+          <div class="tab-content" id="documents-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Required Documents</h2>
+                <button class="edit-button upload-trigger">
+                  <i class="fas fa-upload"></i> Upload
+                </button>
+              </div>
+              <p class="section-description">
+                Access Resources requires current and up to date information to
+                best support all service recipients.
+              </p>
+
+              <div class="file-upload-grid">
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Behavior Support / Safety Plan</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i>
+                      behavior-support-plan-2024.pdf
+                    </p>
+                    <p class="file-meta">2.3 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Health Care Plan</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i> health-care-plan-2024.pdf
+                    </p>
+                    <p class="file-meta">1.8 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Psychological Assessment</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i> psych-assessment-2022.pdf
+                    </p>
+                    <p class="file-meta">3.1 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>CLBC Transition Plan / GSA</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i> transition-plan-2024.pdf
+                    </p>
+                    <p class="file-meta">1.5 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>BC Care Card</h4>
+                  </div>
+                  <div class="document-details">
+                    <p><i class="fas fa-file-image"></i> bc-care-card.jpg</p>
+                    <p class="file-meta">0.5 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>BC ID</h4>
+                  </div>
+                  <div class="document-details">
+                    <p><i class="fas fa-file-image"></i> bc-id.jpg</p>
+                    <p class="file-meta">0.4 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>SIN</h4>
+                  </div>
+                  <div class="document-details">
+                    <p><i class="fas fa-file-image"></i> sin-card.jpg</p>
+                    <p class="file-meta">0.3 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Legal Documents (POA)</h4>
+                  </div>
+                  <div class="document-details">
+                    <p><i class="fas fa-file-pdf"></i> power-of-attorney.pdf</p>
+                    <p class="file-meta">1.2 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Other: Medical Diet Plan</h4>
+                  </div>
+                  <div class="document-details">
+                    <p><i class="fas fa-file-pdf"></i> diet-plan-2024.pdf</p>
+                    <p class="file-meta">0.8 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Upload Document Modal -->
+    <div id="uploadModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Upload Document</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="documentType">Document Type:</label>
+            <select id="documentType" class="form-select">
+              <option value="">Select document type...</option>
+              <option value="behavior" data-requires-expiry="true">
+                Behavior Support / Safety Plan
+              </option>
+              <option value="health" data-requires-expiry="true">
+                Health Care Plan
+              </option>
+              <option value="psychological" data-requires-expiry="false">
+                Psychological Assessment
+              </option>
+              <option value="transition" data-requires-expiry="true">
+                CLBC Transition Plan / GSA
+              </option>
+              <option value="bcid" data-requires-expiry="true">BC ID</option>
+              <option value="legal" data-requires-expiry="false">
+                Legal Documents (POA)
+              </option>
+              <option value="diet" data-requires-expiry="true">
+                Medical Diet Plan
+              </option>
+              <option value="lifePlan" data-requires-expiry="true">
+                Personal Life Plan
+              </option>
+              <option value="financial" data-requires-expiry="true">
+                Financial Review
+              </option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div id="otherDocumentType" class="form-group hidden">
+            <label for="otherType">Specify Document Type:</label>
+            <input
+              type="text"
+              id="otherType"
+              class="form-input"
+              placeholder="Enter document type"
+            />
+          </div>
+
+          <div id="expiryDateField" class="form-group hidden">
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="date" id="expiryDate" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label for="documentFile">Upload File:</label>
+            <input
+              type="file"
+              id="documentFile"
+              class="form-input"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Upload Document</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Tab Navigation
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const tabId = button.getAttribute("data-tab");
+
+            // Update active states
+            tabButtons.forEach((btn) => btn.classList.remove("active"));
+            tabContents.forEach((content) =>
+              content.classList.remove("active")
+            );
+
+            button.classList.add("active");
+            document.getElementById(`${tabId}-tab`).classList.add("active");
+          });
+        });
+
+        // Get and populate profile data
+        const urlParams = new URLSearchParams(window.location.search);
+        const individualId = urlParams.get("id");
+
+        // Mock data - In a real application, this would come from a database
+        const individuals = {
+          "emily-davis": {
+            name: "Emily Davis",
+            email: "emily.davis@email.com",
+            status: "approved",
+            avatar: "https://ui-avatars.com/api/?name=Emily+Davis",
+          },
+          "james-wilson": {
+            name: "James Wilson",
+            email: "james.wilson@email.com",
+            status: "in-contract",
+            avatar: "https://ui-avatars.com/api/?name=James+Wilson",
+          },
+          "maria-garcia": {
+            name: "Maria Garcia",
+            email: "maria.garcia@email.com",
+            status: "disabled",
+            avatar: "https://ui-avatars.com/api/?name=Maria+Garcia",
+          },
+        };
+
+        const individual = individuals[individualId];
+
+        if (individual) {
+          document.getElementById("profileName").textContent = individual.name;
+          document.getElementById("profileEmail").textContent =
+            individual.email;
+          document.getElementById("profileAvatar").src = individual.avatar;
+          document.getElementById("profileAvatar").alt = individual.name[0];
+
+          const statusElement = document.getElementById("profileStatus");
+          statusElement.textContent =
+            individual.status.charAt(0).toUpperCase() +
+            individual.status.slice(1);
+          statusElement.className = `profile-status ${individual.status}`;
+        }
+
+        // Upload Modal Functionality
+        const uploadModal = document.getElementById("uploadModal");
+        const uploadTrigger = document.querySelector(".upload-trigger");
+        const closeModal = uploadModal.querySelector(".close-modal");
+        const cancelBtn = uploadModal.querySelector(".btn-cancel");
+        const documentTypeSelect = document.getElementById("documentType");
+        const otherDocumentType = document.getElementById("otherDocumentType");
+        const expiryDateField = document.getElementById("expiryDateField");
+
+        uploadTrigger.addEventListener("click", () => {
+          uploadModal.classList.remove("hidden");
+        });
+
+        closeModal.addEventListener("click", () => {
+          uploadModal.classList.add("hidden");
+          resetForm();
+        });
+
+        cancelBtn.addEventListener("click", () => {
+          uploadModal.classList.add("hidden");
+          resetForm();
+        });
+
+        documentTypeSelect.addEventListener("change", function () {
+          // Handle "Other" option visibility
+          otherDocumentType.classList.toggle("hidden", this.value !== "other");
+
+          // Handle expiry date field visibility
+          const requiresExpiry =
+            this.options[this.selectedIndex].getAttribute(
+              "data-requires-expiry"
+            ) === "true";
+          expiryDateField.classList.toggle(
+            "hidden",
+            !requiresExpiry && this.value !== "other"
+          );
+
+          if (this.value === "other") {
+            expiryDateField.classList.remove("hidden"); // Always show for other, but make optional
+            expiryDateField.querySelector("input").required = false;
+          } else if (requiresExpiry) {
+            expiryDateField.querySelector("input").required = true;
+          }
+        });
+
+        function resetForm() {
+          documentTypeSelect.value = "";
+          otherDocumentType.classList.add("hidden");
+          expiryDateField.classList.add("hidden");
+          document.getElementById("otherType").value = "";
+          document.getElementById("expiryDate").value = "";
+          document.getElementById("documentFile").value = "";
+        }
+
+        // Handle form submission
+        const submitBtn = uploadModal.querySelector(".btn-submit");
+        submitBtn.addEventListener("click", function () {
+          const fileInput = document.getElementById("documentFile");
+          if (!fileInput.files.length) {
+            showToast("Please select a file to upload", "error");
+            return;
+          }
+
+          const documentType = documentTypeSelect.value;
+          if (!documentType) {
+            showToast("Please select a document type", "error");
+            return;
+          }
+
+          if (
+            documentType === "other" &&
+            !document.getElementById("otherType").value.trim()
+          ) {
+            showToast("Please specify the document type", "error");
+            return;
+          }
+
+          const requiresExpiry =
+            documentTypeSelect.options[
+              documentTypeSelect.selectedIndex
+            ].getAttribute("data-requires-expiry") === "true";
+          if (requiresExpiry && !document.getElementById("expiryDate").value) {
+            showToast("Please select an expiry date", "error");
+            return;
+          }
+
+          // Simulate upload
+          showToast("Document uploaded successfully", "success");
+          uploadModal.classList.add("hidden");
+          resetForm();
+        });
+
+        function showToast(message, type = "success") {
+          const toast = document.createElement("div");
+          toast.className = `toast ${type}`;
+          toast.innerHTML = `
+            <i class="fas ${
+              type === "success" ? "fa-check-circle" : "fa-exclamation-circle"
+            }"></i>
+            <span>${message}</span>
+          `;
+          document.body.appendChild(toast);
+
+          setTimeout(() => {
+            toast.style.animation = "slideOut 0.3s ease-out forwards";
+            setTimeout(() => toast.remove(), 300);
+          }, 3000);
+        }
+      });
+
+      // Toggle pet-related fields
+      function togglePetFields() {
+        const hasPets = document.getElementById("hasPets").checked;
+        document.getElementById("petFields").style.display = hasPets
+          ? "block"
+          : "none";
+      }
+    </script>
+  </body>
+</html>

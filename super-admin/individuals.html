@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Individuals - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <i class="fas fa-home"></i>
+              <a href="index.html" class="nav-link">Home Share Providers</a>
+            </li>
+            <li class="active">
+              <i class="fas fa-users"></i>
+              <a href="individuals.html" class="nav-link">Individuals</a>
+            </li>
+            <li>
+              <i class="fas fa-file-contract"></i>
+              <a href="contracts.html" class="nav-link">Contracts</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search">
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-info">
+            <span class="notifications"><i class="fas fa-bell"></i></span>
+            <span class="profile">Admin User</span>
+          </div>
+        </header>
+
+        <section class="users-section">
+          <div class="section-header">
+            <h2>Active Individuals</h2>
+            <button class="add-user-btn">+ Add Individual</button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Case Manager</th>
+                  <th style="width: 200px">Individual Referral</th>
+                  <th style="width: 200px">Individual Consent to Disclosure</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Emily+Davis"
+                      alt="ED"
+                      class="user-avatar"
+                    />
+                    <a
+                      href="individual-profile.html?id=emily-davis"
+                      class="user-link"
+                      >Emily Davis</a
+                    >
+                  </td>
+                  <td>emily.davis@email.com</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option
+                          value="approved"
+                          data-icon="fa-check-circle"
+                          selected
+                        >
+                          Approved
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="case-manager-cell">Alex Johnson</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="emily-referral">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file-emily-referral"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file-emily-referral" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Referral</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="emily-consent">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file-emily-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file-emily-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=James+Wilson"
+                      alt="JW"
+                      class="user-avatar"
+                    />
+                    <a
+                      href="individual-profile.html?id=james-wilson"
+                      class="user-link"
+                      >James Wilson</a
+                    >
+                  </td>
+                  <td>james.wilson@email.com</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option
+                          value="approved"
+                          data-icon="fa-check-circle"
+                          selected
+                        >
+                          Approved
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="case-manager-cell">Priya Patel</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="james-referral">
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">referral.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="james-consent">
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">consent.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Maria+Garcia"
+                      alt="MG"
+                      class="user-avatar"
+                    />
+                    <a
+                      href="individual-profile.html?id=maria-garcia"
+                      class="user-link"
+                      >Maria Garcia</a
+                    >
+                  </td>
+                  <td>maria.garcia@email.com</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="disabled" data-icon="fa-ban" selected>
+                          Disabled
+                        </option>
+                        <option value="approved" data-icon="fa-check-circle">
+                          Approved
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="case-manager-cell">Jordan Lee</td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="maria-referral">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file-maria-referral"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file-maria-referral" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Referral</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="maria-consent">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file-maria-consent"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file-maria-consent" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Consent</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Placeholder for Inactive Individuals Table -->
+        <div
+          class="inactive-individuals-placeholder"
+          style="
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+            text-align: center;
+            color: #64748b;
+            font-size: 1.1rem;
+          "
+        >
+          <i
+            class="fas fa-user-slash"
+            style="font-size: 1.5rem; color: #64748b; margin-bottom: 0.5rem"
+          ></i
+          ><br />
+          <strong>Inactive Individuals Table Placeholder</strong><br />
+          <span>This is where the Inactive Individuals table will be.</span>
+        </div>
+      </main>
+    </div>
+
+    <!-- Approval Confirmation Modal -->
+    <div id="approvalModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Approve Individual</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to approve this individual?</p>
+          <p>An email will be sent to notify the Individual.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Confirm Approval</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decline Reason Modal -->
+    <div id="declineModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Decline Individual</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="declineReason"
+            >Please provide a reason for declining:</label
+          >
+          <textarea
+            id="declineReason"
+            rows="4"
+            placeholder="Enter the reason for declining..."
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize all file upload containers
+        document.querySelectorAll(".file-upload").forEach((uploadContainer) => {
+          initializeSingleFileUpload(uploadContainer);
+        });
+
+        // Status dropdown functionality
+        const statusSelects = document.querySelectorAll(".status-select");
+
+        statusSelects.forEach((select) => {
+          // Set initial status
+          updateSelectStatus(select);
+
+          select.addEventListener("change", function () {
+            const row = this.closest("tr");
+            const userEmail = row.querySelector("td:nth-child(2)").textContent;
+            const userName = row.querySelector("td:nth-child(1)").textContent;
+
+            if (this.value === "declined") {
+              showDeclineModal(this, userEmail, userName);
+            } else if (this.value === "approved") {
+              showApprovalModal(this, userEmail, userName, false);
+            }
+
+            updateSelectStatus(this);
+          });
+        });
+
+        function showDeclineModal(select, email, name) {
+          const modal = document.getElementById("declineModal");
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+          const reasonTextarea = modal.querySelector("#declineReason");
+
+          modal.dataset.selectElement = select;
+          modal.classList.remove("hidden");
+          reasonTextarea.value = "";
+
+          const closeModal = () => {
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            const reason = reasonTextarea.value.trim();
+            if (!reason) {
+              showToast("Please provide a reason for declining", "error");
+              return;
+            }
+            sendDeclineEmail(email, name, reason);
+            modal.classList.add("hidden");
+            showToast("Individual declined and email sent", "success");
+          };
+        }
+
+        function showApprovalModal(select, email, name) {
+          const modal = document.getElementById("approvalModal");
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+
+          modal.classList.remove("hidden");
+
+          const closeModal = () => {
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            sendApprovalEmail(email, name);
+            modal.classList.add("hidden");
+            showToast("Individual approved and email sent", "success");
+          };
+        }
+
+        function updateSelectStatus(select) {
+          const selectedOption = select.options[select.selectedIndex];
+          const status = selectedOption.value;
+
+          select.dataset.status = status;
+          const iconContainer =
+            select.parentElement.querySelector(".select-icon");
+
+          iconContainer.classList.remove(
+            "text-gray-400",
+            "text-green-500",
+            "text-red-500"
+          );
+
+          switch (status) {
+            case "approved":
+              iconContainer.style.color = "var(--success-color)";
+              break;
+            case "declined":
+              iconContainer.style.color = "var(--danger-color)";
+              break;
+            default:
+              iconContainer.style.color = "var(--text-secondary)";
+          }
+        }
+
+        function showToast(message, type = "success") {
+          const toast = document.createElement("div");
+          toast.className = `toast ${type}`;
+          toast.innerHTML = `
+            <i class="fas ${
+              type === "success" ? "fa-check-circle" : "fa-exclamation-circle"
+            }"></i>
+            <span>${message}</span>
+          `;
+          document.body.appendChild(toast);
+
+          setTimeout(() => {
+            toast.style.animation = "slideOut 0.3s ease-out forwards";
+            setTimeout(() => toast.remove(), 300);
+          }, 3000);
+        }
+
+        function sendApprovalEmail(email, name) {
+          console.log("Sending approval email to:", email);
+          console.log("User:", name);
+        }
+
+        function sendDeclineEmail(email, name, reason) {
+          console.log("Sending decline email to:", email);
+          console.log("User:", name);
+          console.log("Reason:", reason);
+        }
+
+        function initializeSingleFileUpload(uploadContainer) {
+          const fileInput = uploadContainer.querySelector(".file-input");
+          const initialState = uploadContainer.querySelector(
+            ".upload-state.initial"
+          );
+          const uploadedState = uploadContainer.querySelector(
+            ".upload-state.uploaded"
+          );
+          const progressState =
+            uploadContainer.querySelector(".upload-progress");
+          const progressBar = uploadContainer.querySelector(".progress-fill");
+          const progressText = uploadContainer.querySelector(".progress-text");
+          const fileName = uploadContainer.querySelector(".file-name");
+          let uploadedFile = null;
+
+          fileInput.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+              initialState.classList.add("hidden");
+              progressState.classList.remove("hidden");
+              uploadedState.classList.add("hidden");
+
+              let progress = 0;
+              const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `Uploading... ${progress}%`;
+
+                if (progress >= 100) {
+                  clearInterval(interval);
+                  setTimeout(() => {
+                    showUploadedState(file);
+                  }, 200);
+                }
+              }, 200);
+            }
+          });
+
+          const updateButton = uploadContainer.querySelector(".btn-update");
+          if (updateButton) {
+            updateButton.addEventListener("click", function () {
+              fileInput.click();
+            });
+          }
+
+          const downloadButton = uploadContainer.querySelector(".btn-download");
+          if (downloadButton) {
+            downloadButton.addEventListener("click", function () {
+              if (uploadedFile) {
+                alert("Downloading file: " + uploadedFile.name);
+              }
+            });
+          }
+
+          function showUploadedState(file) {
+            initialState.classList.add("hidden");
+            progressState.classList.add("hidden");
+            uploadedState.classList.remove("hidden");
+            fileName.textContent = file.name;
+            uploadedFile = file;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

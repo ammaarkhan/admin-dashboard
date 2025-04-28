@@ -1,0 +1,2627 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Share Providers - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul>
+            <li class="active">
+              <i class="fas fa-home"></i>
+              <a href="index.html" class="nav-link">Home Share Providers</a>
+            </li>
+            <li>
+              <i class="fas fa-users"></i>
+              <a href="individuals.html" class="nav-link">Individuals</a>
+            </li>
+            <li>
+              <i class="fas fa-file-contract"></i>
+              <a href="contracts.html" class="nav-link">Contracts</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search">
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-info">
+            <span class="notifications"><i class="fas fa-bell"></i></span>
+            <span class="profile">Admin User</span>
+          </div>
+        </header>
+
+        <section class="users-section">
+          <div class="section-header">
+            <h2>Active HSP</h2>
+            <button class="add-user-btn">+ Add User</button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>CRC Check</th>
+                  <th>Reference Check</th>
+                  <th>Home Study Recommendation</th>
+                  <th>Profile Bio</th>
+                  <th>Room Listing Bio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Sarah+Wilson"
+                      alt="SW"
+                      class="user-avatar"
+                    />
+                    <a href="hsp-profile.html?id=sarah-wilson" class="user-link"
+                      ><span>Sarah Wilson</span></a
+                    >
+                  </td>
+                  <td>sarah.wilson@example.com</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="approved" data-icon="fa-check-circle">
+                          Approved
+                        </option>
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="1-crc">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file1-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">crc_check.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="1-ref">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file1-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference1.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference2.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="1"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference3.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="2"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="1">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file1"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file1" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">home_study.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Michael+Chen"
+                      alt="MC"
+                      class="user-avatar"
+                    />
+                    <a href="hsp-profile.html?id=michael-chen" class="user-link"
+                      ><span>Michael Chen</span></a
+                    >
+                  </td>
+                  <td>michael.chen@example.com</td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="approved" data-icon="fa-check-circle">
+                          Approved
+                        </option>
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
+                        </option>
+                        <option
+                          value="in-contract"
+                          data-icon="fa-file-contract"
+                        >
+                          In Contract
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                        <option value="disabled" data-icon="fa-ban">
+                          Disabled
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="2-crc">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file2-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">crc_check.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload multiple" data-user-id="2-ref">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file2-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div class="uploaded-files">
+                        <div class="add-more-files">
+                          <button class="btn-add-file">
+                            <i class="fas fa-plus"></i> Add More Files
+                          </button>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference1.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="0"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference2.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="1"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                        <div class="file-item">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i>
+                            <span class="file-name">reference3.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-delete"
+                              title="Delete"
+                              data-index="2"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="2">
+                      <div class="upload-state initial hidden">
+                        <input
+                          type="file"
+                          id="file2"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file2" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">home_study.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview">✔</span> Edit
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="applications-section">
+          <div class="section-header">
+            <h2>Ongoing HSP Applications</h2>
+            <button class="add-user-btn">+ Add Application</button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Application Progress</th>
+                  <th>Status</th>
+                  <th>Case Manager</th>
+                  <th>CRC Check</th>
+                  <th>Reference Check</th>
+                  <th>Home Study Recommendation</th>
+                  <th>Profile Bio</th>
+                  <th>Room Listing Bio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=John+Smith"
+                      alt="JS"
+                      class="user-avatar"
+                    />
+                    <a href="hsp-profile.html?id=john-smith" class="user-link"
+                      ><span>John Smith</span></a
+                    >
+                  </td>
+                  <td>john.smith@example.com</td>
+                  <td>
+                    <div class="progress-container">
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                      </div>
+                      <span class="progress-text">0% Complete</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="approved" data-icon="fa-check-circle">
+                          Approved
+                        </option>
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                        <option value="disabled" data-icon="fa-ban" selected>
+                          Disabled
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="case-manager-cell">
+                    <div class="status-dropdown">
+                      <select
+                        class="case-manager-select"
+                        aria-label="Select Case Manager"
+                      >
+                        <option value="" selected disabled>
+                          Select Case Manager
+                        </option>
+                        <option value="taylor-smith">Taylor Smith</option>
+                        <option value="morgan-lee">Morgan Lee</option>
+                        <option value="alex-jones">Alex Jones</option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="6-crc">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file6-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file6-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div
+                      class="file-upload multiple"
+                      data-user-id="6-ref"
+                      style="width: 200px"
+                    >
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file6-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file6-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div
+                        class="uploaded-files hidden"
+                        style="max-width: 200px"
+                      >
+                        <div
+                          class="add-more-files"
+                          style="position: absolute; top: -30px; right: 0"
+                        >
+                          <button
+                            class="btn-add-file"
+                            style="padding: 2px 8px; font-size: 12px"
+                          >
+                            <i class="fas fa-plus"></i> Add More
+                          </button>
+                        </div>
+                        <!-- Files will be listed here -->
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="6">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file6"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file6" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="user-cell">
+                    <img
+                      src="https://ui-avatars.com/api/?name=Emily+Davis"
+                      alt="ED"
+                      class="user-avatar"
+                    />
+                    <a href="hsp-profile.html?id=emily-davis" class="user-link"
+                      ><span>Emily Davis</span></a
+                    >
+                  </td>
+                  <td>emily.davis@example.com</td>
+                  <td>
+                    <div class="progress-container">
+                      <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                      </div>
+                      <span class="progress-text">75% Complete</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select class="status-select">
+                        <option value="approved" data-icon="fa-check-circle">
+                          Approved
+                        </option>
+                        <option value="conditional" data-icon="fa-clock">
+                          Conditional Approved
+                        </option>
+                        <option value="declined" data-icon="fa-times-circle">
+                          Declined
+                        </option>
+                        <option value="disabled" data-icon="fa-ban" selected>
+                          Disabled
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="case-manager-cell">
+                    <div class="status-dropdown">
+                      <select
+                        class="case-manager-select"
+                        aria-label="Select Case Manager"
+                      >
+                        <option value="" disabled>Select Case Manager</option>
+                        <option value="taylor-smith">Taylor Smith</option>
+                        <option value="morgan-lee" selected>Morgan Lee</option>
+                        <option value="alex-jones">Alex Jones</option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="7-crc">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file7-crc"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file7-crc" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload CRC Check</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div
+                      class="file-upload multiple"
+                      data-user-id="7-ref"
+                      style="width: 200px"
+                    >
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file7-ref"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                          multiple
+                        />
+                        <label for="file7-ref" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload References</span>
+                        </label>
+                      </div>
+                      <div
+                        class="uploaded-files hidden"
+                        style="max-width: 200px"
+                      >
+                        <div
+                          class="add-more-files"
+                          style="position: absolute; top: -30px; right: 0"
+                        >
+                          <button
+                            class="btn-add-file"
+                            style="padding: 2px 8px; font-size: 12px"
+                          >
+                            <i class="fas fa-plus"></i> Add More
+                          </button>
+                        </div>
+                        <!-- Files will be listed here -->
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-user-id="7">
+                      <div class="upload-state initial">
+                        <input
+                          type="file"
+                          id="file7"
+                          class="file-input"
+                          accept=".pdf,.doc,.docx"
+                        />
+                        <label for="file7" class="file-label">
+                          <i class="fas fa-upload"></i>
+                          <span>Upload Study</span>
+                        </label>
+                      </div>
+                      <div class="upload-state uploaded hidden">
+                        <div class="file-info">
+                          <i class="fas fa-file-alt"></i>
+                          <span class="file-name">document.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="upload-progress hidden">
+                        <div class="progress-bar">
+                          <div class="progress-fill"></div>
+                        </div>
+                        <span class="progress-text">Uploading... 0%</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="bio-cell" data-bio-type="profile">
+                    <button
+                      class="btn-bio"
+                      data-bio="profile"
+                      aria-label="Edit Profile Bio"
+                    >
+                      <i class="fas fa-user-edit"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
+                  </td>
+                  <td class="bio-cell" data-bio-type="room">
+                    <button
+                      class="btn-bio"
+                      data-bio="room"
+                      aria-label="Edit Room Listing Bio"
+                    >
+                      <i class="fas fa-door-open"></i>
+                      <span class="bio-preview"></span> Edit
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Placeholder for Inactive HSP Table -->
+        <div
+          class="inactive-hsp-placeholder"
+          style="
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+            text-align: center;
+            color: #64748b;
+            font-size: 1.1rem;
+          "
+        >
+          <i
+            class="fas fa-user-slash"
+            style="font-size: 1.5rem; color: #64748b; margin-bottom: 0.5rem"
+          ></i
+          ><br />
+          <strong>Inactive HSP Table Placeholder</strong><br />
+          <span
+            >This is where the Inactive Home Share Providers table will
+            be.</span
+          >
+        </div>
+
+        <div class="section-divider">
+          <div class="divider-line"></div>
+          <div class="divider-content">
+            <i class="fas fa-folder-open"></i>
+            <span>Resource Management</span>
+          </div>
+          <div class="divider-line"></div>
+        </div>
+
+        <section class="hsp-resources-section">
+          <div class="section-header">
+            <h2>HSP Resources & Documents</h2>
+            <button class="add-document-btn">+ Add Document</button>
+          </div>
+          <div class="table-container">
+            <table class="users-table">
+              <thead>
+                <tr>
+                  <th>Document Name</th>
+                  <th>Last Updated</th>
+                  <th>Visibility</th>
+                  <th>File</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HSP Handbook 2024</td>
+                  <td>Mar 15, 2024</td>
+                  <td>
+                    <div class="visibility-toggle">
+                      <label class="switch">
+                        <input type="checkbox" checked />
+                        <span class="slider round"></span>
+                      </label>
+                      <span class="visibility-label">Visible to HSPs</span>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-doc-id="handbook">
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-pdf"></i>
+                          <span class="file-name">handbook_2024.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="actions">
+                      <button class="btn-delete" title="Delete">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Safety Guidelines</td>
+                  <td>Mar 10, 2024</td>
+                  <td>
+                    <div class="visibility-toggle">
+                      <label class="switch">
+                        <input type="checkbox" checked />
+                        <span class="slider round"></span>
+                      </label>
+                      <span class="visibility-label">Visible to HSPs</span>
+                    </div>
+                  </td>
+                  <td class="file-upload-cell">
+                    <div class="file-upload" data-doc-id="safety">
+                      <div class="upload-state uploaded">
+                        <div class="file-info">
+                          <i class="fas fa-file-pdf"></i>
+                          <span class="file-name">safety_guidelines.pdf</span>
+                        </div>
+                        <div class="file-actions">
+                          <button class="btn-download" title="Download">
+                            <i class="fas fa-download"></i>
+                          </button>
+                          <button class="btn-update" title="Upload New Version">
+                            <i class="fas fa-sync-alt"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="actions-cell">
+                    <div class="actions">
+                      <button class="btn-delete" title="Delete">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Add Document Modal -->
+        <div id="addDocumentModal" class="modal hidden">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Add New Document</h3>
+              <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="documentName">Document Name</label>
+                <input
+                  type="text"
+                  id="documentName"
+                  placeholder="Enter document name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="documentFile">Upload File</label>
+                <div class="file-upload-input">
+                  <input
+                    type="file"
+                    id="documentFile"
+                    accept=".pdf,.doc,.docx"
+                  />
+                  <label for="documentFile" class="file-label">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Choose a file or drag it here</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="documentVisibility" checked />
+                  <span>Make visible to HSP users</span>
+                </label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-cancel">Cancel</button>
+              <button class="btn btn-submit">Upload Document</button>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          /* Section Divider Styles */
+          .section-divider {
+            margin: 3rem 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+
+          .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+          }
+
+          .divider-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0 0.5rem;
+          }
+
+          .divider-content i {
+            color: var(--primary-color);
+          }
+
+          /* Update HSP Resources Section Styles */
+          .hsp-resources-section {
+            margin-top: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+          }
+
+          .hsp-resources-section .section-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+          }
+
+          .hsp-resources-section .section-header h2 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+          }
+
+          .add-document-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          }
+
+          .add-document-btn:hover {
+            background-color: #4338ca;
+          }
+
+          /* Visibility Toggle Styles */
+          .visibility-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+          }
+
+          .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+          }
+
+          .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+          }
+
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: 0.4s;
+          }
+
+          .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+          }
+
+          .switch input:checked + .slider {
+            background-color: var(--success-color);
+          }
+
+          .switch input:checked + .slider:before {
+            transform: translateX(24px);
+          }
+
+          .slider.round {
+            border-radius: 24px;
+          }
+
+          .slider.round:before {
+            border-radius: 50%;
+          }
+
+          .visibility-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+          }
+
+          /* File Upload Input Styles */
+          .file-upload-input {
+            border: 2px dashed #e2e8f0;
+            border-radius: 6px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+          }
+
+          .file-upload-input:hover {
+            border-color: var(--primary-color);
+          }
+
+          .file-upload-input input[type="file"] {
+            display: none;
+          }
+
+          .file-upload-input .file-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+          }
+
+          .file-upload-input .file-label i {
+            font-size: 2rem;
+            color: var(--primary-color);
+          }
+
+          /* Form Group Styles */
+          .form-group {
+            margin-bottom: 1.25rem;
+          }
+
+          .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+          }
+
+          .form-group input[type="text"],
+          .form-group select {
+            width: 100%;
+            padding: 0.625rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.875rem;
+          }
+
+          .form-group input[type="text"]:focus,
+          .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+          }
+
+          .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+          }
+
+          .checkbox-label input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+          }
+
+          /* Actions Cell Styles */
+          .actions-cell .actions {
+            display: flex;
+            gap: 0.5rem;
+          }
+
+          .actions-cell .actions button {
+            padding: 0.375rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            background: transparent;
+          }
+
+          .actions-cell .actions button:hover {
+            background-color: #f1f5f9;
+            color: var(--text-primary);
+          }
+
+          .btn-edit:hover {
+            color: var(--primary-color) !important;
+          }
+
+          .btn-delete:hover {
+            color: var(--danger-color) !important;
+          }
+        </style>
+
+        <script>
+          // Add Document Modal Functionality
+          document.addEventListener("DOMContentLoaded", function () {
+            const addDocumentBtn = document.querySelector(".add-document-btn");
+            const addDocumentModal =
+              document.getElementById("addDocumentModal");
+            const closeModalBtn =
+              addDocumentModal.querySelector(".close-modal");
+            const cancelBtn = addDocumentModal.querySelector(".btn-cancel");
+            const fileInput = document.getElementById("documentFile");
+            const fileLabel = document.querySelector(
+              ".file-upload-input .file-label span"
+            );
+
+            // Open modal
+            addDocumentBtn.addEventListener("click", () => {
+              addDocumentModal.classList.remove("hidden");
+            });
+
+            // Close modal
+            const closeModal = () => {
+              addDocumentModal.classList.add("hidden");
+              resetForm();
+            };
+
+            closeModalBtn.addEventListener("click", closeModal);
+            cancelBtn.addEventListener("click", closeModal);
+
+            // File input handling
+            fileInput.addEventListener("change", (e) => {
+              if (e.target.files.length > 0) {
+                fileLabel.textContent = e.target.files[0].name;
+              } else {
+                fileLabel.textContent = "Choose a file or drag it here";
+              }
+            });
+
+            // Drag and drop functionality
+            const dropZone = document.querySelector(".file-upload-input");
+
+            ["dragenter", "dragover", "dragleave", "drop"].forEach(
+              (eventName) => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+              }
+            );
+
+            function preventDefaults(e) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+
+            ["dragenter", "dragover"].forEach((eventName) => {
+              dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ["dragleave", "drop"].forEach((eventName) => {
+              dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            function highlight(e) {
+              dropZone.style.borderColor = "#4f46e5";
+            }
+
+            function unhighlight(e) {
+              dropZone.style.borderColor = "#e2e8f0";
+            }
+
+            dropZone.addEventListener("drop", handleDrop, false);
+
+            function handleDrop(e) {
+              const dt = e.dataTransfer;
+              const files = dt.files;
+
+              if (files.length > 0) {
+                fileInput.files = files;
+                fileLabel.textContent = files[0].name;
+              }
+            }
+
+            // Reset form
+            function resetForm() {
+              document.getElementById("documentName").value = "";
+              document.getElementById("documentVisibility").checked = true;
+              fileInput.value = "";
+              fileLabel.textContent = "Choose a file or drag it here";
+            }
+
+            // Handle visibility toggles
+            document
+              .querySelectorAll('.visibility-toggle input[type="checkbox"]')
+              .forEach((toggle) => {
+                toggle.addEventListener("change", function () {
+                  const visibilityLabel = this.parentElement.nextElementSibling;
+                  visibilityLabel.textContent = this.checked
+                    ? "Visible to HSPs"
+                    : "Hidden from HSPs";
+                });
+              });
+
+            // Bio editing logic
+            const bioModalEdit = document.getElementById("bioModalEdit");
+            const bioTextarea = document.getElementById("bioTextarea");
+            let currentBioCell = null;
+            let currentBioType = null;
+            let currentRow = null;
+            // Store bios in-memory for demo
+            const bioData = new Map(); // key: row, value: {profile: '', room: ''}
+
+            function attachBioButtonListeners() {
+              document
+                .querySelectorAll(".applications-section .users-table tbody tr")
+                .forEach((row) => {
+                  row.querySelectorAll(".btn-bio").forEach((btn) => {
+                    btn.onclick = function (e) {
+                      currentBioCell = btn.closest(".bio-cell");
+                      currentBioType = btn.getAttribute("data-bio");
+                      currentRow = row;
+                      // Load existing value if any
+                      const rowKey =
+                        row.dataset.rowKey || row.rowIndex || row.innerText;
+                      const bios = bioData.get(rowKey) || {
+                        profile: "",
+                        room: "",
+                      };
+                      bioTextarea.value = bios[currentBioType] || "";
+                      bioModalEdit.classList.remove("hidden");
+                    };
+                  });
+                });
+            }
+            attachBioButtonListeners();
+
+            // Modal close/cancel
+            bioModalEdit.querySelector(".close-modal").onclick = closeBioModal;
+            bioModalEdit.querySelector(".btn-cancel").onclick = closeBioModal;
+            function closeBioModal() {
+              bioModalEdit.classList.add("hidden");
+              bioTextarea.value = "";
+              currentBioCell = null;
+              currentBioType = null;
+              currentRow = null;
+            }
+
+            // Modal save
+            bioModalEdit.querySelector(".btn-submit").onclick = function () {
+              if (!currentBioCell || !currentBioType || !currentRow) return;
+              const rowKey =
+                currentRow.dataset.rowKey ||
+                currentRow.rowIndex ||
+                currentRow.innerText;
+              let bios = bioData.get(rowKey) || { profile: "", room: "" };
+              bios[currentBioType] = bioTextarea.value;
+              bioData.set(rowKey, bios);
+              // Show preview (icon or short text)
+              const preview = currentBioCell.querySelector(".bio-preview");
+              if (bioTextarea.value.trim()) {
+                preview.textContent = "✔";
+                preview.title = bioTextarea.value;
+              } else {
+                preview.textContent = "";
+                preview.title = "";
+              }
+              closeBioModal();
+            };
+
+            // Re-attach listeners if rows are moved (e.g., after approval)
+            window.attachBioButtonListeners = attachBioButtonListeners;
+          });
+
+          // Status dropdown functionality
+          const statusSelects = document.querySelectorAll(".status-select");
+          console.log("Found status selects:", statusSelects.length); // Debug: Check if selects are found
+
+          statusSelects.forEach((select) => {
+            // Set initial status
+            console.log("Initializing select:", select); // Debug: Check each select being initialized
+            updateSelectStatus(select);
+
+            select.addEventListener("change", function () {
+              console.log("Status changed to:", this.value); // Debug: Check if change event fires
+              const isApplicationSection = this.closest(
+                ".applications-section"
+              );
+              console.log("Is in application section:", isApplicationSection); // Debug: Check section context
+              const row = this.closest("tr");
+              const userEmail =
+                row.querySelector("td:nth-child(2)").textContent;
+              const userName = row.querySelector(".user-cell span").textContent;
+              console.log("User info:", { email: userEmail, name: userName }); // Debug: Check user info
+
+              if (this.value === "declined") {
+                console.log("Attempting to show decline modal"); // Debug: Check if this block is reached
+                showDeclineModal(this, userEmail, userName);
+              } else if (
+                this.value === "approved" ||
+                this.value === "conditional"
+              ) {
+                showApprovalModal(
+                  this,
+                  userEmail,
+                  userName,
+                  isApplicationSection,
+                  this.value // pass the new status
+                );
+              }
+
+              updateSelectStatus(this);
+            });
+          });
+
+          function showDeclineModal(select, email, name) {
+            console.log("showDeclineModal called with:", {
+              select,
+              email,
+              name,
+            }); // Debug: Check function call
+            const modal = document.getElementById("declineModal");
+            console.log("Found modal element:", modal); // Debug: Check if modal is found
+            const closeBtn = modal.querySelector(".close-modal");
+            const cancelBtn = modal.querySelector(".btn-cancel");
+            const submitBtn = modal.querySelector(".btn-submit");
+            const reasonTextarea = modal.querySelector("#declineReason");
+            console.log("Modal elements:", {
+              closeBtn: !!closeBtn,
+              cancelBtn: !!cancelBtn,
+              submitBtn: !!submitBtn,
+              reasonTextarea: !!reasonTextarea,
+            }); // Debug: Check if all modal elements are found
+
+            modal.dataset.selectElement = select;
+            console.log("Before removing hidden class"); // Debug: Check before class removal
+            modal.classList.remove("hidden");
+            console.log("After removing hidden class"); // Debug: Check after class removal
+            console.log(
+              "Modal display style:",
+              window.getComputedStyle(modal).display
+            ); // Debug: Check computed style
+            reasonTextarea.value = "";
+
+            const closeModal = () => {
+              console.log("Closing modal"); // Debug: Check if close is triggered
+              modal.classList.add("hidden");
+              select.value = "disabled";
+              updateSelectStatus(select);
+            };
+
+            closeBtn.onclick = closeModal;
+            cancelBtn.onclick = closeModal;
+
+            submitBtn.onclick = () => {
+              console.log("Submit clicked"); // Debug: Check if submit is clicked
+              const reason = reasonTextarea.value.trim();
+              if (!reason) {
+                showToast("Please provide a reason for declining", "error");
+                return;
+              }
+              sendDeclineEmail(email, name, reason);
+              modal.classList.add("hidden");
+              showToast("Application declined and email sent", "success");
+            };
+          }
+
+          function showApprovalModal(
+            select,
+            email,
+            name,
+            isApplicationSection,
+            newStatus // pass the new status
+          ) {
+            if (isApplicationSection) {
+              showBioWarningModal(select, email, name, newStatus);
+            } else {
+              showFinalApprovalModal(
+                select,
+                email,
+                name,
+                isApplicationSection,
+                newStatus
+              );
+            }
+          }
+
+          function showBioWarningModal(select, email, name, newStatus) {
+            const modal = document.getElementById("bioModal");
+            const closeBtn = modal.querySelector(".close-modal");
+            const cancelBtn = modal.querySelector(".btn-cancel");
+            const submitBtn = modal.querySelector(".btn-submit");
+
+            modal.classList.remove("hidden");
+
+            const closeModal = () => {
+              modal.classList.add("hidden");
+              select.value = "disabled";
+              updateSelectStatus(select);
+            };
+
+            closeBtn.onclick = closeModal;
+            cancelBtn.onclick = closeModal;
+
+            submitBtn.onclick = () => {
+              modal.classList.add("hidden");
+              showFinalApprovalModal(select, email, name, true, newStatus);
+            };
+          }
+
+          function showFinalApprovalModal(
+            select,
+            email,
+            name,
+            isApplicationSection,
+            newStatus
+          ) {
+            const modal = document.getElementById("approvalModal");
+            const closeBtn = modal.querySelector(".close-modal");
+            const cancelBtn = modal.querySelector(".btn-cancel");
+            const submitBtn = modal.querySelector(".btn-submit");
+
+            modal.classList.remove("hidden");
+
+            const closeModal = () => {
+              modal.classList.add("hidden");
+              select.value = "disabled";
+              updateSelectStatus(select);
+            };
+
+            closeBtn.onclick = closeModal;
+            cancelBtn.onclick = closeModal;
+
+            submitBtn.onclick = () => {
+              modal.classList.add("hidden");
+              if (isApplicationSection) {
+                moveToUsersList(select.closest("tr"), newStatus);
+              }
+              sendApprovalEmail(email, name);
+              showToast(
+                "Application " +
+                  (newStatus === "conditional"
+                    ? "conditionally approved"
+                    : "approved") +
+                  " and email sent",
+                "success"
+              );
+            };
+          }
+
+          function moveToUsersList(row, newStatus) {
+            console.log("moveToUsersList called with row:", row);
+            const usersList = document.querySelector(
+              ".users-section .users-table tbody"
+            );
+            console.log("Found users list:", usersList);
+            const newUserRow = createUserRowFromApplication(row, newStatus);
+            console.log("Created new user row:", newUserRow);
+            usersList.insertBefore(newUserRow, usersList.firstChild);
+            console.log("Inserted new row at the top of users list");
+            row.remove();
+            console.log("Removed original row from applications section");
+            // Re-attach bio button listeners for new row
+            if (window.attachBioButtonListeners)
+              window.attachBioButtonListeners();
+          }
+
+          function createUserRowFromApplication(applicationRow, newStatus) {
+            console.log(
+              "Creating new user row from application row:",
+              applicationRow
+            );
+            const newUserRow = document.createElement("tr");
+
+            // Copy user cell (name and avatar)
+            const userCell = applicationRow
+              .querySelector(".user-cell")
+              .cloneNode(true);
+            console.log("Cloned user cell:", userCell);
+            newUserRow.appendChild(userCell);
+
+            // Copy email cell
+            const emailCell = applicationRow
+              .querySelector("td:nth-child(2)")
+              .cloneNode(true);
+            console.log("Cloned email cell:", emailCell);
+            newUserRow.appendChild(emailCell);
+
+            // Add status cell with approved status
+            console.log("Creating new status cell with approved status");
+            const statusCell = document.createElement("td");
+            statusCell.innerHTML = `
+                <div class="status-dropdown">
+                    <select class="status-select">
+                        <option value="approved" data-icon="fa-check-circle">Approved</option>
+                        <option value="conditional" data-icon="fa-clock">Conditional Approved</option>
+                        <option value="in-contract" data-icon="fa-file-contract">In Contract</option>
+                        <option value="declined" data-icon="fa-times-circle">Declined</option>
+                        <option value="disabled" data-icon="fa-ban">Disabled</option>
+                    </select>
+                    <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            `;
+            const statusSelect = statusCell.querySelector(".status-select");
+            statusSelect.value =
+              newStatus === "conditional" ? "conditional" : "approved";
+            updateSelectStatus(statusSelect);
+            console.log("Created and initialized status cell:", statusCell);
+            newUserRow.appendChild(statusCell);
+
+            // Copy CRC Check cell
+            const crcCell = applicationRow
+              .querySelector("td:nth-child(6)")
+              .cloneNode(true);
+            console.log("Cloned CRC check cell:", crcCell);
+            newUserRow.appendChild(crcCell);
+
+            // Copy Reference Check cell
+            const refCell = applicationRow
+              .querySelector("td:nth-child(7)")
+              .cloneNode(true);
+            console.log("Cloned reference check cell:", refCell);
+            newUserRow.appendChild(refCell);
+
+            // Copy Home Study Recommendation cell
+            const studyCell = applicationRow
+              .querySelector("td:nth-child(8)")
+              .cloneNode(true);
+            console.log("Cloned home study cell:", studyCell);
+            newUserRow.appendChild(studyCell);
+
+            // Copy Profile Bio cell
+            const profileBioCell = applicationRow
+              .querySelector('td.bio-cell[data-bio-type="profile"]')
+              .cloneNode(true);
+            newUserRow.appendChild(profileBioCell);
+
+            // Copy Room Listing Bio cell
+            const roomBioCell = applicationRow
+              .querySelector('td.bio-cell[data-bio-type="room"]')
+              .cloneNode(true);
+            newUserRow.appendChild(roomBioCell);
+
+            console.log("Returning completed new user row:", newUserRow);
+            return newUserRow;
+          }
+
+          function sendApprovalEmail(email, name) {
+            console.log("Sending approval email to:", email);
+            console.log("User:", name);
+            // In a real application, this would make an API call to send the email
+          }
+
+          function updateSelectStatus(select) {
+            const selectedOption = select.options[select.selectedIndex];
+            const status = selectedOption.value;
+
+            // Update select appearance
+            select.dataset.status = status;
+
+            // Update icon color based on status
+            const iconContainer =
+              select.parentElement.querySelector(".select-icon");
+
+            // Reset classes
+            iconContainer.classList.remove(
+              "text-gray-400",
+              "text-green-500",
+              "text-red-500"
+            );
+
+            // Add appropriate color class
+            switch (status) {
+              case "approved":
+                iconContainer.style.color = "var(--success-color)";
+                break;
+              case "conditional":
+                iconContainer.style.color = "var(--warning-color)";
+                break;
+              case "declined":
+                iconContainer.style.color = "var(--danger-color)";
+                break;
+              default:
+                iconContainer.style.color = "var(--text-secondary)";
+            }
+          }
+
+          // Function to show toast notifications
+          function showToast(message, type = "success") {
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+              <i class="fas ${
+                type === "success" ? "fa-check-circle" : "fa-exclamation-circle"
+              }"></i>
+              <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+              toast.style.animation = "slideOut 0.3s ease-out forwards";
+              setTimeout(() => toast.remove(), 300);
+            }, 3000);
+          }
+
+          // Function to simulate sending decline email
+          function sendDeclineEmail(email, name, reason) {
+            console.log("Sending decline email to:", email);
+            console.log("User:", name);
+            console.log("Reason:", reason);
+            // In a real application, this would make an API call to your backend
+            // to send the actual email
+          }
+        </script>
+      </main>
+    </div>
+
+    <!-- Decline Reason Modal -->
+    <div id="declineModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Decline Application</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="declineReason"
+            >Please provide a reason for declining this application:</label
+          >
+          <textarea
+            id="declineReason"
+            rows="4"
+            placeholder="Enter the reason for declining..."
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bio Warning Modal -->
+    <div id="bioModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Missing Bio Information</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="warning-message">
+            <i
+              class="fas fa-exclamation-triangle"
+              style="color: #f59e0b; margin-right: 8px"
+            ></i>
+            <p>
+              The following required bios have not been filled out for this HSP:
+            </p>
+            <ul style="margin-top: 1rem; margin-left: 1.5rem">
+              <li>Profile Bio</li>
+              <li>Room Listing Bio</li>
+            </ul>
+            <p style="margin-top: 1rem">
+              Would you like to continue with the approval process anyway?
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Continue to Approval</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Approval Confirmation Modal -->
+    <div id="approvalModal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Approve Application</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to approve this application?</p>
+          <p>An email will be sent to notify the Home Share Provider.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Confirm Approval</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .bio-input-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .bio-input-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .bio-input-section label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+
+      .bio-description {
+        font-size: 0.875rem;
+        color: #64748b;
+        margin-bottom: 0.75rem;
+      }
+
+      .modal-content textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+        resize: vertical;
+      }
+
+      .modal-content textarea:focus {
+        outline: none;
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+      }
+
+      /* Update status dropdown styles */
+      .status-dropdown {
+        position: relative;
+        width: 120px;
+      }
+
+      .status-dropdown select {
+        width: 100%;
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        appearance: none;
+        background: white;
+        cursor: pointer;
+        font-size: 0.875rem;
+        line-height: 1.2;
+        white-space: normal; /* Allow text wrapping */
+        height: auto; /* Allow height to adjust */
+        min-height: 36px; /* Ensure minimum height */
+      }
+
+      .status-dropdown .select-icon {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      /* Status colors */
+      .status-select[data-status="approved"] {
+        color: var(--success-color);
+      }
+
+      .status-select[data-status="conditional"] {
+        color: var(--warning-color);
+      }
+
+      .status-select[data-status="declined"] {
+        color: var(--danger-color);
+      }
+
+      .status-select[data-status="disabled"] {
+        color: var(--text-secondary);
+      }
+
+      /* Adjust option text wrapping */
+      .status-select option {
+        white-space: normal;
+        line-height: 1.2;
+      }
+    </style>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Standard single file uploads
+        document
+          .querySelectorAll(".file-upload:not(.multiple)")
+          .forEach((uploadContainer) => {
+            initializeSingleFileUpload(uploadContainer);
+          });
+
+        // Multiple file uploads
+        document
+          .querySelectorAll(".file-upload.multiple")
+          .forEach((uploadContainer) => {
+            initializeMultipleFileUpload(uploadContainer);
+          });
+
+        // Function for single file uploads
+        function initializeSingleFileUpload(uploadContainer) {
+          const fileInput = uploadContainer.querySelector(".file-input");
+          const initialState = uploadContainer.querySelector(
+            ".upload-state.initial"
+          );
+          const uploadedState = uploadContainer.querySelector(
+            ".upload-state.uploaded"
+          );
+          const progressState =
+            uploadContainer.querySelector(".upload-progress");
+          const fileName = uploadContainer.querySelector(".file-name");
+          const progressBar = uploadContainer.querySelector(".progress-fill");
+          const progressText = uploadContainer.querySelector(".progress-text");
+          const updateBtn = uploadContainer.querySelector(".btn-update");
+          const downloadBtn = uploadContainer.querySelector(".btn-download");
+
+          let uploadedFile = null;
+
+          function showProgress() {
+            initialState.classList.add("hidden");
+            uploadedState.classList.add("hidden");
+            progressState.classList.remove("hidden");
+          }
+
+          function updateProgress(percent) {
+            progressBar.style.width = `${percent}%`;
+            progressText.textContent = `Uploading... ${percent}%`;
+          }
+
+          function showUploadedState(file) {
+            initialState.classList.add("hidden");
+            progressState.classList.add("hidden");
+            uploadedState.classList.remove("hidden");
+            fileName.textContent = file.name;
+            uploadedFile = file;
+          }
+
+          function simulateUpload(file) {
+            showProgress();
+            let progress = 0;
+            const interval = setInterval(() => {
+              progress += 10;
+              updateProgress(progress);
+              if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => showUploadedState(file), 500);
+              }
+            }, 200);
+          }
+
+          fileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              simulateUpload(file);
+            }
+          });
+
+          if (updateBtn) {
+            updateBtn.addEventListener("click", () => {
+              fileInput.click();
+            });
+          }
+
+          if (downloadBtn) {
+            downloadBtn.addEventListener("click", () => {
+              if (uploadedFile) {
+                // Create a temporary URL for the file
+                const url = URL.createObjectURL(uploadedFile);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = uploadedFile.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              }
+            });
+          }
+        }
+
+        // Function for multiple file uploads
+        function initializeMultipleFileUpload(uploadContainer) {
+          const fileInput = uploadContainer.querySelector(".file-input");
+          const initialState = uploadContainer.querySelector(
+            ".upload-state.initial"
+          );
+          const uploadedFiles =
+            uploadContainer.querySelector(".uploaded-files");
+          const progressState =
+            uploadContainer.querySelector(".upload-progress");
+          const progressBar = progressState.querySelector(".progress-fill");
+          const progressText = progressState.querySelector(".progress-text");
+
+          // Simple array to store uploaded files
+          let files = [];
+
+          // Handle file input change
+          fileInput.addEventListener("change", function (e) {
+            if (this.files.length > 0) {
+              // Show progress while "uploading"
+              initialState.classList.add("hidden");
+              uploadedFiles.classList.add("hidden");
+              progressState.classList.remove("hidden");
+
+              // Simulate upload progress
+              let progress = 0;
+              const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + "%";
+                progressText.textContent = `Uploading... ${progress}%`;
+
+                if (progress >= 100) {
+                  clearInterval(interval);
+                  setTimeout(() => {
+                    // Add new files to array
+                    Array.from(this.files).forEach((file) => {
+                      files.push(file);
+                    });
+
+                    // Show uploaded files
+                    displayFiles();
+
+                    // Reset file input to allow selecting the same file again
+                    fileInput.value = "";
+                  }, 500);
+                }
+              }, 200);
+            }
+          });
+
+          // Function to display files
+          function displayFiles() {
+            // Hide progress and initial state
+            progressState.classList.add("hidden");
+            initialState.classList.add("hidden");
+
+            // Clear the files container
+            uploadedFiles.innerHTML = "";
+
+            // Create "Add More Files" button at the top
+            const addMoreButton = document.createElement("button");
+            addMoreButton.className = "btn-add-file";
+            addMoreButton.innerHTML =
+              '<i class="fas fa-plus"></i> Add More Files';
+            addMoreButton.onclick = function () {
+              fileInput.click();
+            };
+
+            const addButtonContainer = document.createElement("div");
+            addButtonContainer.className = "add-more-files";
+            addButtonContainer.appendChild(addMoreButton);
+            uploadedFiles.appendChild(addButtonContainer);
+
+            // Add each file
+            files.forEach((file, index) => {
+              const fileItem = document.createElement("div");
+              fileItem.className = "file-item";
+              fileItem.innerHTML = `
+                <div class="file-info">
+                  <i class="fas fa-file-alt"></i>
+                  <span class="file-name">${file.name}</span>
+                </div>
+                <div class="file-actions">
+                  <button class="btn-download" title="Download"><i class="fas fa-download"></i></button>
+                  <button class="btn-delete" title="Delete" data-index="${index}"><i class="fas fa-trash"></i></button>
+                </div>
+              `;
+
+              // Add download functionality
+              fileItem
+                .querySelector(".btn-download")
+                .addEventListener("click", function () {
+                  const url = URL.createObjectURL(file);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = file.name;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                });
+
+              // Add delete functionality
+              fileItem
+                .querySelector(".btn-delete")
+                .addEventListener("click", function () {
+                  files.splice(index, 1);
+
+                  if (files.length === 0) {
+                    // Show initial upload state if no files
+                    uploadedFiles.classList.add("hidden");
+                    initialState.classList.remove("hidden");
+                  } else {
+                    // Refresh the file list
+                    displayFiles();
+                  }
+                });
+
+              uploadedFiles.appendChild(fileItem);
+            });
+
+            // Show files container if we have files
+            if (files.length > 0) {
+              uploadedFiles.classList.remove("hidden");
+            } else {
+              uploadedFiles.classList.add("hidden");
+              initialState.classList.remove("hidden");
+            }
+          }
+        }
+
+        // Status dropdown functionality
+        const statusSelects = document.querySelectorAll(".status-select");
+
+        statusSelects.forEach((select) => {
+          // Set initial status
+          console.log("Initializing select:", select); // Debug: Check each select being initialized
+          updateSelectStatus(select);
+
+          select.addEventListener("change", function () {
+            console.log("Status changed to:", this.value); // Debug: Check if change event fires
+            const isApplicationSection = this.closest(".applications-section");
+            console.log("Is in application section:", isApplicationSection); // Debug: Check section context
+            const row = this.closest("tr");
+            const userEmail = row.querySelector("td:nth-child(2)").textContent;
+            const userName = row.querySelector(".user-cell span").textContent;
+            console.log("User info:", { email: userEmail, name: userName }); // Debug: Check user info
+
+            if (this.value === "declined") {
+              console.log("Attempting to show decline modal"); // Debug: Check if this block is reached
+              showDeclineModal(this, userEmail, userName);
+            } else if (
+              this.value === "approved" ||
+              this.value === "conditional"
+            ) {
+              showApprovalModal(
+                this,
+                userEmail,
+                userName,
+                isApplicationSection,
+                this.value // pass the new status
+              );
+            }
+
+            updateSelectStatus(this);
+          });
+        });
+
+        function showDeclineModal(select, email, name) {
+          console.log("showDeclineModal called with:", { select, email, name }); // Debug: Check function call
+          const modal = document.getElementById("declineModal");
+          console.log("Found modal element:", modal); // Debug: Check if modal is found
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+          const reasonTextarea = modal.querySelector("#declineReason");
+          console.log("Modal elements:", {
+            closeBtn: !!closeBtn,
+            cancelBtn: !!cancelBtn,
+            submitBtn: !!submitBtn,
+            reasonTextarea: !!reasonTextarea,
+          }); // Debug: Check if all modal elements are found
+
+          modal.dataset.selectElement = select;
+          console.log("Before removing hidden class"); // Debug: Check before class removal
+          modal.classList.remove("hidden");
+          console.log("After removing hidden class"); // Debug: Check after class removal
+          console.log(
+            "Modal display style:",
+            window.getComputedStyle(modal).display
+          ); // Debug: Check computed style
+          reasonTextarea.value = "";
+
+          const closeModal = () => {
+            console.log("Closing modal"); // Debug: Check if close is triggered
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            console.log("Submit clicked"); // Debug: Check if submit is clicked
+            const reason = reasonTextarea.value.trim();
+            if (!reason) {
+              showToast("Please provide a reason for declining", "error");
+              return;
+            }
+            sendDeclineEmail(email, name, reason);
+            modal.classList.add("hidden");
+            showToast("Application declined and email sent", "success");
+          };
+        }
+
+        function showApprovalModal(
+          select,
+          email,
+          name,
+          isApplicationSection,
+          newStatus // pass the new status
+        ) {
+          if (isApplicationSection) {
+            showBioWarningModal(select, email, name, newStatus);
+          } else {
+            showFinalApprovalModal(
+              select,
+              email,
+              name,
+              isApplicationSection,
+              newStatus
+            );
+          }
+        }
+
+        function showBioWarningModal(select, email, name, newStatus) {
+          const modal = document.getElementById("bioModal");
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+
+          modal.classList.remove("hidden");
+
+          const closeModal = () => {
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            modal.classList.add("hidden");
+            showFinalApprovalModal(select, email, name, true, newStatus);
+          };
+        }
+
+        function showFinalApprovalModal(
+          select,
+          email,
+          name,
+          isApplicationSection,
+          newStatus
+        ) {
+          const modal = document.getElementById("approvalModal");
+          const closeBtn = modal.querySelector(".close-modal");
+          const cancelBtn = modal.querySelector(".btn-cancel");
+          const submitBtn = modal.querySelector(".btn-submit");
+
+          modal.classList.remove("hidden");
+
+          const closeModal = () => {
+            modal.classList.add("hidden");
+            select.value = "disabled";
+            updateSelectStatus(select);
+          };
+
+          closeBtn.onclick = closeModal;
+          cancelBtn.onclick = closeModal;
+
+          submitBtn.onclick = () => {
+            modal.classList.add("hidden");
+            if (isApplicationSection) {
+              moveToUsersList(select.closest("tr"), newStatus);
+            }
+            sendApprovalEmail(email, name);
+            showToast(
+              "Application " +
+                (newStatus === "conditional"
+                  ? "conditionally approved"
+                  : "approved") +
+                " and email sent",
+              "success"
+            );
+          };
+        }
+
+        function moveToUsersList(row, newStatus) {
+          console.log("moveToUsersList called with row:", row);
+          const usersList = document.querySelector(
+            ".users-section .users-table tbody"
+          );
+          console.log("Found users list:", usersList);
+          const newUserRow = createUserRowFromApplication(row, newStatus);
+          console.log("Created new user row:", newUserRow);
+          usersList.insertBefore(newUserRow, usersList.firstChild);
+          console.log("Inserted new row at the top of users list");
+          row.remove();
+          console.log("Removed original row from applications section");
+          // Re-attach bio button listeners for new row
+          if (window.attachBioButtonListeners)
+            window.attachBioButtonListeners();
+        }
+
+        function createUserRowFromApplication(applicationRow, newStatus) {
+          console.log(
+            "Creating new user row from application row:",
+            applicationRow
+          );
+          const newUserRow = document.createElement("tr");
+
+          // Copy user cell (name and avatar)
+          const userCell = applicationRow
+            .querySelector(".user-cell")
+            .cloneNode(true);
+          console.log("Cloned user cell:", userCell);
+          newUserRow.appendChild(userCell);
+
+          // Copy email cell
+          const emailCell = applicationRow
+            .querySelector("td:nth-child(2)")
+            .cloneNode(true);
+          console.log("Cloned email cell:", emailCell);
+          newUserRow.appendChild(emailCell);
+
+          // Add status cell with approved status
+          console.log("Creating new status cell with approved status");
+          const statusCell = document.createElement("td");
+          statusCell.innerHTML = `
+              <div class="status-dropdown">
+                  <select class="status-select">
+                      <option value="approved" data-icon="fa-check-circle">Approved</option>
+                      <option value="conditional" data-icon="fa-clock">Conditional Approved</option>
+                      <option value="in-contract" data-icon="fa-file-contract">In Contract</option>
+                      <option value="declined" data-icon="fa-times-circle">Declined</option>
+                      <option value="disabled" data-icon="fa-ban">Disabled</option>
+                  </select>
+                  <div class="select-icon">
+                      <i class="fas fa-chevron-down"></i>
+                  </div>
+              </div>
+          `;
+          const statusSelect = statusCell.querySelector(".status-select");
+          statusSelect.value =
+            newStatus === "conditional" ? "conditional" : "approved";
+          updateSelectStatus(statusSelect);
+          console.log("Created and initialized status cell:", statusCell);
+          newUserRow.appendChild(statusCell);
+
+          // Copy CRC Check cell (skip Case Manager column)
+          const crcCell = applicationRow
+            .querySelector("td:nth-child(6)")
+            .cloneNode(true);
+          newUserRow.appendChild(crcCell);
+
+          // Copy Reference Check cell
+          const refCell = applicationRow
+            .querySelector("td:nth-child(7)")
+            .cloneNode(true);
+          newUserRow.appendChild(refCell);
+
+          // Copy Home Study Recommendation cell
+          const studyCell = applicationRow
+            .querySelector("td:nth-child(8)")
+            .cloneNode(true);
+          newUserRow.appendChild(studyCell);
+
+          // Copy Profile Bio cell
+          const profileBioCell = applicationRow
+            .querySelector('td.bio-cell[data-bio-type="profile"]')
+            .cloneNode(true);
+          newUserRow.appendChild(profileBioCell);
+
+          // Copy Room Listing Bio cell
+          const roomBioCell = applicationRow
+            .querySelector('td.bio-cell[data-bio-type="room"]')
+            .cloneNode(true);
+          newUserRow.appendChild(roomBioCell);
+
+          return newUserRow;
+        }
+
+        function sendApprovalEmail(email, name) {
+          console.log("Sending approval email to:", email);
+          console.log("User:", name);
+          // In a real application, this would make an API call to send the email
+        }
+
+        function updateSelectStatus(select) {
+          const selectedOption = select.options[select.selectedIndex];
+          const status = selectedOption.value;
+
+          // Update select appearance
+          select.dataset.status = status;
+
+          // Update icon color based on status
+          const iconContainer =
+            select.parentElement.querySelector(".select-icon");
+
+          // Reset classes
+          iconContainer.classList.remove(
+            "text-gray-400",
+            "text-green-500",
+            "text-red-500"
+          );
+
+          // Add appropriate color class
+          switch (status) {
+            case "approved":
+              iconContainer.style.color = "var(--success-color)";
+              break;
+            case "conditional":
+              iconContainer.style.color = "var(--warning-color)";
+              break;
+            case "declined":
+              iconContainer.style.color = "var(--danger-color)";
+              break;
+            default:
+              iconContainer.style.color = "var(--text-secondary)";
+          }
+        }
+
+        // Function to show toast notifications
+        function showToast(message, type = "success") {
+          const toast = document.createElement("div");
+          toast.className = `toast ${type}`;
+          toast.innerHTML = `
+            <i class="fas ${
+              type === "success" ? "fa-check-circle" : "fa-exclamation-circle"
+            }"></i>
+            <span>${message}</span>
+          `;
+          document.body.appendChild(toast);
+
+          // Remove toast after 3 seconds
+          setTimeout(() => {
+            toast.style.animation = "slideOut 0.3s ease-out forwards";
+            setTimeout(() => toast.remove(), 300);
+          }, 3000);
+        }
+
+        // Function to simulate sending decline email
+        function sendDeclineEmail(email, name, reason) {
+          console.log("Sending decline email to:", email);
+          console.log("User:", name);
+          console.log("Reason:", reason);
+          // In a real application, this would make an API call to your backend
+          // to send the actual email
+        }
+      });
+    </script>
+
+    <!-- Add this modal at the end of the file, before </body> -->
+    <div id="bioModalEdit" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Edit Bio</h3>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="bioTextarea">Enter bio content:</label>
+          <textarea
+            id="bioTextarea"
+            rows="5"
+            placeholder="Enter bio..."
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel">Cancel</button>
+          <button class="btn btn-submit">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .bio-cell {
+        text-align: center;
+      }
+      .btn-bio {
+        background: #eef2ff;
+        color: var(--primary-color);
+        border: 1px solid #e0e7ff;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .btn-bio:hover {
+        background: #e0e7ff;
+      }
+      .bio-preview {
+        margin-right: 0.5rem;
+        font-weight: bold;
+        color: var(--success-color);
+      }
+    </style>
+  </body>
+</html>

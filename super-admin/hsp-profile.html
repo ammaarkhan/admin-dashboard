@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HSP Profile - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .profile-container {
+        padding: 2rem;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-right: 1.5rem;
+      }
+
+      .profile-title h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #111827;
+      }
+
+      .profile-title p {
+        margin: 0.5rem 0 0;
+        color: #6b7280;
+      }
+
+      .profile-status {
+        margin-left: auto;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-weight: 500;
+      }
+
+      .profile-status.approved {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+
+      .profile-status.in-progress {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+
+      .profile-status.disabled {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .profile-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .info-item {
+        background: #f9fafb;
+        padding: 1rem;
+        border-radius: 6px;
+      }
+
+      .info-item.full-width {
+        grid-column: 1 / -1;
+      }
+
+      .info-item label {
+        display: block;
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .info-item p {
+        margin: 0;
+        color: #111827;
+        font-size: 0.9375rem;
+      }
+
+      .tab-navigation {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #e5e7eb;
+        padding-bottom: 1rem;
+      }
+
+      .tab-button {
+        padding: 0.75rem 1.25rem;
+        background: none;
+        border: none;
+        border-bottom: 2px solid transparent;
+        color: #6b7280;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      .tab-button.active {
+        color: #2563eb;
+        border-bottom-color: #2563eb;
+        font-weight: 600;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        border: none;
+        border-radius: 6px;
+        color: #374151;
+        font-size: 0.875rem;
+        cursor: pointer;
+        margin-bottom: 1rem;
+      }
+
+      .back-button i {
+        margin-right: 0.5rem;
+      }
+
+      .back-button:hover {
+        background: #e5e7eb;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e5e7eb;
+      }
+
+      .section-header h2 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #111827;
+      }
+
+      .edit-button {
+        padding: 0.5rem 1rem;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        color: #374151;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .edit-button:hover {
+        background: #e5e7eb;
+      }
+
+      .file-upload-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .file-upload-item {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+
+      .document-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .document-header h4 {
+        margin: 0;
+        font-size: 0.9375rem;
+        color: #111827;
+      }
+
+      .document-details {
+        font-size: 0.875rem;
+      }
+
+      .document-details p {
+        margin: 0.25rem 0;
+        color: #4b5563;
+      }
+
+      .file-meta {
+        font-size: 0.75rem;
+        color: #6b7280;
+      }
+
+      .document-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+
+      .action-btn {
+        padding: 0.375rem 0.75rem;
+        background: #f3f4f6;
+        border: 1px solid #e5e7eb;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        color: #374151;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .action-btn:hover {
+        background: #e5e7eb;
+      }
+
+      /* Additional styles for listings */
+      .listing-container {
+        padding: 1.5rem;
+      }
+
+      .listing-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .listing-section:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .listing-section h3 {
+        color: #1e293b;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        font-weight: 500;
+      }
+
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .feature-list li {
+        padding: 0.25rem 0;
+        color: #4b5563;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .feature-list li::before {
+        content: "•";
+        color: var(--primary);
+      }
+
+      .bio-content {
+        background: #ffffff;
+        padding: 1.25rem;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        margin-top: 0.5rem;
+      }
+
+      .bio-content p {
+        color: #374151;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+        margin: 0 0 1rem 0;
+      }
+
+      .bio-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .info-item label {
+        display: block;
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .info-item.full-width {
+        grid-column: 1 / -1;
+        background: #f9fafb;
+        padding: 1.25rem;
+        border-radius: 6px;
+      }
+
+      .upload-button {
+        padding: 0.5rem 1rem;
+        background: #4f46e5;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .upload-button:hover {
+        background: #4338ca;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #1e293b;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 0.9375rem;
+      }
+
+      .file-help {
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-top: 0.25rem;
+      }
+
+      .uploaded-files {
+        margin-top: 0.5rem;
+      }
+
+      .file-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .file-item:last-child {
+        border-bottom: none;
+      }
+
+      .add-more-files {
+        margin-top: 0.5rem;
+      }
+
+      .btn-add-file {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        color: #4f46e5;
+        background: none;
+        border: 1px solid #4f46e5;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .btn-add-file:hover {
+        background: #f5f3ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul>
+            <li class="active">
+              <i class="fas fa-home"></i>
+              <a href="index.html" class="nav-link">Home Share Providers</a>
+            </li>
+            <li>
+              <i class="fas fa-users"></i>
+              <a href="individuals.html" class="nav-link">Individuals</a>
+            </li>
+            <li>
+              <i class="fas fa-file-contract"></i>
+              <a href="contracts.html" class="nav-link">Contracts</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="search">
+            <input type="text" placeholder="Search..." />
+          </div>
+          <div class="user-info">
+            <span class="notifications"><i class="fas fa-bell"></i></span>
+            <span class="profile">Admin User</span>
+          </div>
+        </header>
+
+        <button onclick="window.location.href='index.html'" class="back-button">
+          <i class="fas fa-arrow-left"></i>
+          Back to Home Share Providers
+        </button>
+
+        <div class="profile-container">
+          <div class="profile-header">
+            <img src="" alt="" class="profile-avatar" id="profileAvatar" />
+            <div class="profile-title">
+              <h1 id="profileName"></h1>
+              <p id="profileEmail"></p>
+            </div>
+            <div class="profile-status" id="profileStatus"></div>
+          </div>
+
+          <div class="tab-navigation">
+            <button class="tab-button active" data-tab="profile">
+              Profile Information
+            </button>
+            <button class="tab-button" data-tab="preferences">
+              Home Share Preferences
+            </button>
+            <button class="tab-button" data-tab="documents">
+              File Uploads
+            </button>
+            <button class="tab-button" data-tab="listings">
+              Room Listings
+            </button>
+          </div>
+
+          <!-- Profile Information -->
+          <div class="tab-content active" id="profile-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Personal Information</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>First Name</label>
+                  <p>John</p>
+                </div>
+                <div class="info-item">
+                  <label>Last Name</label>
+                  <p>Smith</p>
+                </div>
+                <div class="info-item">
+                  <label>Date of Birth</label>
+                  <p>January 15, 1985</p>
+                </div>
+                <div class="info-item">
+                  <label>Gender</label>
+                  <p>Male</p>
+                </div>
+                <div class="info-item">
+                  <label>Gender Identity</label>
+                  <p>Cisgender Male</p>
+                </div>
+                <div class="info-item">
+                  <label>Phone</label>
+                  <p>(555) 123-4567</p>
+                </div>
+                <div class="info-item">
+                  <label>Email</label>
+                  <p>john.smith@example.com</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Address</label>
+                  <p>123 Main Street</p>
+                </div>
+                <div class="info-item">
+                  <label>City</label>
+                  <p>Toronto</p>
+                </div>
+                <div class="info-item">
+                  <label>Province</label>
+                  <p>Ontario</p>
+                </div>
+                <div class="info-item">
+                  <label>Postal Code</label>
+                  <p>M5V 2K7</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Profile Bio (Written by Home Share Coordinator)</label>
+                  <div class="bio-content">
+                    <p>
+                      John is a dedicated and experienced home share provider
+                      with a warm personality and strong commitment to
+                      supporting individuals with diverse needs. With his
+                      background in caregiving and current role as a software
+                      engineer, he brings a unique blend of technical
+                      problem-solving skills and compassionate care to his role.
+                      John maintains a structured yet flexible environment that
+                      promotes independence and personal growth.
+                    </p>
+                    <p>
+                      His home provides a peaceful and inclusive atmosphere, and
+                      his experience with various support needs makes him
+                      well-equipped to handle different situations. John's
+                      multilingual abilities and patient approach to
+                      communication ensure effective interaction with
+                      individuals of diverse backgrounds.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Background & Experience</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Occupation</label>
+                  <p>Software Engineer</p>
+                </div>
+                <div class="info-item">
+                  <label>Employment Status</label>
+                  <p>Full-time</p>
+                </div>
+                <div class="info-item">
+                  <label>Previous Caregiving Experience</label>
+                  <p>3 years as a part-time caregiver</p>
+                </div>
+                <div class="info-item">
+                  <label>Relevant Certifications</label>
+                  <p>First Aid & CPR, Crisis Prevention</p>
+                </div>
+                <div class="info-item">
+                  <label>Languages Spoken</label>
+                  <p>
+                    English (Native), French (Intermediate), Spanish (Basic)
+                  </p>
+                </div>
+                <div class="info-item">
+                  <label>Preferred Communication Method</label>
+                  <p>Text messages, Email</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Home Share Preferences -->
+          <div class="tab-content" id="preferences-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Support Individual Preferences</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Preferred Age Range</label>
+                  <p>18-40 years</p>
+                </div>
+                <div class="info-item">
+                  <label>Gender Preference</label>
+                  <p>No preference</p>
+                </div>
+                <div class="info-item full-width">
+                  <label>Willing to Support</label>
+                  <p>Physical disabilities, Mild intellectual disabilities</p>
+                </div>
+                <div class="info-item">
+                  <label>Comfort Level with Personal Care</label>
+                  <p>Basic assistance only</p>
+                </div>
+                <div class="info-item">
+                  <label>Behavioral Support Comfort Level</label>
+                  <p>Mild to moderate behaviors</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Support Services & Availability</h2>
+                <button class="edit-button">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Available Support Hours</label>
+                  <p>Evenings and weekends</p>
+                </div>
+                <div class="info-item">
+                  <label>Overnight Support</label>
+                  <p>Available if needed</p>
+                </div>
+                <div class="info-item">
+                  <label>Emergency Availability</label>
+                  <p>24/7 for emergencies</p>
+                </div>
+                <div class="info-item">
+                  <label>Vacation Coverage Plan</label>
+                  <p>Family member as backup support</p>
+                </div>
+                <div class="info-item">
+                  <label>Meal Support</label>
+                  <p>Can prepare meals and teach cooking skills</p>
+                </div>
+                <div class="info-item">
+                  <label>Transportation</label>
+                  <p>Has valid driver's license and vehicle</p>
+                </div>
+                <div class="info-item">
+                  <label>Medical Support Level</label>
+                  <p>Medication reminders, Basic first aid</p>
+                </div>
+                <div class="info-item">
+                  <label>Community Integration</label>
+                  <p>Willing to assist with social activities</p>
+                </div>
+                <div class="info-item">
+                  <label>Life Skills Training</label>
+                  <p>Can assist with budgeting, shopping, and daily planning</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- File Uploads -->
+          <div class="tab-content" id="documents-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Required Documents</h2>
+                <button class="upload-button" onclick="showUploadModal()">
+                  <i class="fas fa-upload"></i> Upload
+                </button>
+              </div>
+              <p class="section-description">
+                Access Resources requires current and up to date information to
+                best support all service providers.
+              </p>
+
+              <div class="file-upload-grid">
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Physician's Certification</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i>
+                      physicians-cert-2024.pdf
+                    </p>
+                    <p class="file-meta">0.9 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>First Aid Certificate</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i> first-aid-cert-2024.pdf
+                    </p>
+                    <p class="file-meta">0.8 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Driver's License</h4>
+                  </div>
+                  <div class="document-details">
+                    <p><i class="fas fa-file-image"></i> drivers-license.jpg</p>
+                    <p class="file-meta">0.5 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Vehicle Insurance</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i> vehicle-insurance-2024.pdf
+                    </p>
+                    <p class="file-meta">1.1 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Home Insurance</h4>
+                  </div>
+                  <div class="document-details">
+                    <p>
+                      <i class="fas fa-file-pdf"></i> home-insurance-2024.pdf
+                    </p>
+                    <p class="file-meta">0.9 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>References</h4>
+                  </div>
+                  <div class="document-details">
+                    <p><i class="fas fa-file-pdf"></i> references-2024.pdf</p>
+                    <p class="file-meta">0.7 MB</p>
+                    <div class="document-actions">
+                      <button class="action-btn">
+                        <i class="fas fa-download"></i> Download
+                      </button>
+                      <button class="action-btn">
+                        <i class="fas fa-upload"></i> Update File
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="file-upload-item">
+                  <div class="document-header">
+                    <h4>Monitoring Visit Forms</h4>
+                  </div>
+                  <div class="document-details">
+                    <div class="uploaded-files">
+                      <div class="file-item">
+                        <div class="file-info">
+                          <i class="fas fa-file-pdf"></i>
+                          <span class="file-name"
+                            >monitoring_visit_2024_q1.pdf</span
+                          >
+                        </div>
+                        <div class="file-actions">
+                          <button class="action-btn">
+                            <i class="fas fa-download"></i> Download
+                          </button>
+                        </div>
+                      </div>
+                      <div class="file-item">
+                        <div class="file-info">
+                          <i class="fas fa-file-pdf"></i>
+                          <span class="file-name"
+                            >monitoring_visit_2023_q4.pdf</span
+                          >
+                        </div>
+                        <div class="file-actions">
+                          <button class="action-btn">
+                            <i class="fas fa-download"></i> Download
+                          </button>
+                        </div>
+                      </div>
+                      <div class="file-item">
+                        <div class="file-info">
+                          <i class="fas fa-file-pdf"></i>
+                          <span class="file-name"
+                            >monitoring_visit_2023_q3.pdf</span
+                          >
+                        </div>
+                        <div class="file-actions">
+                          <button class="action-btn">
+                            <i class="fas fa-download"></i> Download
+                          </button>
+                        </div>
+                      </div>
+                      <div class="add-more-files">
+                        <button class="btn-add-file">
+                          <i class="fas fa-plus"></i> Add More Files
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Document Modal -->
+          <div id="uploadModal" class="modal hidden">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3>Upload Document</h3>
+                <button class="close-modal" onclick="closeUploadModal()">
+                  &times;
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="documentType">Document Type</label>
+                  <select id="documentType" class="form-control">
+                    <option value="">Select document type...</option>
+                    <option value="physician">Physician's Certification</option>
+                    <option value="firstaid">First Aid Certificate</option>
+                    <option value="driver">Driver's License</option>
+                    <option value="vehicle">Vehicle Insurance</option>
+                    <option value="home">Home Insurance</option>
+                    <option value="references">References</option>
+                    <option value="monitoring">Monitoring Visit Forms</option>
+                  </select>
+                </div>
+                <div class="form-group expiry-date hidden">
+                  <label for="expiryDate">Expiry Date</label>
+                  <input type="date" id="expiryDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <label for="documentFile">Upload File</label>
+                  <input
+                    type="file"
+                    id="documentFile"
+                    class="form-control"
+                    multiple
+                  />
+                  <p class="file-help">
+                    Accepted formats: PDF, DOC, DOCX (Max size: 5MB)
+                  </p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeUploadModal()">
+                  Cancel
+                </button>
+                <button class="btn btn-submit" onclick="handleFileUpload()">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Room Listings -->
+          <div class="tab-content" id="listings-tab">
+            <div class="profile-section">
+              <div class="section-header">
+                <h2>Active Listings</h2>
+                <button class="edit-button">
+                  <i class="fas fa-plus"></i> Add New Listing
+                </button>
+              </div>
+
+              <div class="listing-container">
+                <div class="listing-section">
+                  <h3>Listing Info</h3>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>Property Type</label>
+                      <p>House</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Room Type</label>
+                      <p>Private Room</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Bathroom Type</label>
+                      <p>Shared Bathroom</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Location</label>
+                      <p>Corktown, Vancouver</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Available From</label>
+                      <p>March 1, 2024</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Minimum Stay</label>
+                      <p>6 months</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Room Size</label>
+                      <p>200 sq ft</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Furnished</label>
+                      <p>Yes</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>About Listing</h3>
+                  <div class="info-grid">
+                    <div class="info-item full-width">
+                      <label
+                        >Room Listing Bio (Written by Home Share
+                        Coordinator)</label
+                      >
+                      <div class="bio-content">
+                        <p>
+                          This thoughtfully designed living space offers an
+                          ideal environment for individuals seeking a supportive
+                          and inclusive home share arrangement. The room is
+                          situated in a quiet neighborhood with excellent
+                          accessibility to community resources and public
+                          transportation. John has created a living space that
+                          perfectly balances privacy with community engagement.
+                        </p>
+                        <p>
+                          The home's layout and amenities have been carefully
+                          considered to accommodate various support needs while
+                          maintaining a comfortable, home-like atmosphere. The
+                          shared spaces are well-maintained and designed to
+                          foster both independence and social interaction when
+                          desired.
+                        </p>
+                      </div>
+                    </div>
+                    <div class="info-item full-width">
+                      <label>Description</label>
+                      <p>
+                        Comfortable, affordable stay in a well-maintained house.
+                        The room comes with a queen bed, en-suite bathroom, work
+                        desk, and essential amenities. Located in Corktown, this
+                        room offers a perfect blend of comfort and convenience.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>Features</h3>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>Amenities</label>
+                      <ul class="feature-list">
+                        <li>Queen size bed</li>
+                        <li>Work desk</li>
+                        <li>Closet</li>
+                        <li>High-speed internet</li>
+                        <li>Air conditioning</li>
+                        <li>Heating</li>
+                      </ul>
+                    </div>
+                    <div class="info-item">
+                      <label>Shared Spaces</label>
+                      <ul class="feature-list">
+                        <li>Kitchen</li>
+                        <li>Living room</li>
+                        <li>Laundry room</li>
+                        <li>Garden</li>
+                        <li>Parking</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>Housing Rules</h3>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>House Rules</label>
+                      <ul class="feature-list">
+                        <li>No smoking indoors</li>
+                        <li>Quiet hours: 10 PM - 7 AM</li>
+                        <li>Clean up after using common areas</li>
+                        <li>Guests allowed with prior notice</li>
+                        <li>No overnight guests without approval</li>
+                      </ul>
+                    </div>
+                    <div class="info-item">
+                      <label>Additional Policies</label>
+                      <ul class="feature-list">
+                        <li>Monthly cleaning schedule</li>
+                        <li>Shared utility costs</li>
+                        <li>Recycling program</li>
+                        <li>Pet policy available</li>
+                        <li>Security deposit required</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="listing-section">
+                  <h3>Safety & Security</h3>
+                  <div class="info-grid">
+                    <div class="info-item full-width">
+                      <p>
+                        The house is equipped with smoke detectors, carbon
+                        monoxide detectors, and security cameras in common
+                        areas. All residents receive a set of keys and access
+                        codes for secure entry.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Tab Navigation
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        tabButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const tabId = button.getAttribute("data-tab");
+
+            // Update active states
+            tabButtons.forEach((btn) => btn.classList.remove("active"));
+            tabContents.forEach((content) =>
+              content.classList.remove("active")
+            );
+
+            button.classList.add("active");
+            document.getElementById(`${tabId}-tab`).classList.add("active");
+          });
+        });
+
+        // Get and populate profile data
+        const urlParams = new URLSearchParams(window.location.search);
+        const hspId = urlParams.get("id");
+
+        // Mock data - In a real application, this would come from a database
+        const hsps = {
+          "sarah-wilson": {
+            name: "Sarah Wilson",
+            email: "sarah.wilson@example.com",
+            status: "approved",
+            avatar: "https://ui-avatars.com/api/?name=Sarah+Wilson",
+          },
+          "michael-chen": {
+            name: "Michael Chen",
+            email: "michael.chen@example.com",
+            status: "approved",
+            avatar: "https://ui-avatars.com/api/?name=Michael+Chen",
+          },
+          "john-smith": {
+            name: "John Smith",
+            email: "john.smith@example.com",
+            status: "in-progress",
+            avatar: "https://ui-avatars.com/api/?name=John+Smith",
+          },
+          "emily-davis": {
+            name: "Emily Davis",
+            email: "emily.davis@example.com",
+            status: "in-progress",
+            avatar: "https://ui-avatars.com/api/?name=Emily+Davis",
+          },
+        };
+
+        const hsp = hsps[hspId];
+
+        if (hsp) {
+          document.getElementById("profileName").textContent = hsp.name;
+          document.getElementById("profileEmail").textContent = hsp.email;
+          document.getElementById("profileAvatar").src = hsp.avatar;
+          document.getElementById("profileAvatar").alt = hsp.name;
+
+          const statusElement = document.getElementById("profileStatus");
+          statusElement.textContent =
+            hsp.status === "in-progress"
+              ? "Application in Progress (75%)"
+              : hsp.status.charAt(0).toUpperCase() + hsp.status.slice(1);
+          statusElement.className = `profile-status ${hsp.status}`;
+        } else {
+          // Handle case when no HSP is found
+          console.error("No HSP found with ID:", hspId);
+          document.getElementById("profileName").textContent = "HSP Not Found";
+          document.getElementById("profileEmail").textContent =
+            "No email available";
+          document.getElementById("profileAvatar").src =
+            "https://ui-avatars.com/api/?name=Not+Found";
+          document.getElementById("profileAvatar").alt = "Not Found";
+          document.getElementById("profileStatus").textContent = "Unknown";
+          document.getElementById("profileStatus").className =
+            "profile-status disabled";
+        }
+      });
+
+      function showUploadModal() {
+        document.getElementById("uploadModal").classList.remove("hidden");
+      }
+
+      function closeUploadModal() {
+        document.getElementById("uploadModal").classList.add("hidden");
+      }
+
+      function handleFileUpload() {
+        // Simulate upload success
+        showToast("Files uploaded successfully", "success");
+        closeUploadModal();
+      }
+
+      // Show/hide expiry date based on document type
+      document
+        .getElementById("documentType")
+        .addEventListener("change", function () {
+          const expiryDateGroup = document.querySelector(".expiry-date");
+          const documentFile = document.getElementById("documentFile");
+
+          // Reset file input
+          documentFile.value = "";
+
+          // Show expiry date for certain documents
+          if (
+            ["physician", "firstaid", "driver", "vehicle", "home"].includes(
+              this.value
+            )
+          ) {
+            expiryDateGroup.classList.remove("hidden");
+          } else {
+            expiryDateGroup.classList.add("hidden");
+          }
+
+          // Enable multiple file upload for monitoring visits and references
+          if (["monitoring", "references"].includes(this.value)) {
+            documentFile.setAttribute("multiple", "");
+          } else {
+            documentFile.removeAttribute("multiple");
+          }
+        });
+    </script>
+  </body>
+</html>
