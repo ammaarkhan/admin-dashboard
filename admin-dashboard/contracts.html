@@ -405,8 +405,8 @@
                   <th>Contract ID</th>
                   <th>Individual</th>
                   <th>Home Share Provider</th>
-                  <th>Case Manager</th>
                   <th>Status</th>
+                  <th>Case Manager</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Individual Consent Agreement</th>
@@ -420,7 +420,6 @@
                   <td>CTR-0001</td>
                   <td>Emily Davis</td>
                   <td>Sarah Wilson</td>
-                  <td>John Anderson</td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
@@ -446,6 +445,7 @@
                       </div>
                     </div>
                   </td>
+                  <td>John Anderson</td>
                   <td>2024-03-15</td>
                   <td>2025-03-15</td>
                   <td class="file-upload-cell">
@@ -619,7 +619,6 @@
                   <td>CTR-0002</td>
                   <td>James Wilson</td>
                   <td>Michael Chen</td>
-                  <td>Sarah Thompson</td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
@@ -641,6 +640,7 @@
                       </div>
                     </div>
                   </td>
+                  <td>Sarah Thompson</td>
                   <td>2024-03-18</td>
                   <td>2025-03-18</td>
                   <td class="file-upload-cell">
@@ -792,8 +792,8 @@
                   <th>Contract ID</th>
                   <th>Individual</th>
                   <th>Home Share Provider</th>
-                  <th>Case Manager</th>
                   <th>Status</th>
+                  <th>Case Manager</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Individual Consent Agreement</th>
@@ -807,7 +807,6 @@
                   <td>CTR-0003</td>
                   <td>Maria Garcia</td>
                   <td>John Smith</td>
-                  <td>Michael Williams</td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select" disabled>
@@ -824,6 +823,7 @@
                       </div>
                     </div>
                   </td>
+                  <td>Michael Williams</td>
                   <td>2023-03-15</td>
                   <td>2024-03-15</td>
                   <td class="file-upload-cell">
@@ -1148,7 +1148,6 @@
             <td>CTR-${String(contractId).padStart(4, "0")}</td>
             <td>${individual.options[individual.selectedIndex].text}</td>
             <td>${provider.options[provider.selectedIndex].text}</td>
-            <td>${assignedAdmin.options[assignedAdmin.selectedIndex].text}</td>
             <td>
               <div class="status-dropdown">
                 <select class="status-select">
@@ -1162,6 +1161,7 @@
                 </div>
               </div>
             </td>
+            <td>${assignedAdmin.options[assignedAdmin.selectedIndex].text}</td>
             <td>${startDate.value}</td>
             <td>${endDate.value}</td>
             <td class="file-upload-cell">

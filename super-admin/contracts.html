@@ -411,8 +411,8 @@
                   <th>Contract ID</th>
                   <th>Individual</th>
                   <th>Home Share Provider</th>
-                  <th>Case Manager</th>
                   <th>Status</th>
+                  <th>Case Manager</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Individual Consent Agreement</th>
@@ -426,22 +426,6 @@
                   <td>CTR-0001</td>
                   <td>Emily Davis</td>
                   <td>Sarah Wilson</td>
-                  <td>
-                    <div class="status-dropdown">
-                      <select
-                        class="case-manager-select"
-                        aria-label="Select Case Manager"
-                      >
-                        <option value="1" selected>John Anderson</option>
-                        <option value="2">Sarah Thompson</option>
-                        <option value="3">Michael Williams</option>
-                        <option value="4">Lisa Chen</option>
-                      </select>
-                      <div class="select-icon">
-                        <i class="fas fa-chevron-down"></i>
-                      </div>
-                    </div>
-                  </td>
                   <td>
                     <div class="status-dropdown">
                       <select class="status-select">
@@ -461,6 +445,22 @@
                         <option value="complete" data-icon="fa-flag-checkered">
                           Complete
                         </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select
+                        class="case-manager-select"
+                        aria-label="Select Case Manager"
+                      >
+                        <option value="1" selected>John Anderson</option>
+                        <option value="2">Sarah Thompson</option>
+                        <option value="3">Michael Williams</option>
+                        <option value="4">Lisa Chen</option>
                       </select>
                       <div class="select-icon">
                         <i class="fas fa-chevron-down"></i>
@@ -642,22 +642,6 @@
                   <td>Michael Chen</td>
                   <td>
                     <div class="status-dropdown">
-                      <select
-                        class="case-manager-select"
-                        aria-label="Select Case Manager"
-                      >
-                        <option value="1">John Anderson</option>
-                        <option value="2" selected>Sarah Thompson</option>
-                        <option value="3">Michael Williams</option>
-                        <option value="4">Lisa Chen</option>
-                      </select>
-                      <div class="select-icon">
-                        <i class="fas fa-chevron-down"></i>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="status-dropdown">
                       <select class="status-select">
                         <option value="active" data-icon="fa-check-circle">
                           Active
@@ -671,6 +655,22 @@
                         <option value="complete" data-icon="fa-flag-checkered">
                           Complete
                         </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="status-dropdown">
+                      <select
+                        class="case-manager-select"
+                        aria-label="Select Case Manager"
+                      >
+                        <option value="1">John Anderson</option>
+                        <option value="2" selected>Sarah Thompson</option>
+                        <option value="3">Michael Williams</option>
+                        <option value="4">Lisa Chen</option>
                       </select>
                       <div class="select-icon">
                         <i class="fas fa-chevron-down"></i>
@@ -828,8 +828,8 @@
                   <th>Contract ID</th>
                   <th>Individual</th>
                   <th>Home Share Provider</th>
-                  <th>Case Manager</th>
                   <th>Status</th>
+                  <th>Case Manager</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Individual Consent Agreement</th>
@@ -845,6 +845,22 @@
                   <td>John Smith</td>
                   <td>
                     <div class="status-dropdown">
+                      <select class="status-select" disabled>
+                        <option
+                          value="complete"
+                          data-icon="fa-flag-checkered"
+                          selected
+                        >
+                          Complete
+                        </option>
+                      </select>
+                      <div class="select-icon">
+                        <i class="fas fa-chevron-down"></i>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="status-dropdown">
                       <select
                         class="case-manager-select"
                         aria-label="Select Case Manager"
@@ -854,22 +870,6 @@
                         <option value="2">Sarah Thompson</option>
                         <option value="3" selected>Michael Williams</option>
                         <option value="4">Lisa Chen</option>
-                      </select>
-                      <div class="select-icon">
-                        <i class="fas fa-chevron-down"></i>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="status-dropdown">
-                      <select class="status-select" disabled>
-                        <option
-                          value="complete"
-                          data-icon="fa-flag-checkered"
-                          selected
-                        >
-                          Complete
-                        </option>
                       </select>
                       <div class="select-icon">
                         <i class="fas fa-chevron-down"></i>
@@ -1202,11 +1202,11 @@
             <td>${provider.options[provider.selectedIndex].text}</td>
             <td>
               <div class="status-dropdown">
-                <select class="case-manager-select" aria-label="Select Case Manager">
-                  <option value="1" selected>John Anderson</option>
-                  <option value="2">Sarah Thompson</option>
-                  <option value="3">Michael Williams</option>
-                  <option value="4">Lisa Chen</option>
+                <select class="status-select">
+                  <option value="active" data-icon="fa-check-circle">Active</option>
+                  <option value="pending" data-icon="fa-clock" selected>Pending</option>
+                  <option value="disabled" data-icon="fa-ban">Disabled</option>
+                  <option value="complete" data-icon="fa-flag-checkered">Complete</option>
                 </select>
                 <div class="select-icon">
                   <i class="fas fa-chevron-down"></i>
@@ -1215,11 +1215,11 @@
             </td>
             <td>
               <div class="status-dropdown">
-                <select class="status-select">
-                  <option value="active" data-icon="fa-check-circle">Active</option>
-                  <option value="pending" data-icon="fa-clock" selected>Pending</option>
-                  <option value="disabled" data-icon="fa-ban">Disabled</option>
-                  <option value="complete" data-icon="fa-flag-checkered">Complete</option>
+                <select class="case-manager-select" aria-label="Select Case Manager">
+                  <option value="1" selected>John Anderson</option>
+                  <option value="2">Sarah Thompson</option>
+                  <option value="3">Michael Williams</option>
+                  <option value="4">Lisa Chen</option>
                 </select>
                 <div class="select-icon">
                   <i class="fas fa-chevron-down"></i>
