@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Case Manager Profile</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      .profile-section {
+        margin-bottom: 2rem;
+      }
+      .profile-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .profile-label {
+        color: #64748b;
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        display: block;
+      }
+      .profile-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1.5rem;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .profile-table th,
+      .profile-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #e2e8f0;
+        text-align: left;
+        font-size: 1rem;
+      }
+      .profile-table th {
+        background: #f8fafc;
+        color: #1e293b;
+        font-weight: 500;
+      }
+      .profile-table tr:last-child td {
+        border-bottom: none;
+      }
+      @media (max-width: 768px) {
+        .profile-table th,
+        .profile-table td {
+          padding: 0.5rem;
+        }
+        .profile-title {
+          font-size: 1.25rem;
+        }
+      }
+      .profile-tabs {
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+      }
+      .tab-btn {
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+        border: none;
+        border-radius: 6px 6px 0 0;
+        background: #f1f5f9;
+        color: #64748b;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        outline: none;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+      }
+      .tab-btn.active {
+        background: #fff;
+        color: #4f46e5;
+        border-bottom: 2px solid #4f46e5;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        z-index: 1;
+      }
+      .tab-btn:focus {
+        outline: 2px solid #4f46e5;
+      }
+      .tab-section {
+        display: none;
+      }
+      .tab-section.active {
+        display: block;
+      }
+      .bio-cell {
+        text-align: center;
+      }
+      .btn-bio {
+        background: #eef2ff;
+        color: #4f46e5;
+        border: 1px solid #e0e7ff;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background 0.2s;
+      }
+      .btn-bio:hover {
+        background: #e0e7ff;
+      }
+      .bio-preview {
+        margin-right: 0.5rem;
+        font-weight: bold;
+        color: #10b981;
+      }
+    </style>
+  </head>
+  <body style="font-family: 'Inter', sans-serif; background: #f1f5f9">
+    <div class="dashboard" style="display: flex; min-height: 100vh">
+      <aside
+        class="sidebar"
+        style="
+          width: 250px;
+          background: #1e293b;
+          color: #fff;
+          padding: 2rem 1rem 2rem 2rem;
+        "
+      >
+        <div class="logo">
+          <h2 style="color: #fff">Super Admin Dashboard</h2>
+        </div>
+        <nav>
+          <ul style="list-style: none; padding: 0; margin: 2rem 0 0 0">
+            <li style="margin-bottom: 1rem">
+              <i class="fas fa-home"></i>
+              <a
+                href="index.html"
+                class="nav-link"
+                style="color: #fff; text-decoration: none; margin-left: 0.5rem"
+                >Home Share Providers</a
+              >
+            </li>
+            <li style="margin-bottom: 1rem">
+              <i class="fas fa-users"></i>
+              <a
+                href="individuals.html"
+                class="nav-link"
+                style="color: #fff; text-decoration: none; margin-left: 0.5rem"
+                >Individuals</a
+              >
+            </li>
+            <li style="margin-bottom: 1rem">
+              <i class="fas fa-file-contract"></i>
+              <a
+                href="contracts.html"
+                class="nav-link"
+                style="color: #fff; text-decoration: none; margin-left: 0.5rem"
+                >Contracts</a
+              >
+            </li>
+            <li style="margin-bottom: 1rem">
+              <i class="fas fa-user-cog"></i>
+              <a
+                href="user-management.html"
+                class="nav-link"
+                style="
+                  color: #4f46e5;
+                  text-decoration: none;
+                  margin-left: 0.5rem;
+                  font-weight: 600;
+                "
+                >User Management</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="main-content" style="flex: 1; padding: 2rem">
+        <a
+          href="user-management.html"
+          class="back-link"
+          aria-label="Back to User Management"
+        >
+          <i class="fas fa-arrow-left"></i> Back to User Management
+        </a>
+        <div class="profile-section">
+          <div class="profile-title" id="profileName">Case Manager</div>
+          <span class="profile-label">Case Manager Profile</span>
+        </div>
+        <div class="profile-section">
+          <div class="profile-tabs">
+            <button
+              class="tab-btn active"
+              id="contractsTabBtn"
+              aria-controls="contractsSection"
+            >
+              Contracts
+            </button>
+            <button
+              class="tab-btn"
+              id="individualsTabBtn"
+              aria-controls="individualsSection"
+            >
+              Individuals
+            </button>
+            <button class="tab-btn" id="hspTabBtn" aria-controls="hspSection">
+              Ongoing HSP Applicants
+            </button>
+          </div>
+          <div id="contractsSection" class="tab-section active">
+            <h3>Contracts</h3>
+            <div class="table-container">
+              <table
+                class="profile-table"
+                aria-label="Contracts linked to case manager"
+              >
+                <thead>
+                  <tr>
+                    <th>Contract ID</th>
+                    <th>Individual</th>
+                    <th>Home Share Provider</th>
+                    <th>Status</th>
+                    <th>Case Manager</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Individual Consent Agreement</th>
+                    <th>HSP Contract</th>
+                    <th>Incident Reports</th>
+                  </tr>
+                </thead>
+                <tbody id="contractsTable">
+                  <tr>
+                    <td>CTR-0001</td>
+                    <td>Emily Davis</td>
+                    <td>Sarah Wilson</td>
+                    <td>
+                      <span
+                        class="badge"
+                        style="background: #dcfce7; color: #166534"
+                        >Active</span
+                      >
+                    </td>
+                    <td>
+                      <div class="status-dropdown">
+                        <select
+                          class="case-manager-select"
+                          aria-label="Select Case Manager"
+                        >
+                          <option value="priya-patel" selected>
+                            Priya Patel
+                          </option>
+                          <option value="jordan-lee">Jordan Lee</option>
+                          <option value="alex-johnson">Alex Johnson</option>
+                        </select>
+                        <div class="select-icon">
+                          <i class="fas fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td>2024-03-15</td>
+                    <td>2025-03-15</td>
+                    <td class="file-upload-cell">
+                      <div
+                        class="file-upload multiple"
+                        data-user-id="1-consent"
+                      >
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file1-consent"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file1-consent" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Consent Files</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name"
+                                >consent_agreement_2024.pdf</span
+                              >
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload multiple" data-user-id="1-hsp">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file1-hsp"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file1-hsp" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload HSP Files</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name"
+                                >hsp_contract_2024.pdf</span
+                              >
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div
+                        class="file-upload multiple"
+                        data-user-id="1-incident"
+                      >
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file1-incident"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file1-incident" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Incident Reports</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name"
+                                >incident_report_2024.pdf</span
+                              >
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>CTR-0002</td>
+                    <td>James Wilson</td>
+                    <td>Michael Chen</td>
+                    <td>
+                      <span
+                        class="badge"
+                        style="background: #f1f5f9; color: #64748b"
+                        >Inactive</span
+                      >
+                    </td>
+                    <td>
+                      <div class="status-dropdown">
+                        <select
+                          class="case-manager-select"
+                          aria-label="Select Case Manager"
+                        >
+                          <option value="priya-patel">Priya Patel</option>
+                          <option value="jordan-lee" selected>
+                            Jordan Lee
+                          </option>
+                          <option value="alex-johnson">Alex Johnson</option>
+                        </select>
+                        <div class="select-icon">
+                          <i class="fas fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td>2023-01-10</td>
+                    <td>2024-01-10</td>
+                    <td class="file-upload-cell">
+                      <div
+                        class="file-upload multiple"
+                        data-user-id="2-consent"
+                      >
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file2-consent"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file2-consent" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Consent Files</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name"
+                                >consent_agreement_2023.pdf</span
+                              >
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload multiple" data-user-id="2-hsp">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file2-hsp"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file2-hsp" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload HSP Files</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name"
+                                >hsp_contract_2023.pdf</span
+                              >
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div
+                        class="file-upload multiple"
+                        data-user-id="2-incident"
+                      >
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file2-incident"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file2-incident" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Incident Reports</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name"
+                                >incident_report_2023.pdf</span
+                              >
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="individualsSection" class="tab-section">
+            <h3>Individuals</h3>
+            <div class="table-container">
+              <table
+                class="profile-table"
+                aria-label="Individuals linked to case manager"
+              >
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Case Manager</th>
+                    <th>Individual Referral</th>
+                    <th>Individual Consent to Disclosure</th>
+                  </tr>
+                </thead>
+                <tbody id="individualsTable">
+                  <tr>
+                    <td>Emily Davis</td>
+                    <td>emily.davis@email.com</td>
+                    <td>
+                      <span
+                        class="badge"
+                        style="background: #dcfce7; color: #166534"
+                        >Approved</span
+                      >
+                    </td>
+                    <td>
+                      <div class="status-dropdown">
+                        <select
+                          class="case-manager-select"
+                          aria-label="Select Case Manager"
+                        >
+                          <option value="priya-patel" selected>
+                            Priya Patel
+                          </option>
+                          <option value="jordan-lee">Jordan Lee</option>
+                          <option value="alex-johnson">Alex Johnson</option>
+                        </select>
+                        <div class="select-icon">
+                          <i class="fas fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="emily-referral">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-emily-referral"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-emily-referral" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Referral</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">referral_emily.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="emily-consent">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-emily-consent"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-emily-consent" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Consent</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">consent_emily.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>James Wilson</td>
+                    <td>james.wilson@email.com</td>
+                    <td>
+                      <span
+                        class="badge"
+                        style="background: #f1f5f9; color: #64748b"
+                        >In Contract</span
+                      >
+                    </td>
+                    <td>
+                      <div class="status-dropdown">
+                        <select
+                          class="case-manager-select"
+                          aria-label="Select Case Manager"
+                        >
+                          <option value="priya-patel">Priya Patel</option>
+                          <option value="jordan-lee" selected>
+                            Jordan Lee
+                          </option>
+                          <option value="alex-johnson">Alex Johnson</option>
+                        </select>
+                        <div class="select-icon">
+                          <i class="fas fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="james-referral">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-james-referral"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-james-referral" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Referral</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">referral_james.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="james-consent">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-james-consent"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-james-consent" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Consent</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">consent_james.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="hspSection" class="tab-section">
+            <h3>Ongoing HSP Applicants</h3>
+            <div class="table-container">
+              <table
+                class="profile-table"
+                aria-label="Ongoing HSP applicants linked to case manager"
+              >
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Application Progress</th>
+                    <th>Status</th>
+                    <th>Case Manager</th>
+                    <th>CRC Check</th>
+                    <th>Reference Check</th>
+                    <th>Home Study Recommendation</th>
+                    <th>Profile Bio</th>
+                    <th>Room Listing Bio</th>
+                  </tr>
+                </thead>
+                <tbody id="hspApplicantsTable">
+                  <tr>
+                    <td>Sarah Wilson</td>
+                    <td>sarah.wilson@example.com</td>
+                    <td>
+                      <div class="progress-container">
+                        <div class="progress-bar">
+                          <div class="progress-fill" style="width: 80%"></div>
+                        </div>
+                        <span class="progress-text">80% Complete</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        class="badge"
+                        style="background: #fef9c3; color: #b45309"
+                        >In Review</span
+                      >
+                    </td>
+                    <td>
+                      <div class="status-dropdown">
+                        <select
+                          class="case-manager-select"
+                          aria-label="Select Case Manager"
+                        >
+                          <option value="priya-patel" selected>
+                            Priya Patel
+                          </option>
+                          <option value="jordan-lee">Jordan Lee</option>
+                          <option value="alex-johnson">Alex Johnson</option>
+                        </select>
+                        <div class="select-icon">
+                          <i class="fas fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="sarah-crc">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-sarah-crc"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-sarah-crc" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload CRC Check</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">crc_sarah.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div
+                        class="file-upload multiple"
+                        data-user-id="sarah-ref"
+                      >
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-sarah-ref"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file-sarah-ref" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload References</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name">ref_sarah.pdf</span>
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="sarah-study">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-sarah-study"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-sarah-study" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Study</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">study_sarah.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="bio-cell" data-bio-type="profile">
+                      <button
+                        class="btn-bio"
+                        data-bio="profile"
+                        aria-label="Edit Profile Bio"
+                      >
+                        <i class="fas fa-user-edit"></i>
+                        <span class="bio-preview">✔</span> Edit
+                      </button>
+                    </td>
+                    <td class="bio-cell" data-bio-type="room">
+                      <button
+                        class="btn-bio"
+                        data-bio="room"
+                        aria-label="Edit Room Listing Bio"
+                      >
+                        <i class="fas fa-door-open"></i>
+                        <span class="bio-preview">✔</span> Edit
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Michael Chen</td>
+                    <td>michael.chen@example.com</td>
+                    <td>
+                      <div class="progress-container">
+                        <div class="progress-bar">
+                          <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <span class="progress-text">60% Complete</span>
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        class="badge"
+                        style="background: #dcfce7; color: #166534"
+                        >Approved</span
+                      >
+                    </td>
+                    <td>
+                      <div class="status-dropdown">
+                        <select
+                          class="case-manager-select"
+                          aria-label="Select Case Manager"
+                        >
+                          <option value="priya-patel">Priya Patel</option>
+                          <option value="jordan-lee" selected>
+                            Jordan Lee
+                          </option>
+                          <option value="alex-johnson">Alex Johnson</option>
+                        </select>
+                        <div class="select-icon">
+                          <i class="fas fa-chevron-down"></i>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="michael-crc">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-michael-crc"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-michael-crc" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload CRC Check</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">crc_michael.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div
+                        class="file-upload multiple"
+                        data-user-id="michael-ref"
+                      >
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-michael-ref"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                            multiple
+                          />
+                          <label for="file-michael-ref" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload References</span>
+                          </label>
+                        </div>
+                        <div class="uploaded-files">
+                          <div class="add-more-files">
+                            <button class="btn-add-file">
+                              <i class="fas fa-plus"></i> Add More Files
+                            </button>
+                          </div>
+                          <div class="file-item">
+                            <div class="file-info">
+                              <i class="fas fa-file-alt"></i
+                              ><span class="file-name">ref_michael.pdf</span>
+                            </div>
+                            <div class="file-actions">
+                              <button class="btn-download" title="Download">
+                                <i class="fas fa-download"></i>
+                              </button>
+                              <button class="btn-delete" title="Delete">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="file-upload-cell">
+                      <div class="file-upload" data-user-id="michael-study">
+                        <div class="upload-state initial">
+                          <input
+                            type="file"
+                            id="file-michael-study"
+                            class="file-input"
+                            accept=".pdf,.doc,.docx"
+                          />
+                          <label for="file-michael-study" class="file-label">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Study</span>
+                          </label>
+                        </div>
+                        <div class="upload-state uploaded">
+                          <div class="file-info">
+                            <i class="fas fa-file-alt"></i
+                            ><span class="file-name">study_michael.pdf</span>
+                          </div>
+                          <div class="file-actions">
+                            <button class="btn-download" title="Download">
+                              <i class="fas fa-download"></i>
+                            </button>
+                            <button
+                              class="btn-update"
+                              title="Upload New Version"
+                            >
+                              <i class="fas fa-sync-alt"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="bio-cell" data-bio-type="profile">
+                      <button
+                        class="btn-bio"
+                        data-bio="profile"
+                        aria-label="Edit Profile Bio"
+                      >
+                        <i class="fas fa-user-edit"></i>
+                        <span class="bio-preview">✔</span> Edit
+                      </button>
+                    </td>
+                    <td class="bio-cell" data-bio-type="room">
+                      <button
+                        class="btn-bio"
+                        data-bio="room"
+                        aria-label="Edit Room Listing Bio"
+                      >
+                        <i class="fas fa-door-open"></i>
+                        <span class="bio-preview">✔</span> Edit
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script>
+      // Set profile name from URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+      const name = getQueryParam("name");
+      if (name) {
+        document.getElementById("profileName").textContent = name;
+      }
+      // Tab switching logic
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const tabSections = document.querySelectorAll(".tab-section");
+      tabBtns.forEach((btn, idx) => {
+        btn.addEventListener("click", function () {
+          tabBtns.forEach((b) => b.classList.remove("active"));
+          tabSections.forEach((s) => s.classList.remove("active"));
+          btn.classList.add("active");
+          tabSections[idx].classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>
